@@ -1,0 +1,113 @@
+# Branch Naming Conventions
+
+Guidelines for naming git branches to maintain clarity and consistency.
+
+## Standard Format
+
+```
+<type>/<description>
+```
+
+**Type prefixes:**
+- `feature/` - New features or enhancements
+- `fix/` - Bug fixes
+- `refactor/` - Code refactoring without changing behavior
+- `docs/` - Documentation changes
+- `test/` - Adding or updating tests
+- `chore/` - Maintenance tasks, dependencies, tooling
+
+**Description:**
+- Use lowercase with hyphens
+- Keep it concise but descriptive (2-5 words)
+- Describe what, not how
+
+## Examples
+
+**Good:**
+```
+feature/user-authentication
+fix/checkout-race-condition
+refactor/simplify-api-client
+docs/update-readme
+test/add-integration-tests
+chore/update-dependencies
+```
+
+**Bad:**
+```
+my-branch                    # No type prefix
+feature/updateTheUserAuth    # camelCase instead of kebab-case
+fix/bug                      # Too vague
+feature/add-new-feature-for-user-authentication-with-oauth  # Too long
+johns-work                   # Doesn't describe the change
+```
+
+## Short-Lived Branches
+
+Branch names should reflect temporary work:
+- Merge frequently (aim for 1-3 days)
+- Delete after squash merge
+- Don't overthink naming for quick fixes
+
+## Optional: Ticket References
+
+If using issue tracking, you can include ticket numbers:
+```
+feature/123-user-authentication
+fix/456-checkout-race-condition
+```
+
+Format: `<type>/<ticket>-<description>`
+
+## Main Branch
+
+- Primary branch: `main` (or `master` in older repos)
+- Protected and long-lived
+- All feature branches merge here via squash merge
+
+## Common Commands
+
+**Creating and switching branches:**
+```bash
+# Create and switch to new branch
+git checkout -b feature/feature-name
+
+# Switch to existing branch
+git checkout branch-name
+
+# Create branch without switching
+git branch feature/feature-name
+```
+
+**Pushing branches:**
+```bash
+# Push and set upstream
+git push -u origin feature/feature-name
+
+# Push to existing upstream
+git push
+```
+
+**Deleting branches:**
+```bash
+# Delete local branch (after merge)
+git branch -d feature/feature-name
+
+# Force delete local branch
+git branch -D feature/feature-name
+
+# Delete remote branch
+git push origin --delete feature/feature-name
+```
+
+**Listing branches:**
+```bash
+# List local branches
+git branch
+
+# List all branches (local and remote)
+git branch -a
+
+# List remote branches
+git branch -r
+```

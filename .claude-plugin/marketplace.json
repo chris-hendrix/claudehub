@@ -1,0 +1,16 @@
+{
+  "name": "claude-hub",
+  "owner": {
+    "name": "Your Name"
+  },
+  "metadata": {
+    "description": "A collection of plugins for enhancing Claude Code workflows with git and GitHub automation"
+  },
+  "plugins": [
+    {
+      "name": "github",
+      "source": "./plugins/github",
+      "description": "Git and GitHub workflow automation with best practices for commits, PRs, and branch management"
+    }
+  ]
+}
