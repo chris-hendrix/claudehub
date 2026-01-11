@@ -62,6 +62,18 @@ Delete local branches that were merged or closed in origin.
 3. Confirms which branches to delete
 4. Deletes confirmed branches
 
+### `/create-issue`
+
+Create a GitHub issue with AI-generated content.
+
+**What it does:**
+1. Gathers input from user (issue type, description, context)
+2. Generates issue title and description following template format
+3. Displays generated content
+4. Confirms with user and asks about labels/assignees
+5. Creates issue using `gh issue create`
+6. Shows issue URL and number
+
 ## Skills
 
 ### `github`
