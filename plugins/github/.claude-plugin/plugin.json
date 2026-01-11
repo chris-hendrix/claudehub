@@ -1,0 +1,5 @@
+{
+  "name": "github",
+  "description": "Git and GitHub workflow automation with best practices for commits, PRs, and branch management",
+  "version": "1.0.0"
+}
