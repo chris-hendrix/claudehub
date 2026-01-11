@@ -11,8 +11,8 @@ IMPORTANT: Load referenced skills using the Skill tool.
 
 ## Process
 
-1. Use AskUserQuestion if input is unclear, then gather context (current branch, PR status, uncommitted changes)
-2. If on default branch, use `branch-namer` agent to suggest branch name and create it
+1. Use AskUserQuestion if input is unclear
+2. If on default branch, use Skill tool to run `/create-branch`
 3. If unstaged changes exist, use AskUserQuestion to confirm if they want to include them in commit
 4. Push and create/update draft PR
 5. Show PR URL

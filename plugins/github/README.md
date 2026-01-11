@@ -4,16 +4,39 @@ Git and GitHub workflow automation with best practices for commits, PRs, and bra
 
 ## Commands
 
+### `/create-branch`
+
+Create a new git branch with AI-suggested name.
+
+**What it does:**
+1. Uses branch-namer agent to suggest branch name
+2. Gathers context (current branch, uncommitted changes)
+3. Confirms branch name and stash preferences with user
+4. Stashes changes if needed
+5. Creates and checks out new branch
+6. Pops stash if changes were stashed
+
 ### `/submit-pr`
 
 Commit changes, push to remote, and create/update draft PR.
 
 **What it does:**
-1. Gathers context (branch, PR status, uncommitted changes)
+1. Creates branch if on default branch (via `/create-branch`)
 2. Commits any pending changes (confirms with user first)
 3. Pushes and creates/updates draft PR
 4. Shows PR URL
-5. Offers to update title/description or mark ready for review
+5. Offers to update title/description (via `/describe-pr`)
+
+### `/describe-pr`
+
+Generate and update PR title and description from branch diff.
+
+**What it does:**
+1. Uses pr-describer agent to analyze branch changes
+2. Generates PR title and description
+3. Displays generated content
+4. Confirms with user
+5. Updates PR using `gh pr edit`
 
 ### `/checkout-default`
 
@@ -21,9 +44,23 @@ Switch to default branch and sync with remote.
 
 **What it does:**
 1. Determines the default branch (main or master)
-2. Switches to the default branch
-3. Fetches from remote
-4. Pulls latest changes
+2. Gathers context (current branch, uncommitted changes)
+3. Confirms and asks about stashing changes
+4. Stashes changes if needed
+5. Switches to default branch
+6. Fetches and pulls latest changes
+7. Pops stash if changes were stashed
+8. Offers to clean dead branches (via `/clean-branches`)
+
+### `/clean-branches`
+
+Delete local branches that were merged or closed in origin.
+
+**What it does:**
+1. Uses dead-branch-finder agent to identify stale branches
+2. Displays list of branches with their status (merged/closed)
+3. Confirms which branches to delete
+4. Deletes confirmed branches
 
 ## Skills
 
