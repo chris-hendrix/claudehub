@@ -110,14 +110,14 @@ Creates GitHub templates in your repository if they don't exist:
 
 **From this repository:**
 ```bash
-/plugin marketplace add /path/to/claude-hub
-/plugin install github@claude-hub
+/plugin marketplace add /path/to/claudehub
+/plugin install github@claudehub
 ```
 
 **From GitHub:**
 ```bash
-/plugin marketplace add username/claude-hub
-/plugin install github@claude-hub
+/plugin marketplace add username/claudehub
+/plugin install github@claudehub
 ```
 
 ## Version
