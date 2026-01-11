@@ -1,9 +1,12 @@
 ---
 description: Commit, push, and create/update draft PR
-allowed-tools: Bash, AskUserQuestion, Skill, Task
+allowed-tools: AskUserQuestion, Skill, Bash, Task
 ---
 
-IMPORTANT: Load referenced skills using the Skill tool.
+## Important
+
+- Always load referenced skills using the Skill tool
+- When needing input from the user, always use AskUserQuestion tool
 
 ## Skills
 
@@ -11,12 +14,18 @@ IMPORTANT: Load referenced skills using the Skill tool.
 
 ## Process
 
-1. Use AskUserQuestion if input is unclear
+1. Gather context from input (if unclear)
+
 2. If on default branch, use Skill tool to run `/create-branch`
-3. If unstaged changes exist, use AskUserQuestion to confirm if they want to include them in commit
+
+3. If unstaged changes exist, confirm if they want to include them in commit
+
 4. Push and create/update draft PR
+
 5. Show PR URL
-6. Use AskUserQuestion to ask if they want to generate title/description, use Skill tool to run `/describe-pr` if yes
-7. Use AskUserQuestion to ask if they want to mark PR as ready for review (publish), use `gh pr ready` if yes
+
+6. Ask if they want to generate title/description, use Skill tool to run `/describe-pr` if yes
+
+7. Ask if they want to mark PR as ready for review (publish), use `gh pr ready` if yes
 
 Input: $ARGUMENTS

@@ -1,9 +1,12 @@
 ---
 description: Create a GitHub issue with AI-generated content
-allowed-tools: Bash, AskUserQuestion, Skill, Read, Glob
+allowed-tools: AskUserQuestion, Skill, Bash, Read, Glob
 ---
 
-IMPORTANT: Load referenced skills using the Skill tool.
+## Important
+
+- Always load referenced skills using the Skill tool
+- When needing input from the user, always use AskUserQuestion tool
 
 ## Skills
 
@@ -11,7 +14,7 @@ IMPORTANT: Load referenced skills using the Skill tool.
 
 ## Process
 
-1. Gather input from user (use AskUserQuestion if unclear)
+1. Gather input from user (if unclear)
    - Issue type (bug, feature, task)
    - Brief description or problem statement
    - Optional: additional context
@@ -25,7 +28,7 @@ IMPORTANT: Load referenced skills using the Skill tool.
 
 4. Display the generated title and description to user
 
-5. Use AskUserQuestion to confirm and optionally add labels/assignees
+5. Confirm and optionally add labels/assignees
 
 6. If confirmed, create issue using `gh issue create`
 
