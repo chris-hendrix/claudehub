@@ -13,12 +13,12 @@ IMPORTANT: Load referenced skills using the Skill tool.
 
 ## Process
 
-1. Gather context from input (ask user if unclear)
+1. Gather context from input (use AskUserQuestion if unclear)
    - Determine PR number (from current branch or user input)
 
 2. Use `pr-describer` agent to return a PR title and description
 
-3. Confirm with user
+3. Use AskUserQuestion to confirm with user
 
 4. Apply changes to PR using `gh pr edit`
 

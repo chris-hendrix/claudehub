@@ -11,7 +11,7 @@ IMPORTANT: Load referenced skills using the Skill tool.
 
 ## Process
 
-1. Determine the default branch (main or master)
+1. Use AskUserQuestion if input is unclear, then determine the default branch (main or master)
 2. Switch to the default branch
 3. Fetch from remote
 4. Pull latest changes
