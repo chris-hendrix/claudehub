@@ -57,7 +57,7 @@ Understanding how components interact is key to effective design:
 **Universal Rules:**
 - Use lowercase with hyphens (e.g., `my-component-name`)
 - Keep names concise and descriptive
-- Avoid acronyms unless widely recognized (e.g., `pr`, `api` are fine; `tkt` for ticket is not)
+- Avoid acronyms unless widely recognized (e.g., `pr`, `api` are fine; `tkt` for ticket or issue is not)
 - Length: Aim for 3-50 characters, prioritizing clarity
 
 **Component-Specific Patterns:**

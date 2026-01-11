@@ -49,15 +49,15 @@ Branch names should reflect temporary work:
 - Delete after squash merge
 - Don't overthink naming for quick fixes
 
-## Optional: Ticket References
+## Optional: Ticket or Issue References
 
-If using issue tracking, you can include ticket numbers:
+If using issue tracking, you can include ticket or issue numbers:
 ```
 feature/123-user-authentication
 fix/456-checkout-race-condition
 ```
 
-Format: `<type>/<ticket>-<description>`
+Format: `<type>/<ticket-or-issue>-<description>`
 
 ## Main Branch
 

@@ -1,13 +1,13 @@
 ---
 name: implementing
-description: This skill should be used when the user wants to "implement this", "execute a plan", "work on a ticket", "build from a description", mentions implementation execution, or is working on implementing from plans, tickets, or descriptions.
+description: This skill should be used when the user wants to "implement this", "execute a plan", "work on a ticket or issue", "build from a description", mentions implementation execution, or is working on implementing from plans, tickets or issues, or descriptions.
 version: 1.0.0
 allowed-tools: Read, Write, Bash, Edit, AskUserQuestion, Glob, Task, Grep, TodoWrite
 ---
 
 # Implementing
 
-Execute implementation from plans, tickets, or descriptions with mandatory review checkpoints.
+Execute implementation from plans, tickets or issues, or descriptions with mandatory review checkpoints.
 
 ## Philosophy
 
@@ -118,7 +118,7 @@ After completing each phase, run success criteria from the plan:
 
 When all phases complete:
 - Run full verification suite
-- Write implementation summary to `.thoughts/implementations/YYYY-MM-DD-[ticket-id-]<topic>.md`
+- Write implementation summary to `.thoughts/implementations/YYYY-MM-DD-[ticket-or-issue-id-]<topic>.md`
 - Present remaining manual verification steps
 
 ### Summary Document

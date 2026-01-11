@@ -15,7 +15,7 @@ Create markdown documents in the `.thoughts/` folder.
 
 Files follow this pattern:
 ```
-yyyy-mm-dd-[ticket-id-]short-description.md
+yyyy-mm-dd-[ticket-or-issue-id-]short-description.md
 ```
 
 Examples:

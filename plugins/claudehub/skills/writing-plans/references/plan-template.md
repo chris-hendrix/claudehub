@@ -75,7 +75,7 @@
 
 ## References
 
-- Original ticket: [link or path]
+- Original ticket or issue: [link or path]
 - Related research: [links]
 - Similar implementation: [file:line]
 ```

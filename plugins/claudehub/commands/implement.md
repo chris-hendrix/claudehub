@@ -25,6 +25,6 @@ model: opus
    - Run automated verification from success criteria
    - Present results and wait for user sign-off
    - Mark phase complete only after confirmation
-6. After all phases: run full verification, write summary to `.thoughts/implementations/YYYY-MM-DD-[ticket-id-]<topic>.md`
+6. After all phases: run full verification, write summary to `.thoughts/implementations/YYYY-MM-DD-[ticket-or-issue-id-]<topic>.md`
 
 Input: $ARGUMENTS
