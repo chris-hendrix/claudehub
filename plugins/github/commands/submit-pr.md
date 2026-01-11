@@ -17,5 +17,6 @@ IMPORTANT: Load referenced skills using the Skill tool.
 4. Push and create/update draft PR
 5. Show PR URL
 6. Use AskUserQuestion to ask if they want to generate title/description, use Skill tool to run `/describe-pr` if yes
+7. Use AskUserQuestion to ask if they want to mark PR as ready for review (publish), use `gh pr ready` if yes
 
 Input: $ARGUMENTS

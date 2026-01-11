@@ -26,6 +26,7 @@ Commit changes, push to remote, and create/update draft PR.
 3. Pushes and creates/updates draft PR
 4. Shows PR URL
 5. Offers to update title/description (via `/describe-pr`)
+6. Offers to mark PR as ready for review (publish)
 
 ### `/describe-pr`
 
