@@ -18,10 +18,12 @@ IMPORTANT: Load referenced skills using the Skill tool.
 
 2. Use `pr-describer` agent to return a PR title and description
 
-3. Use AskUserQuestion to confirm with user
+3. Display the generated title and description to user
 
-4. Apply changes to PR using `gh pr edit`
+4. Use AskUserQuestion to confirm with user
 
-5. Show GitHub URL
+5. Apply changes to PR using `gh pr edit`
+
+6. Show GitHub URL
 
 Input: $ARGUMENTS
