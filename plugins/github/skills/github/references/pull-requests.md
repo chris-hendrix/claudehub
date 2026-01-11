@@ -164,6 +164,42 @@ gh pr edit 123 --add-label "priority"
 gh pr edit 123 --add-reviewer username
 ```
 
+**IMPORTANT: Preserving Media When Updating PRs**
+
+When updating a PR description using `gh pr edit --body`, you will replace the entire body content. This means any images, videos, or other media embedded in the PR will be lost unless you preserve them.
+
+**Before updating:**
+1. Fetch the current PR body to check for media:
+   ```bash
+   gh pr view 123 --json body -q .body
+   ```
+2. Look for image references (e.g., `![alt](url)`) or video embeds
+3. Copy any media URLs or markdown that should be preserved
+
+**When updating:**
+- Include existing media in your new body content
+- Preserve image markdown: `![description](url)`
+- Preserve video links or embeds
+- Keep any other important visual content
+
+**Example:**
+```bash
+# Fetch current body first
+CURRENT_BODY=$(gh pr view 123 --json body -q .body)
+
+# Review for media, then update with preserved content
+gh pr edit 123 --body "$(cat <<'EOF'
+# Updated Description
+
+New content here...
+
+## Screenshots (preserved)
+![Original screenshot](https://user-images.githubusercontent.com/...)
+
+EOF
+)"
+```
+
 **Closing PRs:**
 ```bash
 # Close without merging

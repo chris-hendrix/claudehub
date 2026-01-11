@@ -1,4 +1,4 @@
-.PHONY: help install install-marketplace install-plugins uninstall uninstall-plugins uninstall-marketplace reinstall
+.PHONY: help install install-marketplace install-plugins uninstall uninstall-marketplace reinstall
 
 # Get the absolute path to this directory
 ROOT_DIR := $(shell pwd)
@@ -10,8 +10,7 @@ help:
 	@echo "  make install              Install marketplace and all plugins"
 	@echo "  make install-marketplace  Install just the marketplace"
 	@echo "  make install-plugins      Install all plugins (requires marketplace)"
-	@echo "  make uninstall            Uninstall all plugins and marketplace"
-	@echo "  make uninstall-plugins    Uninstall just the plugins"
+	@echo "  make uninstall            Uninstall marketplace (uninstalls all plugins)"
 	@echo "  make uninstall-marketplace Uninstall just the marketplace"
 	@echo "  make reinstall            Reinstall everything (uninstall then install)"
 
@@ -36,17 +35,8 @@ install-plugins:
 		echo "✓ Plugins installed"; \
 	fi
 
-uninstall: uninstall-plugins uninstall-marketplace
+uninstall: uninstall-marketplace
 	@echo "✓ Uninstall complete"
-
-uninstall-plugins:
-	@if claude plugin list 2>/dev/null | grep -q "github"; then \
-		echo "Uninstalling plugins..."; \
-		claude plugin uninstall github; \
-		echo "✓ Plugins uninstalled"; \
-	else \
-		echo "Plugin 'github' not installed, skipping"; \
-	fi
 
 uninstall-marketplace:
 	@if claude plugin marketplace list 2>/dev/null | grep -q "claude-hub"; then \

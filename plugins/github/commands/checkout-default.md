@@ -1,7 +1,13 @@
 ---
 description: Switch to default branch and sync with remote
-allowed-tools: Bash
+allowed-tools: Bash, Skill
 ---
+
+IMPORTANT: Load referenced skills using the Skill tool.
+
+## Skills
+
+- `github` - Git/GitHub workflow, branch naming, and PR conventions
 
 ## Process
 

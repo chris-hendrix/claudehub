@@ -78,6 +78,31 @@ Start from trunk, create focused branches for each logical change. Keep commits 
 When rebasing, update from the bottom of the stack upward. Resolve conflicts at each level before proceeding.
 ```
 
+## Agents
+
+Agents are specialized subagents that can be delegated tasks. They are defined in `.claude/agents/` or `<plugin>/agents/`.
+
+### Agent Frontmatter
+
+```yaml
+---
+name: agent-name (required)
+description: "When Claude should delegate to this subagent" (required)
+tools: Bash, Read, Grep (optional, inherits all if omitted)
+disallowedTools: Write, Edit (optional, tools to deny)
+model: sonnet | opus | haiku | inherit (optional, defaults to sonnet)
+permissionMode: default | acceptEdits | dontAsk | bypassPermissions | plan (optional)
+skills: skill-name, another-skill (optional, CSV format, injected at startup)
+hooks: (optional, lifecycle hooks)
+---
+```
+
+**Key differences from skills:**
+- Agents use `tools` instead of `allowed-tools`
+- Agents have `skills` field to inject skill content at startup (subagents don't inherit skills from parent)
+- Agents support `permissionMode` and `disallowedTools`
+- Skills are specified as comma-separated values, and their full content is injected into the subagent's context
+
 ## Sources
 
 - [Agent Skills](https://code.claude.com/docs/en/skills)
