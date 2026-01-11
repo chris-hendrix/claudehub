@@ -16,16 +16,19 @@ allowed-tools: AskUserQuestion, Skill, Bash, Task
 
 1. Gather context from input (if unclear)
 
-2. If on default branch, use Skill tool to run `/create-branch`
+2. Ask all questions upfront using AskUserQuestion tool:
+   - If unstaged changes exist, confirm if they want to include them in commit
+   - Ask if they want to generate title/description (will run `/describe-pr`)
+   - Ask if they want to mark PR as ready for review (publish)
 
-3. If unstaged changes exist, confirm if they want to include them in commit
+3. If on default branch, use Skill tool to run `/create-branch`
 
 4. Push and create/update draft PR
 
 5. Show PR URL
 
-6. Ask if they want to generate title/description, use Skill tool to run `/describe-pr` if yes
+6. If they said yes to title/description, use Skill tool to run `/describe-pr`
 
-7. Ask if they want to mark PR as ready for review (publish), use `gh pr ready` if yes
+7. If they said yes to publish, use `gh pr ready`
 
 Input: $ARGUMENTS
