@@ -59,12 +59,13 @@ Wait for explicit user confirmation before creating todos and beginning implemen
 
 ### Phase Processing
 
-Plans are organized into phases with success criteria. Execute phases sequentially:
+Execute phases sequentially:
 1. Load phase tasks into TodoWrite
-2. Implement all changes in the phase
+2. Implement changes, marking items complete in both TodoWrite and the plan file
 3. Run automated verification (from phase success criteria)
-4. Present results and get user confirmation
-5. Proceed to next phase only after sign-off
+4. Get user confirmation before proceeding to next phase
+
+See [references/implementing-a-plan.md](references/implementing-a-plan.md) for plan tracking guidance.
 
 ### Agent Selection
 
@@ -83,22 +84,23 @@ Halt execution immediately when encountering:
 
 ## Handling Deviations
 
-When implementation diverges from the plan:
+Deviations can be initiated by you (blockers, better approaches) or the user (preference changes, scope adjustments).
 
-### BLOCKED Status Protocol
+### When You Discover Issues
 
-When tasks cannot proceed as planned, never auto-approve deviations. Present options:
-1. Approve the deviation with justification
+If tasks cannot proceed as planned, present options:
+1. Approve a deviation with justification
 2. Revise the plan to address the issue
 3. Enforce adherence to original plan
 4. Investigate further before deciding
 
-### Plan Updates
+### When Plans Change
 
-If the plan needs modification during execution:
-- Document the deviation and reasoning
-- Get explicit user approval
-- Update the plan file if changes are significant
+After approval of any deviation:
+- Update the plan file to reflect the new approach
+- Document when and why it was modified
+
+See [references/implementing-a-plan.md](references/implementing-a-plan.md) for details.
 
 ## Phase Verification
 
@@ -123,8 +125,10 @@ When all phases complete:
 
 ### Summary Document
 
-Follow `writing-documentation` skill for frontmatter. The summary should capture:
-- What was implemented (high-level)
-- Any deviations from original plan with reasoning
+Follow `writing-documentation` skill for frontmatter. Include:
+- What was implemented
+- Files created/modified
+- Key design decisions
+- **Implementation Notes**: Deviations, challenges, approach refinements (if plan was updated during implementation, note this here)
 - Verification results
 - Link to original plan file
