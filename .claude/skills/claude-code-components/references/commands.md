@@ -33,7 +33,7 @@ Keep names short and imperative.
 ---
 description: "Shows in command list" (required)
 argument-hint: [placeholder] (optional)
-allowed-tools: Bash, Read, Glob (optional)
+allowed-tools: AskUserQuestion, Skill, Bash, Read, Glob (optional, but always include AskUserQuestion and Skill)
 model: sonnet | opus | haiku (optional)
 disable-model-invocation: true (optional, prevents model from invoking)
 ---
@@ -45,10 +45,13 @@ disable-model-invocation: true (optional, prevents model from invoking)
 ---
 description: "Command description"
 argument-hint: [optional placeholder]
-allowed-tools: Tool1, Tool2
+allowed-tools: AskUserQuestion, Skill, Tool1, Tool2
 ---
 
-IMPORTANT: Load referenced skills using the Skill tool. Ask the user for context if input is unclear.
+## Important
+
+- Always load referenced skills using the Skill tool
+- When needing input from the user, always use AskUserQuestion tool
 
 ## Skills
 
@@ -65,16 +68,18 @@ Input: $ARGUMENTS
 
 ## Writing Guidelines
 
-Slash commands should be concise. Use two sections:
+Slash commands should be concise. Use three sections:
 
+- **Important**: Standard bullets about loading skills and using AskUserQuestion
 - **Skills** (optional): List skills with brief descriptions of what they provide
 - **Process**: Numbered steps for execution
 
 Not all slash commands need skills. Simple actions (`checkout-master`, `run-tests`) may just have a Process section. But if you find yourself writing detailed methodology, that belongs in a skill.
 
 **IMPORTANT:**
-- Always load any referenced skills using the Skill tool before proceeding with the process
-- Always ask the user for context if the input is unclear - don't proceed with assumptions when clarification is cheap
+- Always include AskUserQuestion and Skill in allowed-tools
+- Always include the Important section with standard bullets
+- The Important section eliminates the need to repeatedly mention AskUserQuestion in process steps
 
 ## Example
 
@@ -82,10 +87,13 @@ Not all slash commands need skills. Simple actions (`checkout-master`, `run-test
 ---
 description: Submit a PR with auto-generated description
 argument-hint: [optional PR title]
-allowed-tools: Bash, Read, Glob, Skill
+allowed-tools: AskUserQuestion, Skill, Bash, Read, Glob
 ---
 
-IMPORTANT: Load referenced skills using the Skill tool. Ask the user for context if input is unclear.
+## Important
+
+- Always load referenced skills using the Skill tool
+- When needing input from the user, always use AskUserQuestion tool
 
 ## Skills
 

@@ -1,16 +1,21 @@
 {
-  "name": "claude-hub",
+  "name": "claudehub",
   "owner": {
-    "name": "Your Name"
+    "name": "chris-hendrix"
   },
   "metadata": {
-    "description": "A collection of plugins for enhancing Claude Code workflows with git and GitHub automation"
+    "description": "A marketplace of Claude Code plugins for GitHub workflows and systematic development"
   },
   "plugins": [
     {
       "name": "github",
       "source": "./plugins/github",
       "description": "Git and GitHub workflow automation with best practices for commits, PRs, and branch management"
+    },
+    {
+      "name": "claudehub",
+      "source": "./plugins/claudehub",
+      "description": "Research-plan-implement workflow automation for systematic development"
     }
   ]
 }

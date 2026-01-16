@@ -18,7 +18,7 @@ These components can be used in:
 | Component | Purpose | Invocation | Can Reference | Location | Details |
 |-----------|---------|------------|---------------|----------|---------|
 | Skill | Domain knowledge | Claude matches context → injects knowledge | Other skills, CLI/MCP tools | `.claude/skills/` | `references/skills.md` |
-| Slash Command | User-invoked actions | User types `/command-name` | Skills, agents | `.claude/commands/` | `references/slash-commands.md` |
+| Slash Command | User-invoked actions | User types `/command-name` | Skills, agents | `.claude/commands/` | `references/commands.md` |
 | Agent | Autonomous specialists | Claude matches context → spawns isolated worker via Task tool | Skills | `.claude/agents/` | `references/agents.md` |
 | Hook | Event-driven automation | System triggers script or prompt on events | N/A | `hooks/hooks.json` | `references/hooks.md` |
 
@@ -57,7 +57,7 @@ Understanding how components interact is key to effective design:
 **Universal Rules:**
 - Use lowercase with hyphens (e.g., `my-component-name`)
 - Keep names concise and descriptive
-- Avoid acronyms unless widely recognized (e.g., `pr`, `api` are fine; `tkt` for ticket is not)
+- Avoid acronyms unless widely recognized (e.g., `pr`, `api` are fine; `tkt` for ticket or issue is not)
 - Length: Aim for 3-50 characters, prioritizing clarity
 
 **Component-Specific Patterns:**

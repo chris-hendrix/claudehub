@@ -1,9 +1,12 @@
 ---
 description: Switch to default branch and sync with remote
-allowed-tools: Bash, Skill, AskUserQuestion
+allowed-tools: AskUserQuestion, Skill, Bash
 ---
 
-IMPORTANT: Load referenced skills using the Skill tool.
+## Important
+
+- Always load referenced skills using the Skill tool
+- When needing input from the user, always use AskUserQuestion tool
 
 ## Skills
 
@@ -11,13 +14,13 @@ IMPORTANT: Load referenced skills using the Skill tool.
 
 ## Process
 
-1. Use AskUserQuestion if input is unclear
+1. Gather context from input (if unclear)
 
 2. Determine the default branch (main or master)
 
 3. Gather context (current branch, staged/unstaged changes)
 
-4. Use AskUserQuestion to confirm and (if changes exist) ask if they want to stash/pop changes
+4. Confirm and (if changes exist) ask if they want to stash/pop changes
 
 5. If confirmed, stash changes (if any)
 
@@ -29,6 +32,6 @@ IMPORTANT: Load referenced skills using the Skill tool.
 
 9. Pop the stash if changes were stashed
 
-10. Use AskUserQuestion to ask if they want to clean dead branches, use Skill tool to run `/clean-branches` if yes
+10. Ask if they want to clean dead branches, use Skill tool to run `/clean-branches` if yes
 
 Input: $ARGUMENTS
