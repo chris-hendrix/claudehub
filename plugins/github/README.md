@@ -9,35 +9,31 @@ Git and GitHub workflow automation with best practices for commits, PRs, and bra
 Create a new git branch with AI-suggested name.
 
 **What it does:**
-1. Uses branch-namer agent to suggest branch name
-2. Gathers context (current branch, uncommitted changes)
-3. Confirms branch name and stash preferences with user
-4. Stashes changes if needed
-5. Creates and checks out new branch
-6. Pops stash if changes were stashed
+1. Gathers context and suggests appropriate branch name
+2. Handles uncommitted changes appropriately
+3. Creates and checks out new branch
 
 ### `/submit-pr`
 
 Commit changes, push to remote, and create/update draft PR.
 
 **What it does:**
-1. Creates branch if on default branch (via `/create-branch`)
-2. Commits any pending changes (confirms with user first)
+1. Creates branch if on default branch
+2. Commits any changes
 3. Pushes and creates/updates draft PR
 4. Shows PR URL
-5. Offers to update title/description (via `/describe-pr`)
-6. Offers to mark PR as ready for review (publish)
+5. Offers to update title/description
+6. Offers to mark as ready for review if in draft state
 
 ### `/describe-pr`
 
 Generate and update PR title and description from branch diff.
 
 **What it does:**
-1. Uses pr-describer agent to analyze branch changes
-2. Generates PR title and description
-3. Displays generated content
-4. Confirms with user
-5. Updates PR using `gh pr edit`
+1. Gathers context and generates PR title and description
+2. Displays generated content
+3. Confirms with user
+4. Updates PR
 
 ### `/checkout-default`
 
@@ -58,10 +54,11 @@ Switch to default branch and sync with remote.
 Delete local branches that were merged or closed in origin.
 
 **What it does:**
-1. Uses dead-branch-finder agent to identify stale branches
-2. Displays list of branches with their status (merged/closed)
-3. Confirms which branches to delete
-4. Deletes confirmed branches
+1. Fetches and prunes remote tracking info
+2. Identifies stale branches marked as [gone]
+3. Displays list of branches that can be deleted
+4. Confirms which branches to delete
+5. Deletes confirmed branches
 
 ### `/create-issue`
 

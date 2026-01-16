@@ -1,6 +1,6 @@
 ---
 description: Commit, push, and create/update draft PR
-allowed-tools: AskUserQuestion, Skill, Bash, Task
+allowed-tools: AskUserQuestion, Skill, Bash
 ---
 
 ## Important
@@ -10,25 +10,20 @@ allowed-tools: AskUserQuestion, Skill, Bash, Task
 
 ## Skills
 
-- `github` - Git/GitHub workflow, branch naming, and PR conventions
+- `github` - Git/GitHub workflow, branch naming, and PR conventions (see references/pull-requests.md)
 
 ## Process
 
-1. Gather context from input (if unclear)
+1. Create branch if on default branch
 
-2. Ask all questions upfront using AskUserQuestion tool:
-   - If unstaged changes exist, confirm if they want to include them in commit
-   - Ask if they want to generate title/description (will run `/describe-pr`)
-   - Ask if they want to mark PR as ready for review (publish)
+2. Commit any changes
 
-3. If on default branch, use Skill tool to run `/create-branch`
+3. Push and create/update draft PR
 
-4. Push and create/update draft PR
+4. Show PR URL
 
-5. Show PR URL
+5. Offer to update title/description
 
-6. If they said yes to title/description, use Skill tool to run `/describe-pr`
-
-7. If they said yes to publish, use `gh pr ready`
+6. Offer to mark as ready for review if in draft state
 
 Input: $ARGUMENTS

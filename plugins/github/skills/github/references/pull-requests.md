@@ -2,6 +2,14 @@
 
 Guidelines for creating effective pull requests that facilitate review and maintain project quality.
 
+## Context for Describing PRs
+
+PR titles and descriptions can be generated from:
+- Branch diff: Use `git diff <base-branch>...HEAD` to see all changes since branch divergence
+- Commit history: Use `git log <base-branch>..HEAD` to see commit messages
+- Linked issues: Check branch name for issue numbers (e.g., `feature/123-add-auth`)
+- Existing PR media: Fetch current PR body with `gh pr view --json body -q .body` to preserve images/videos
+
 ## PR Lifecycle
 
 **Draft → Ready → Review → Squash Merge**

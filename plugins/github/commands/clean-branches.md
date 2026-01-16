@@ -1,6 +1,6 @@
 ---
 description: Delete local branches that were merged or closed in origin
-allowed-tools: AskUserQuestion, Skill, Bash, Task
+allowed-tools: Bash, AskUserQuestion, Skill
 ---
 
 ## Important
@@ -14,14 +14,14 @@ allowed-tools: AskUserQuestion, Skill, Bash, Task
 
 ## Process
 
-1. Gather context from input (if unclear)
+1. Fetch and prune remote tracking info
 
-2. Use `dead-branch-finder` agent to identify branches that can be deleted
+2. Identify local branches that have been deleted on the remote
 
-3. Display list of branches with their status (merged/closed)
+3. Display the list of branches that can be deleted
 
-4. Confirm which branches to delete
+4. Confirm with the user if they are okay deleting all branches
 
-5. Delete confirmed branches
+5. Delete all the branches if confirmed
 
 Input: $ARGUMENTS
