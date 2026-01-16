@@ -1,28 +1,27 @@
 ---
 description: Create a new git branch with AI-suggested name
-allowed-tools: Bash, AskUserQuestion, Task
+allowed-tools: Bash, AskUserQuestion, Skill
 ---
 
-IMPORTANT: Load referenced skills using the Skill tool.
+## Important
+
+- Always load referenced skills using the Skill tool
+- When needing input from the user, always use AskUserQuestion tool
 
 ## Skills
 
-- `github` - Git/GitHub workflow, branch naming, and PR conventions
+- `github` - Git/GitHub workflow, branch naming, and PR conventions (see references/branches.md)
 
 ## Process
 
-1. Use AskUserQuestion if input is unclear
+1. Gather context
 
-2. Use `branch-namer` agent to suggest branch name
+2. Suggest branch name following format: `<type>/<issue-number>-<description>`
 
-3. Gather context (current branch, staged/unstaged changes)
+3. Determine base branch (if branching from main, sync with origin first)
 
-4. Use AskUserQuestion to confirm branch name and (if changes exist) ask if they want to stash/pop changes
+4. Handle any uncommitted changes appropriately
 
-5. If confirmed, stash changes (if any)
-
-6. Create and checkout the new branch
-
-7. Pop the stash if changes were stashed
+5. Create and checkout the new branch
 
 Input: $ARGUMENTS

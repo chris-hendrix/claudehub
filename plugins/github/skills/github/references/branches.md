@@ -2,6 +2,24 @@
 
 Guidelines for naming git branches to maintain clarity and consistency.
 
+## Context for Branch Names
+
+Branch names can be derived from multiple sources:
+
+**Issue/ticket numbers:**
+- Check if the user provided an issue number or references a GitHub issue
+- Use `gh issue view <number>` to fetch issue details
+- Extract the issue type and description
+
+**Uncommitted or staged changes:**
+- Run `git status` to see modified files
+- Run `git diff` for staged changes or `git diff HEAD` for all changes
+- Analyze the changes to infer the type (feature, fix, refactor, etc.) and description
+
+**User input:**
+- Direct description from the user about what they're working on
+- Clarify with the user if the context is unclear
+
 ## Standard Format
 
 ```
@@ -110,4 +128,17 @@ git branch -a
 
 # List remote branches
 git branch -r
+```
+
+**Cleaning up dead branches:**
+```bash
+# Update remote tracking info and remove stale remote references
+git fetch --prune
+
+# List all local branches with their remote tracking status
+git branch -vv
+
+# Identify branches marked with [gone] - these have been deleted on the remote (likely merged)
+# Delete them using:
+git branch -D branch-name
 ```

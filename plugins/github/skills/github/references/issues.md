@@ -2,12 +2,21 @@
 
 Guidelines for creating and managing GitHub Issues to track tasks, bugs, and features.
 
+## Context for Creating Issues
+
+Issue content can be derived from user input:
+- Direct description from the user about the bug, feature, or task
+- Problem statement or requirements
+- References to websites, markdown files, documentation, or other resources
+- The user may tell you to create it from the diff (use `git diff`)
+- Clarify with the user if the context is unclear
+
 ## Issue Template
 
 Use the template in `.github/ISSUE_TEMPLATE/issue_template.md`. If it doesn't exist, ask the user if they want to create it using:
 
 ```bash
-${CLAUDE_PLUGIN_ROOT}/scripts/setup-templates.sh
+${CLAUDE_PLUGIN_ROOT}/.support/scripts/setup-templates.sh
 ```
 
 ## When to Create an Issue

@@ -2,6 +2,21 @@
 
 Guidelines for creating effective pull requests that facilitate review and maintain project quality.
 
+## Context for Describing PRs
+
+When generating PR descriptions, **always** check for and follow the repo's PR template first:
+
+**PR Template (check first):**
+- Read template from `.github/PULL_REQUEST_TEMPLATE/pull_request_template.md` or `.github/pull_request_template.md`
+- If template exists, follow its exact structure and sections
+- If template doesn't exist, use standard format below
+
+**Context sources for PR content:**
+- Branch diff: Use `git diff <base-branch>...HEAD` to see all changes since branch divergence
+- Commit history: Use `git log <base-branch>..HEAD` to see commit messages
+- Linked issues: Check branch name for issue numbers (e.g., `feature/123-add-auth`)
+- Existing PR media: Fetch current PR body with `gh pr view --json body -q .body` to preserve images/videos
+
 ## PR Lifecycle
 
 **Draft → Ready → Review → Squash Merge**
@@ -45,7 +60,7 @@ Update README with installation steps
 Use the template in `.github/PULL_REQUEST_TEMPLATE/pull_request_template.md`. If it doesn't exist, ask the user if they want to create it using:
 
 ```bash
-${CLAUDE_PLUGIN_ROOT}/scripts/setup-templates.sh
+${CLAUDE_PLUGIN_ROOT}/.support/scripts/setup-templates.sh
 ```
 
 ## Draft PR Guidelines
