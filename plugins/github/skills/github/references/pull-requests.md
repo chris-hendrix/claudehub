@@ -4,7 +4,14 @@ Guidelines for creating effective pull requests that facilitate review and maint
 
 ## Context for Describing PRs
 
-PR titles and descriptions can be generated from:
+When generating PR descriptions, **always** check for and follow the repo's PR template first:
+
+**PR Template (check first):**
+- Read template from `.github/PULL_REQUEST_TEMPLATE/pull_request_template.md` or `.github/pull_request_template.md`
+- If template exists, follow its exact structure and sections
+- If template doesn't exist, use standard format below
+
+**Context sources for PR content:**
 - Branch diff: Use `git diff <base-branch>...HEAD` to see all changes since branch divergence
 - Commit history: Use `git log <base-branch>..HEAD` to see commit messages
 - Linked issues: Check branch name for issue numbers (e.g., `feature/123-add-auth`)
