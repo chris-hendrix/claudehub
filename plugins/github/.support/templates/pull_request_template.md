@@ -8,7 +8,7 @@ Closes/Fixes/Resolves/Related to #
 
 [1-2 sentences: technical approach]
 
-# QA & Review Guidelines
+# What was tested?
 
 - What was tested
 - Screenshots/recordings if applicable
