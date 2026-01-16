@@ -44,7 +44,62 @@ model: sonnet | opus | haiku (optional)
 
 Note: `allowed-tools` accepts any valid Claude Code tool - the examples above aren't exhaustive. Other tools include `Edit`, `Write`, `Grep`, `WebFetch`, `WebSearch`, `AskUserQuestion`, `Skill`, `Task`, `mcp__*`, etc.
 
-## Example
+## Context Sections
+
+Skills should include "Context for..." sections that explain where to gather information for generating content. This helps Claude Code understand data sources before taking action.
+
+**Pattern:** Start reference files with a context section explaining:
+- What user input to expect
+- What commands to run to gather information
+- What templates or files to check first
+- When to clarify with the user
+
+**Example - Branch naming context:**
+```markdown
+## Context for Branch Names
+
+Branch names can be derived from multiple sources:
+
+**Issue/ticket numbers:**
+- Check if the user provided an issue number or references a GitHub issue
+- Use `gh issue view <number>` to fetch issue details
+- Extract the issue type and description
+
+**Uncommitted or staged changes:**
+- Run `git status` to see modified files
+- Run `git diff` for staged changes or `git diff HEAD` for all changes
+- Analyze the changes to infer the type (feature, fix, refactor, etc.) and description
+
+**User input:**
+- Direct description from the user about what they're working on
+- Clarify with the user if the context is unclear
+```
+
+**Example - PR description context with template checking:**
+```markdown
+## Context for Describing PRs
+
+When generating PR descriptions, **always** check for and follow the repo's PR template first:
+
+**PR Template (check first):**
+- Read template from `.github/PULL_REQUEST_TEMPLATE/pull_request_template.md` or `.github/pull_request_template.md`
+- If template exists, follow its exact structure and sections
+- If template doesn't exist, use standard format below
+
+**Context sources for PR content:**
+- Branch diff: Use `git diff <base-branch>...HEAD` to see all changes since branch divergence
+- Commit history: Use `git log <base-branch>..HEAD` to see commit messages
+- Linked issues: Check branch name for issue numbers (e.g., `feature/123-add-auth`)
+- Existing PR media: Fetch current PR body with `gh pr view --json body -q .body` to preserve images/videos
+```
+
+**Key Principles:**
+- Put context sections at the top of reference files, before detailed guidelines
+- Be specific about commands to run and files to check
+- Always mention template checking when applicable (PR templates, issue templates, etc.)
+- Order sources by priority (user input first, then automated gathering)
+
+## Example Skill
 
 ```markdown
 ---

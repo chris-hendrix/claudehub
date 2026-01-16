@@ -16,7 +16,7 @@ Issue content can be derived from user input:
 Use the template in `.github/ISSUE_TEMPLATE/issue_template.md`. If it doesn't exist, ask the user if they want to create it using:
 
 ```bash
-${CLAUDE_PLUGIN_ROOT}/scripts/setup-templates.sh
+${CLAUDE_PLUGIN_ROOT}/.support/scripts/setup-templates.sh
 ```
 
 ## When to Create an Issue

@@ -2,6 +2,10 @@
 name: claude-code-components
 description: "This skill should be used when creating or modifying Claude Code components including skills, slash commands, agents, and hooks. It provides naming conventions, structure guidelines, best practices, and antipatterns."
 version: 1.0.0
+invokable: true
+command-description: "Help with creating or modifying Claude Code components"
+command-argument-hint: "[what you're trying to do]"
+allowed-tools: AskUserQuestion, Skill, Read, Glob, Edit, Write, Bash
 ---
 
 # Claude Component Authoring
@@ -88,6 +92,49 @@ For large skills, use a `references/` subdirectory to split out detailed content
 
 **Tool Reference Documentation:**
 Skills are the ideal place to document external tools - both CLI tools (`gh`, `gt`, `npm`) and MCP tools (`mcp__linear__*`, `mcp__slack__*`). This includes tool names, parameters, and usage patterns. This is reference documentation, not to be confused with slash commands.
+
+## Plugin Directory Structure
+
+When creating plugins, organize directories to clearly distinguish component directories from supporting resources:
+
+**Component directories** (loaded by Claude Code):
+- `commands/` - Slash commands
+- `skills/` - Skills
+- `agents/` - Agents (if needed)
+- `hooks/` - Hooks
+
+**Supporting resources** (not components):
+- `.support/` - Non-component resources
+  - `.support/scripts/` - Shell scripts
+  - `.support/templates/` - Template files
+  - `.support/docs/` - Additional documentation
+
+**Example structure:**
+```
+my-plugin/
+├── .claude-plugin/
+│   └── manifest.json
+├── .support/
+│   ├── scripts/
+│   │   └── setup.sh
+│   └── templates/
+│       └── template.md
+├── commands/
+│   ├── deploy.md
+│   └── test.md
+├── skills/
+│   └── my-skill/
+│       ├── SKILL.md
+│       └── references/
+│           └── patterns.md
+└── hooks/
+    └── hooks.json
+```
+
+**Why `.support/`?**
+- Prefixing with a dot makes it clear these are not Claude Code components
+- Nesting under a single directory keeps the plugin root clean
+- Component directories (`commands/`, `skills/`, etc.) are immediately visible
 
 ## Antipatterns
 

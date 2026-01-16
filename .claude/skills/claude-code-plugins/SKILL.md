@@ -1,7 +1,11 @@
 ---
-name: creating-plugins
+name: claude-code-plugins
 description: "This skill should be used when creating, scaffolding, or setting up Claude Code plugins and marketplace configurations."
 version: 1.0.0
+invokable: true
+command-description: "Create or scaffold Claude Code plugins and marketplace configurations"
+command-argument-hint: "[plugin name or action]"
+allowed-tools: AskUserQuestion, Skill, Read, Glob, Edit, Write, Bash
 ---
 
 # Creating Claude Code Plugins

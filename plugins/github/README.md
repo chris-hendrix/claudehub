@@ -101,7 +101,7 @@ Creates GitHub templates in your repository if they don't exist:
 - `.github/ISSUE_TEMPLATE/issue_template.md`
 
 **Automatic:** Runs on session start via hook
-**Manual:** Run `scripts/setup-templates.sh` from the plugin directory
+**Manual:** Run `.support/scripts/setup-templates.sh` from the plugin directory
 
 ## Installation
 

@@ -60,7 +60,7 @@ Update README with installation steps
 Use the template in `.github/PULL_REQUEST_TEMPLATE/pull_request_template.md`. If it doesn't exist, ask the user if they want to create it using:
 
 ```bash
-${CLAUDE_PLUGIN_ROOT}/scripts/setup-templates.sh
+${CLAUDE_PLUGIN_ROOT}/.support/scripts/setup-templates.sh
 ```
 
 ## Draft PR Guidelines
