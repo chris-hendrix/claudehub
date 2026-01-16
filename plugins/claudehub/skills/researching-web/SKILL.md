@@ -17,6 +17,23 @@ Methodology for conducting effective web research and synthesizing findings.
 - **Currency awareness** - Note publication dates; flag potentially outdated information
 - **Multi-angle coverage** - Explore topics from multiple search angles for completeness
 
+## Critical: Check Current Versions
+
+**LLM knowledge is often outdated.** When researching libraries, frameworks, or tools:
+
+1. **Always search for current version** - Add "2025" or "latest" to queries
+2. **Check official docs first** - `site:docs.{library}.com` or `site:{library}.dev`
+3. **Look for migration guides** - New versions often have different patterns
+4. **Verify best practices** - What was recommended 2 years ago may be deprecated
+
+**Examples of outdated patterns:**
+- React: Class components → Hooks → Server Components
+- ESLint: `.eslintrc` → Flat config (`eslint.config.js`)
+- Node.js: CommonJS (`require`) → ESM (`import`)
+- Next.js: Pages Router → App Router
+
+Always include version information in findings and note when patterns have changed.
+
 ## Research Types
 
 | Type | Purpose | Tools |

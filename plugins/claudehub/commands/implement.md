@@ -24,8 +24,16 @@ model: opus
 
 3. Create TodoWrite with confirmed phases
 
-4. Execute each phase with verification and user sign-off
+4. **Execute each phase task by task, updating the plan file continuously:**
+   - Check off steps, tasks, and phases as you complete them
+   - Update Tracked Changes for significant deviations
+   - Update frontmatter status (planned → in-progress → completed)
+   - See `implementing` skill references for detailed instructions
 
-5. Complete with full verification and summary to `.thoughts/implementations/`
+5. Run phase checks (tests, manual verification) after completing all tasks
+
+6. Get user sign-off on manual checks before moving to next phase
+
+7. Complete with full verification and summary to `.thoughts/implementations/`
 
 Input: $ARGUMENTS
