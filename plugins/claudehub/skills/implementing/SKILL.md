@@ -9,6 +9,8 @@ allowed-tools: Read, Write, Bash, Edit, AskUserQuestion, Glob, Task, Grep, TodoW
 
 Execute implementation from plans, tickets or issues, or descriptions with mandatory review checkpoints.
 
+**Multi-session implementation**: Large implementations span multiple sessions. The plan file is the source of truth - checkboxes show progress, and any session can resume where the previous one left off.
+
 ## Philosophy
 
 - **Critical Review Before Starting**: Read plans skeptically. Assess confidence and raise concerns before executing.
@@ -43,29 +45,30 @@ See [references/confidence-assessment.md](references/confidence-assessment.md) f
 
 Do not begin implementation until user acknowledges the assessment.
 
-## Phase Confirmation
+## Phase Confirmation & Resuming Work
 
-After confidence assessment, present the phases to the user:
-- List each phase with a brief description
-- Highlight dependencies between phases
-- Note estimated scope/complexity per phase
+After confidence assessment, present phases and get user confirmation before starting. If resuming work from a previous session, identify where to start based on checkboxes.
 
-Wait for explicit user confirmation before creating todos and beginning implementation. This allows the user to:
-- Reorder phases if needed
-- Split or combine phases
-- Adjust scope before work begins
+See [references/implementing-a-plan.md](references/implementing-a-plan.md) for detailed instructions on phase confirmation and resuming work across sessions.
 
 ## Execution Model
+
+**CRITICAL: Update the plan file continuously as you work.** The plan is a living document - check off items, record changes, update status. This enables resuming work across sessions.
 
 ### Phase Processing
 
 Execute phases sequentially:
-1. Load phase tasks into TodoWrite
-2. Implement changes, marking items complete in both TodoWrite and the plan file
-3. Run automated verification (from phase success criteria)
-4. Get user confirmation before proceeding to next phase
 
-See [references/implementing-a-plan.md](references/implementing-a-plan.md) for plan tracking guidance.
+1. **Load phase**: Add phase tasks to TodoWrite
+2. **Implement task by task**: Complete steps, update both TodoWrite and plan file
+3. **Verify phase**: Run checks, get user sign-off
+4. **Move to next phase**: Clear TodoWrite, load next phase
+
+**See [references/implementing-a-plan.md](references/implementing-a-plan.md) for detailed instructions on:**
+- What to check off in the plan file and when
+- How to update Tracked Changes section
+- How to update frontmatter status
+- Handling deviations during implementation
 
 ### Agent Selection
 
@@ -84,51 +87,12 @@ Halt execution immediately when encountering:
 
 ## Handling Deviations
 
-Deviations can be initiated by you (blockers, better approaches) or the user (preference changes, scope adjustments).
+When tasks cannot proceed as planned or a better approach is discovered, present options to the user and get approval before deviating. Update the plan file's Tracked Changes section with significant deviations.
 
-### When You Discover Issues
+See [references/implementing-a-plan.md](references/implementing-a-plan.md) for detailed instructions and examples.
 
-If tasks cannot proceed as planned, present options:
-1. Approve a deviation with justification
-2. Revise the plan to address the issue
-3. Enforce adherence to original plan
-4. Investigate further before deciding
+## Phase Verification & Completion
 
-### When Plans Change
+After completing each phase, run phase-level checks (automated tests, manual verification) and get user sign-off before proceeding. When all phases complete, write implementation summary to `.thoughts/implementations/`.
 
-After approval of any deviation:
-- Update the plan file to reflect the new approach
-- Document when and why it was modified
-
-See [references/implementing-a-plan.md](references/implementing-a-plan.md) for details.
-
-## Phase Verification
-
-After completing each phase, run success criteria from the plan:
-
-### Automated Verification
-- Tests, linting, type checks as specified
-- Build verification if applicable
-- All automated checks must pass before proceeding
-
-### Manual Verification
-- Present manual verification steps to user
-- Wait for explicit confirmation
-- Do not proceed to next phase without sign-off
-
-## Completion
-
-When all phases complete:
-- Run full verification suite
-- Write implementation summary to `.thoughts/implementations/YYYY-MM-DD-[ticket-or-issue-id-]<topic>.md`
-- Present remaining manual verification steps
-
-### Summary Document
-
-Follow `writing-documentation` skill for frontmatter. Include:
-- What was implemented
-- Files created/modified
-- Key design decisions
-- **Implementation Notes**: Deviations, challenges, approach refinements (if plan was updated during implementation, note this here)
-- Verification results
-- Link to original plan file
+See [references/implementing-a-plan.md](references/implementing-a-plan.md) for detailed verification steps and summary document structure.

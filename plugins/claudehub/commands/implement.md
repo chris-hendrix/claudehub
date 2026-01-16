@@ -18,23 +18,22 @@ model: opus
 
 ## Process
 
-1. Gather context from input (if unclear)
-   - Plan file: search `.thoughts/plans/` if name given
-   - Description: clarify scope and requirements
+1. Gather context (plan file from `.thoughts/plans/` or clarify description)
 
-2. Assess confidence (task, existing code, plan) - present ratings and concerns to user
+2. Assess confidence and present phases for confirmation
 
-3. Present phases to user for confirmation
+3. Create TodoWrite with confirmed phases
 
-4. Create TodoWrite with all phases (only after user confirms)
+4. **Execute each phase task by task, updating the plan file continuously:**
+   - Check off steps, tasks, and phases as you complete them
+   - Update Tracked Changes for significant deviations
+   - Update frontmatter status (planned → in-progress → completed)
+   - See `implementing` skill references for detailed instructions
 
-5. For each phase:
-   - Mark phase as in_progress
-   - Implement all changes in the phase
-   - Run automated verification from success criteria
-   - Present results and wait for user sign-off
-   - Mark phase complete only after confirmation
+5. Run phase checks (tests, manual verification) after completing all tasks
 
-6. After all phases: run full verification, write summary to `.thoughts/implementations/YYYY-MM-DD-[ticket-or-issue-id-]<topic>.md`
+6. Get user sign-off on manual checks before moving to next phase
+
+7. Complete with full verification and summary to `.thoughts/implementations/`
 
 Input: $ARGUMENTS

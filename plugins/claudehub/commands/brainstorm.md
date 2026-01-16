@@ -14,22 +14,26 @@ model: opus
 
 - `brainstorming` - dialogue methodology
 - `researching-codebase` - gathering project context
+- `researching-web` - web research for new libraries/frameworks
 - `writing-documentation` - file naming and frontmatter
 
 ## Process
 
-1. Gather context from input (if unclear)
+1. Gather context from input
 
-2. Research codebase using `researching-codebase` skill (spawn multiple agents)
+2. Define objective and success criteria, get user confirmation before proceeding
 
-3. Ask deeper questions informed by codebase context (prefer multiple choice)
+3. Research based on task type:
+   - **Modifying existing codebase**: Research codebase for current patterns and architecture
+   - **New features with external dependencies**: Research web for library docs, APIs, best practices
+   - **Both**: Research codebase first, then web for new integrations
 
-4. Present 2-3 approaches with trade-offs, lead with recommendation
+4. Ask deeper questions informed by findings
 
-5. Once user picks an approach, create `.thoughts/brainstorms/YYYY-MM-DD-<topic>.md` with initial structure
+5. Present 2-3 approaches with trade-offs and recommendation
 
-6. Continue design in 200-300 word sections, updating document after each validated section
+6. Create `.thoughts/brainstorms/YYYY-MM-DD-<topic>.md` with validated design
 
-7. Ask if user wants to create an implementation plan using `/claudehub:create-plan`
+7. Offer to create implementation plan
 
 Input: $ARGUMENTS
