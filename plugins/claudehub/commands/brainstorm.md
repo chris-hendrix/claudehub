@@ -18,18 +18,16 @@ model: opus
 
 ## Process
 
-1. Gather context from input (if unclear)
+1. Gather context from input
 
-2. Research codebase using `researching-codebase` skill (spawn multiple agents)
+2. Research codebase for relevant patterns and context
 
-3. Ask deeper questions informed by codebase context (prefer multiple choice)
+3. Ask deeper questions informed by findings
 
-4. Present 2-3 approaches with trade-offs, lead with recommendation
+4. Present 2-3 approaches with trade-offs and recommendation
 
-5. Once user picks an approach, create `.thoughts/brainstorms/YYYY-MM-DD-<topic>.md` with initial structure
+5. Create `.thoughts/brainstorms/YYYY-MM-DD-<topic>.md` with validated design
 
-6. Continue design in 200-300 word sections, updating document after each validated section
-
-7. Ask if user wants to create an implementation plan using `/claudehub:create-plan`
+6. Offer to create implementation plan
 
 Input: $ARGUMENTS

@@ -18,16 +18,16 @@ model: opus
 
 ## Process
 
-1. Gather context from input (if unclear)
+1. Gather context from input
 
-2. Research codebase using `researching-codebase` skill (spawn multiple agents)
+2. Research codebase for relevant patterns and architecture
 
-3. **Ask clarifying questions** - DO NOT SKIP, wait for answers
+3. Ask clarifying questions and wait for answers
 
-4. Present 2-3 architecture options with trade-offs, get user preference
+4. Present 2-3 architecture options with trade-offs
 
 5. Write plan iteratively with user feedback
 
-6. Save to `.thoughts/plans/YYYY-MM-DD-[ticket-or-issue-id-]<topic>.md` (see `writing-documentation` skill)
+6. Save to `.thoughts/plans/YYYY-MM-DD-[ticket-or-issue-id-]<topic>.md`
 
 Input: $ARGUMENTS

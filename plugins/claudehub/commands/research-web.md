@@ -1,7 +1,7 @@
 ---
 description: Search the web for a topic and save findings to a research doc
 argument-hint: [topic]
-allowed-tools: AskUserQuestion, Skill, Task, Write, Bash
+allowed-tools: AskUserQuestion, Skill, WebSearch, WebFetch, Write, Bash
 ---
 
 ## Important
@@ -11,28 +11,18 @@ allowed-tools: AskUserQuestion, Skill, Task, Write, Bash
 
 ## Skills
 
-- `researching-web` - Web research methodology
+- `researching-web` - Web research methodology (see references for search strategy and synthesis format)
 
 ## Process
 
-1. Parse topic from args (or ask user if not provided)
+1. Gather topic from input
 
-2. Spawn `web-searcher` agent via Task tool with the topic
+2. Execute strategic web searches and rank results
 
-3. Receive ranked URLs from searcher (top 5-8)
+3. Fetch and synthesize findings from top URLs in parallel
 
-4. Spawn multiple `web-synthesizer` agents in parallel via Task tool (one per URL)
+4. Aggregate findings into cohesive summary with citations
 
-5. Wait for all synthesizers to complete
-
-6. Aggregate findings from all synthesizers into a cohesive summary
-
-7. Create `.thoughts/research/` directory if needed
-
-8. Generate filename: `YYYY-MM-DD-<topic-slug>.md`
-
-9. Write doc with frontmatter (date, topic) and aggregated findings with citations
-
-10. Display path to user
+5. Save to `.thoughts/research/YYYY-MM-DD-<topic-slug>.md`
 
 Input: $ARGUMENTS

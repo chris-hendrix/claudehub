@@ -14,6 +14,7 @@ See the [main README](../../README.md) for marketplace setup.
 
 | Command | Description |
 |---------|-------------|
+| `/claudehub:research-web` | Search the web and save findings to research doc |
 | `/claudehub:brainstorm` | Brainstorm an idea into a validated design |
 | `/claudehub:create-plan` | Create detailed implementation plans through research |
 | `/claudehub:implement` | Implement from a plan or description |
@@ -24,6 +25,7 @@ See the [main README](../../README.md) for marketplace setup.
 
 | Skill | Description |
 |-------|-------------|
+| `researching-web` | Web research methodology and synthesis |
 | `researching-codebase` | Investigate and document codebases |
 | `writing-plans` | Create detailed implementation plans |
 | `implementing` | Execute implementation with review checkpoints |

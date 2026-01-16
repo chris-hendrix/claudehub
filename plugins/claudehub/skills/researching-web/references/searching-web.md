@@ -2,6 +2,20 @@
 
 Methodology for analyzing queries and conducting strategic searches.
 
+## Output Format
+
+When conducting web research, return ranked URLs as a numbered list:
+
+```
+1. [Title](URL)
+   Snippet describing the content...
+
+2. [Title](URL)
+   Snippet describing the content...
+```
+
+Return top 5-8 most relevant results after deduplication and ranking by relevance and source authority.
+
 ## Query Analysis
 
 Before searching, deconstruct the user's request:

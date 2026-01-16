@@ -17,16 +17,16 @@ allowed-tools: Read, Glob, AskUserQuestion, Write, Skill, Task
 
 ## Process
 
-1. Gather context from input (if unclear)
+1. Gather context from input
 
-2. Propose 5-7 dimensions with reasoning, get user confirmation
+2. Propose 5-7 dimensions with reasoning and get user confirmation
 
-3. Evaluate dimensions in parallel (spawn agent per dimension)
+3. Evaluate all dimensions
 
 4. Synthesize results into final evaluation
 
 5. Save to `.thoughts/evaluations/YYYY-MM-DD-{artifact-name}-evaluation.md`
 
-6. Offer to show 10/10 version or red-team the evaluation
+6. Offer to show 10/10 version or red-team
 
 Input: $ARGUMENTS
