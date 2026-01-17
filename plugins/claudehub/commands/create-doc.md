@@ -11,7 +11,7 @@ allowed-tools: Write, Read, Bash, AskUserQuestion, Glob, Skill
 
 ## Skills
 
-- `writing-documentation` - structure and conventions
+- `claudehub:writing-documentation` - structure and conventions
 
 ## Process
 

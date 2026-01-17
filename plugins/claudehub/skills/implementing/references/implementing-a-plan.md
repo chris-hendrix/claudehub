@@ -12,19 +12,16 @@ Replace `- [ ]` with `- [x]` in the plan file at each level as you complete them
 
 **As you work through tasks:**
 - **Steps** - Check as you complete each individual action
-- **Tasks** - Check when all steps in the task are complete
+- **Checks** - Check after running verification commands and they pass
+- **Tasks** - Check when all steps and checks in the task are complete
 
-**After phase completion:**
-- **Checks (phase-level)** - Check after running tests and getting user sign-off
-- **Phases** - Check when all tasks and checks in the phase are complete
-
-This provides real-time visibility into progress at all levels.
+This provides real-time visibility into progress and enables tight feedback loops.
 
 ### 2. Update frontmatter status
 
 Edit the plan file's frontmatter as work progresses:
-- `status: planned` → `status: in-progress` (when starting first phase)
-- `status: in-progress` → `status: completed` (when all phases done)
+- `status: planned` → `status: in-progress` (when starting first task)
+- `status: in-progress` → `status: completed` (when all tasks done)
 
 ### 3. Update Tracked Changes section
 
@@ -60,27 +57,14 @@ Deviations happen when the plan needs to change during implementation.
 - **Significant changes**: Architectural shifts, added/removed phases, major scope changes
 - **Don't record**: Minor refactors, variable renames, small code style adjustments
 
-## Phase Confirmation
-
-After confidence assessment, present the phases to the user:
-- List each phase with a brief description
-- Highlight dependencies between phases
-- Note estimated scope/complexity per phase
-- If resuming work, identify which phase to start based on checkboxes
-
-Wait for explicit user confirmation before creating todos and beginning implementation. This allows the user to:
-- Reorder phases if needed
-- Split or combine phases
-- Adjust scope before work begins
-
 ## Resuming Work Across Sessions
 
 When opening a plan file to continue work:
 
 1. **Read the plan** - Architecture section provides all context needed
 2. **Check progress** - Unchecked items show what remains
-3. **Find starting point** - First unchecked phase or task
-4. **Load into TodoWrite** - Add current phase tasks
+3. **Find starting point** - First unchecked task
+4. **Load into TodoWrite** - Add upcoming tasks
 5. **Continue implementation** - No prior session context needed
 
 ## Plan vs TodoWrite
@@ -93,38 +77,34 @@ Use both tools in parallel:
 | **TodoWrite** | Active work tracking for current session | Ephemeral, session-specific |
 
 **Workflow:**
-1. Load current phase tasks into TodoWrite
+1. Load upcoming tasks into TodoWrite
 2. Mark items complete in **both** TodoWrite and the plan file
-3. Move to next phase: clear TodoWrite, load new phase tasks
+3. Work through tasks sequentially
 
-## Phase Verification
+## Task Verification
 
-After completing all tasks in a phase, run phase-level checks:
+Each task has inline checks for verification:
 
-### Automated Checks
-1. Run tests, linting, type checks as specified in phase checks
-2. Run build verification if applicable
-3. All automated checks must pass before proceeding
+### Running Checks
+1. Complete all steps in the task
+2. Run verification commands specified in checks
+3. All checks must pass before marking task complete
 4. Check off check items in the plan file
 
-### Manual Checks
-1. Present manual check steps to user
-2. Wait for explicit confirmation
-3. Check off check items in the plan file
-4. Do not proceed to next phase without sign-off
+### If Checks Fail
+1. Debug and fix the issue
+2. Re-run checks until they pass
+3. Only then mark the task complete
 
-### After All Checks Pass
-1. Check off the phase checkbox in the plan file
-2. **Present completion to user** - This is a natural stopping point
-3. **Assess context usage and recommend accordingly:**
-   - If context is getting large (many files read, long conversation): **Recommend stopping** and resuming in a fresh session with `/implement path/to/plan.md`
-   - If context is still manageable: Ask if user wants to continue or stop
-4. **If user chooses to continue:** Load next phase into TodoWrite and proceed
-5. **If user stops:** Plan file shows all progress; next session picks up seamlessly
+### Natural Stopping Points
+After completing several tasks, assess context usage:
+- If context is getting large (many files read, long conversation): **Recommend stopping** and resuming in a fresh session with `/implement path/to/plan.md`
+- If context is still manageable: Continue with next tasks
+- Plan file shows all progress; next session picks up seamlessly
 
 ## Completion & Summary Document
 
-When all phases complete:
+When all tasks complete:
 
 1. Run full verification suite
 2. Write implementation summary to `.thoughts/implementations/YYYY-MM-DD-[ticket-or-issue-id-]<topic>.md`

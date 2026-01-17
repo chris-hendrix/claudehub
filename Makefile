@@ -42,6 +42,19 @@ install-plugins:
 	@echo "✓ All plugins installed"
 
 uninstall:
+	@echo "Uninstalling plugins..."
+	@if claude plugin list 2>/dev/null | grep -q "github@claudehub"; then \
+		claude plugin uninstall github@claudehub; \
+		echo "✓ Plugin 'github' uninstalled"; \
+	else \
+		echo "Plugin 'github' not installed"; \
+	fi
+	@if claude plugin list 2>/dev/null | grep -q "claudehub@claudehub"; then \
+		claude plugin uninstall claudehub@claudehub; \
+		echo "✓ Plugin 'claudehub' uninstalled"; \
+	else \
+		echo "Plugin 'claudehub' not installed"; \
+	fi
 	@if claude plugin marketplace list 2>/dev/null | grep -q "claudehub"; then \
 		echo "Uninstalling marketplace..."; \
 		claude plugin marketplace remove claudehub; \

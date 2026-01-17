@@ -12,9 +12,9 @@ model: opus
 
 ## Skills
 
-- `researching-codebase` - gathering context
-- `writing-plans` - planning methodology
-- `writing-documentation` - file naming and frontmatter
+- `claudehub:researching-codebase` - gathering context
+- `claudehub:writing-plans` - planning methodology
+- `claudehub:writing-documentation` - file naming and frontmatter
 
 ## Process
 

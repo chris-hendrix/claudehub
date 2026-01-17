@@ -26,6 +26,7 @@ Research-plan-implement workflow automation for systematic development.
 - `/claudehub:brainstorm` - Brainstorm an idea into a validated design
 - `/claudehub:create-plan` - Create detailed implementation plans through research
 - `/claudehub:implement` - Implement from a plan or description
+- `/claudehub:ralph` - Run Ralph Wiggum autonomous implementation iterations
 - `/claudehub:evaluate` - Assess output across relevant quality dimensions
 - `/claudehub:create-doc` - Create a new document in .thoughts/
 
@@ -33,6 +34,7 @@ Research-plan-implement workflow automation for systematic development.
 - `researching-codebase` - Investigate and document codebases
 - `writing-plans` - Create detailed implementation plans
 - `implementing` - Execute implementation with review checkpoints
+- `ralph-wiggum` - Loop-based autonomous implementation methodology
 - `brainstorming` - Refine ideas into designs through dialogue
 - `evaluating` - Dimension-based artifact assessment
 - `writing-documentation` - .thoughts/ document conventions

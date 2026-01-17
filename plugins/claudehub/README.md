@@ -18,6 +18,7 @@ See the [main README](../../README.md) for marketplace setup.
 | `/claudehub:brainstorm` | Brainstorm an idea into a validated design |
 | `/claudehub:create-plan` | Create detailed implementation plans through research |
 | `/claudehub:implement` | Implement from a plan or description |
+| `/claudehub:ralph` | Run Ralph Wiggum autonomous implementation iterations |
 | `/claudehub:evaluate` | Assess output across relevant quality dimensions |
 | `/claudehub:create-doc` | Create a new document in .thoughts/ |
 
@@ -29,6 +30,7 @@ See the [main README](../../README.md) for marketplace setup.
 | `researching-codebase` | Investigate and document codebases |
 | `writing-plans` | Create detailed implementation plans |
 | `implementing` | Execute implementation with review checkpoints |
+| `ralph-wiggum` | Loop-based autonomous implementation methodology |
 | `brainstorming` | Refine ideas into designs through dialogue |
 | `evaluating` | Dimension-based artifact assessment |
 | `writing-documentation` | .thoughts/ document conventions |

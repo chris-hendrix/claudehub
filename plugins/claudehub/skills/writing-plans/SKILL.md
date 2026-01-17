@@ -22,18 +22,18 @@ Plans are for **diving into the solution**. They bridge the gap between a valida
 A good plan has:
 
 1. **Architecture specification** - Self-contained context: all technical details needed to implement without conversation history
-2. **Implementation checklist** - Granular breakdown into phases → tasks → steps with clear stopping points
+2. **Implementation checklist** - Granular breakdown into tasks with inline verification for tight feedback loops
 3. **Living document** - Checkboxes show progress; any session can pick up where the last one left off
 
 ## Philosophy
 
 - **Self-contained context**: Architecture section must include all details needed to implement without prior conversation history
-- **Session-sized phases**: Each phase should be completable in a single LLM session (consider context limits)
+- **Task-level verification**: Each task is independently verifiable with inline checks for tight feedback loops
 - **Enough detail for LLM implementation**: Include code structure and patterns, not full code
 - **Balance specificity with context**: Provide enough detail without consuming excessive context
-- **Actionable and granular**: Break work down to steps an LLM can execute
+- **Actionable and granular**: Break work down to specific actions an LLM can execute
 - **Living document**: Checkboxes track progress; the plan is the source of truth across sessions
-- **Phase-based verification**: Each phase should be independently verifiable and resumable
+- **Ralph-compatible**: Structure supports autonomous implementation through iterative loops
 
 ## Plan Structure
 
@@ -53,30 +53,29 @@ A good plan has:
 
 ### Implementation Checklist (Core)
 
-The **most important section**. Breaks work into **Phases → Tasks → Steps** with phase-level checks:
+The **most important section**. Breaks work into **Tasks → Steps → Checks** with inline verification:
 
-- **Phase**: Logical grouping and session boundary (e.g., "Backend API", "Frontend Components")
-  - Has checkbox - checked when all tasks and phase checks complete
-  - Should be completable in a single LLM session
-  - Corresponds to a layer or major component
-  - Independently resumable - can start this phase in a fresh session using only the plan
-  - Ends with checks (tests, manual verification)
-
-- **Task**: Specific deliverable (e.g., "Create user endpoint", "Add user form")
-  - Has checkbox - checked when all steps complete
-  - Cohesive and focused on one thing
+- **Task**: A small, verifiable chunk of work (e.g., "Add GET /users endpoint with pagination")
+  - Has checkbox - checked when all steps and checks complete
+  - Atomic unit that can be completed in one iteration (may depend on previous tasks)
+  - Self-contained and verifiable on its own
+  - Should be completable in one focused work session
   - Usually touches 1-3 related files
-  - Numbered within phases (1.1, 1.2, 2.1, 2.2, etc.)
+  - Numbered sequentially (Task 1, Task 2, Task 3...)
+  - **Ralph compatibility**: One task per Ralph iteration
 
-- **Step**: Granular action (e.g., "Add route handler in `routes/users.ts`")
-  - Has checkbox - checked when step complete
-  - Specific enough for an LLM to implement
+- **Step**: Specific action within a task
+  - Has checkbox - checked when action complete
+  - Concrete and actionable (e.g., "Add route handler in `src/routes/users.ts`")
   - Include file references when possible
 
-- **Check**: Phase-level verification (e.g., "Run tests", "Verify user flow")
+- **Check**: Verification that proves the task is complete
   - Has checkbox - checked when verification passes
-  - Appears at end of each phase
-  - Numbered by phase (Check 1.1, Check 1.2, etc.)
+  - Appears inline after steps within each task
+  - Exact command with success criteria (e.g., "Run `npm test users.test.ts` - all tests pass")
+  - Numbered per check (Check 1, Check 2, etc.)
+
+**Key principle:** Tasks are small, verifiable chunks. Implement steps → run checks → verify complete → next task. This enables tight feedback loops for autonomous implementation (Ralph) or manual execution.
 
 ### Tracking Sections (End)
 
@@ -106,7 +105,7 @@ Ask questions clearly and wait for answers.
 ### 3. Iterative Writing
 
 Don't write the full plan in one shot. Propose structure first, get feedback, then fill in details. Present:
-- High-level phase breakdown
+- High-level task breakdown
 - Key architectural decisions
 - Any concerns or risks
 
@@ -142,10 +141,9 @@ As you implement from the plan:
 
 1. **Check off items at all levels** as completed: `- [ ]` → `- [x]`
    - Check steps as you complete each action
-   - Check tasks when all their steps are done
-   - Check phase checks after running tests and user sign-off
-   - Check phases when all their tasks and checks are done
-2. **Verify at phase boundaries** - run phase checks (tests, manual verification) before moving to next phase
+   - Check task-level checks after running verification commands
+   - Check tasks when all their steps and checks are done
+2. **Tight feedback loop** - implement steps → run checks → mark complete → next task
 3. **Record significant changes** in Tracked Changes:
    - Changed approach due to constraint
    - Added unexpected requirement
@@ -157,7 +155,7 @@ As you implement from the plan:
 
 1. **No open questions in final plan** - Research or ask before writing
 2. **Verify everything** - Research to verify facts yourself
-3. **Phase-by-phase verification** - Each phase has clear success criteria
+3. **Task-by-task verification** - Each task has exact verification command and success criteria
 4. **Include scope boundaries** - Explicitly state what we're NOT doing
 
 ## References
