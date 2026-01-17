@@ -176,7 +176,7 @@ How you think about development
 
 ```bash
 # Using the slash command
-/run-ralph [plan-file] [--max-iterations N] [--commit]
+/claudehub:ralph [plan-file] [--max-iterations N] [--commit]
 
 # Direct script usage
 bash scripts/ralph-wiggum.sh /path/to/project 20
