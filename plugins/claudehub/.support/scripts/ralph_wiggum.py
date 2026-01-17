@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Ralph - Autonomous implementation agent for Claude Code plans."""
+"""Ralph Wiggum - Autonomous implementation agent for Claude Code plans."""
 
 import argparse
 import subprocess
@@ -17,7 +17,7 @@ def get_progress_file(plan_file: Path) -> Path:
 def initialize_progress_file(progress_file: Path):
     """Create progress file if it doesn't exist."""
     if not progress_file.exists():
-        progress_file.write_text("""# Ralph Implementation Progress
+        progress_file.write_text("""# Ralph Wiggum Implementation Progress
 
 ## Learnings
 
@@ -38,7 +38,7 @@ def run_claude(plan_file: Path, progress_file: Path, iteration: int) -> str:
 
     today = datetime.now().strftime("%Y-%m-%d")
 
-    prompt = f"""You are Ralph (iteration {iteration}), an autonomous implementation agent.
+    prompt = f"""You are Ralph Wiggum (iteration {iteration}), an autonomous implementation agent.
 
 ## Context
 - **Plan file**: Architecture and tasks
@@ -58,8 +58,9 @@ def run_claude(plan_file: Path, progress_file: Path, iteration: int) -> str:
 
 ```
 ### Iteration {iteration} - Task N.M
+- Result: TASK_COMPLETE/TASK_FAILED
 - Files: [list]
-- What worked: [approach]
+- What worked/failed: [approach and outcome]
 - Learnings: [add reusable patterns to Learnings section above]
 ```
 
@@ -94,7 +95,7 @@ def commit_changes(iteration: int, output: str):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Ralph - Autonomous implementation agent")
+    parser = argparse.ArgumentParser(description="Ralph Wiggum - Autonomous implementation agent")
     parser.add_argument("plan_file", type=Path, help="Path to plan file")
     parser.add_argument("--max-iterations", type=int, default=10, help="Max iterations (default: 10)")
     parser.add_argument("--commit", action="store_true", help="Auto-commit successful tasks")
@@ -108,7 +109,7 @@ def main():
     progress_file = get_progress_file(args.plan_file)
     initialize_progress_file(progress_file)
 
-    print(f"Starting Ralph - {args.plan_file.name} (max {args.max_iterations} iterations)")
+    print(f"Starting Ralph Wiggum - {args.plan_file.name} (max {args.max_iterations} iterations)")
     print(f"Progress: {progress_file.name}\n")
 
     for i in range(1, args.max_iterations + 1):
