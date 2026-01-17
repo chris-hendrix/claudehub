@@ -27,13 +27,13 @@ install-marketplace:
 
 install-plugins:
 	@echo "Installing plugins..."
-	@if claude plugin list 2>/dev/null | grep -q "github"; then \
+	@if claude plugin list 2>/dev/null | grep -q "github@claudehub"; then \
 		echo "Plugin 'github' already installed"; \
 	else \
 		claude plugin install github@claudehub; \
 		echo "✓ Plugin 'github' installed"; \
 	fi
-	@if claude plugin list 2>/dev/null | grep -q "claudehub"; then \
+	@if claude plugin list 2>/dev/null | grep -q "claudehub@claudehub"; then \
 		echo "Plugin 'claudehub' already installed"; \
 	else \
 		claude plugin install claudehub@claudehub; \
