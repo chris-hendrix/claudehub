@@ -1,6 +1,6 @@
 ---
 description: Run Ralph Wiggum autonomous implementation iterations
-argument-hint: [plan-file] [--max-iterations N] [--commit]
+argument-hint: <plan-file> [max-iterations]
 references-skills: ralph-wiggum
 ---
 
@@ -13,23 +13,32 @@ Execute Ralph Wiggum to implement plan tasks iteratively.
 
 ## Skills
 
-- `ralph-wiggum` - Autonomous implementation methodology (see references for iteration loop and failure handling)
+- `claudehub:ralph-wiggum` - Autonomous implementation methodology
 
 ## Process
 
-1. Load the `ralph-wiggum` skill using the Skill tool first (required)
+1. Load the `claudehub:ralph-wiggum` skill using the Skill tool first (required)
 
-2. Gather inputs if not provided:
-   - Plan file path (search `.thoughts/plans/` for recent plans if needed)
-   - Max iterations (suggest: 10)
-   - Auto-commit flag (suggest: false)
+2. Handle plan file setup:
+   - If no plan file provided:
+     - Check if RALPH_PLAN.md exists
+     - If exists: Ask "Continue with existing RALPH_PLAN.md or provide new plan file?"
+     - If doesn't exist: Ask user to provide plan file
+   - If plan file provided:
+     - Verify it contains task checkboxes (`- [ ] **Task`)
+     - Copy to RALPH_PLAN.md (overwrites if exists)
 
-3. **Branch safety**: If --commit flag is used and on default branch, suggest `ralph/<plan-name>` branch and STOP
+3. Ask for max iterations (suggestion: 10)
 
-4. Follow the Ralph Wiggum iteration loop methodology (see `references/ralph-iteration-loop.md`):
-   - Setup: Verify plan file, create progress file if needed
-   - Loop: Work through tasks one at a time, updating files after each
-   - Report: Keep user informed of progress after each iteration
-   - Stop: When all tasks complete or max iterations reached
+4. Run the Ralph Wiggum script:
+   ```bash
+   bash /path/to/plugins/claudehub/skills/ralph-wiggum/scripts/ralph-wiggum.sh $(pwd) <max-iterations>
+   ```
+
+   The script will:
+   - Work in the project root directory
+   - Use RALPH_PLAN.md and RALPH_PROGRESS.md
+   - Implement tasks one at a time
+   - Stop when all tasks complete or max iterations reached
 
 Input: $ARGUMENTS

@@ -179,7 +179,7 @@ How you think about development
 /run-ralph [plan-file] [--max-iterations N] [--commit]
 
 # Direct script usage
-python scripts/ralph_wiggum.py path/to/plan.md --max-iterations 20 --commit
+bash scripts/ralph-wiggum.sh /path/to/project 20
 ```
 
 ### Options
@@ -223,4 +223,4 @@ If you haven't built your own coding agent yet, that's the fundamental knowledge
 - [Ralph Methodology](https://ghuntley.com/ralph/) - Original article by Geoffrey Huntley
 - [Loop Philosophy](https://ghuntley.com/loop/) - The mindset shift behind Ralph Wiggum
 - [Building Coding Agents](https://www.youtube.com/geoffreyhuntley) - Geoffrey Huntley's workshops
-- `scripts/ralph_wiggum.py` - Implementation script that manages the loop
+- `scripts/ralph-wiggum.sh` - Bash implementation script that manages the loop
