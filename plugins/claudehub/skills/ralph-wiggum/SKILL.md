@@ -4,14 +4,16 @@ description: This skill should be used when implementing through autonomous loop
 
 # Ralph Wiggum: Loop-Based Implementation
 
-Ralph Wiggum is a loop methodology that runs autonomous implementation iterations. The script executes tasks from a plan file one at a time, learning from failures through a progress file.
+**Script:** `scripts/ralph_wiggum.sh`
+
+Ralph Wiggum is a loop methodology that runs autonomous implementation iterations. Execute tasks from a plan file one at a time, learning from failures through a progress file.
 
 ## What Ralph Wiggum Does
 
-The ralph.py script:
+The methodology:
 1. Reads plan file (tasks) and progress file (learnings)
 2. Finds first uncompleted task
-3. Invokes Claude to implement that task
+3. Implements that task
 4. Repeats until done or max iterations
 
 Each iteration maintains tight context:
@@ -19,17 +21,11 @@ Each iteration maintains tight context:
 - Progress file (learnings + iteration log)
 - No conversation history
 
-## Output Signals
+## Output Signal
 
-Watch for these in the script output:
-- `<promise>TASK_COMPLETE</promise>` - Task done, tests passed
-- `<promise>TASK_FAILED</promise>` - Task failed, documented for next iteration
-- `<promise>ALL_COMPLETE</promise>` - All tasks complete
+Use this promise tag when all tasks are complete:
+- `<promise>COMPLETE</promise>` - All tasks checked off, implementation done
 
 ## Key Principle
 
 One task per iteration. Tests must pass. Learn from failures. Software is clay on a wheel—iterate and refine.
-
-## Running Ralph Wiggum
-
-You can run this process using `scripts/ralph_wiggum.py`
