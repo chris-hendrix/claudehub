@@ -11,14 +11,14 @@ Ralph Wiggum is a loop methodology that runs autonomous implementation iteration
 ## What Ralph Wiggum Does
 
 The methodology:
-1. Reads RALPH_PLAN.md (tasks) and RALPH_PROGRESS.md (learnings)
+1. Reads PLAN.md (tasks) and PROGRESS.md (learnings)
 2. Finds first uncompleted task
 3. Implements that task
 4. Repeats until done or max iterations
 
 Each iteration maintains tight context:
-- RALPH_PLAN.md (task list + architecture)
-- RALPH_PROGRESS.md (learnings + iteration log)
+- PLAN.md (task list + architecture)
+- PROGRESS.md (learnings + iteration log)
 - No conversation history
 
 ## Output Signal

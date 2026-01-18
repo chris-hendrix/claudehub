@@ -21,12 +21,12 @@ Execute Ralph Wiggum to implement plan tasks iteratively.
 
 2. Handle plan file setup:
    - If no plan file provided:
-     - Check if RALPH_PLAN.md exists
-     - If exists: Ask "Continue with existing RALPH_PLAN.md or provide new plan file?"
+     - Check if PLAN.md exists
+     - If exists: Ask "Continue with existing PLAN.md or provide new plan file?"
      - If doesn't exist: Ask user to provide plan file
    - If plan file provided:
      - Verify it contains task checkboxes (`- [ ] **Task`)
-     - Copy to RALPH_PLAN.md (overwrites if exists)
+     - Copy to PLAN.md (overwrites if exists)
 
 3. Ask for max iterations (suggestion: 10)
 
@@ -37,7 +37,7 @@ Execute Ralph Wiggum to implement plan tasks iteratively.
 
    The script will:
    - Work in the project root directory
-   - Use RALPH_PLAN.md and RALPH_PROGRESS.md
+   - Use PLAN.md and PROGRESS.md
    - Implement tasks one at a time
    - Stop when all tasks complete or max iterations reached
 

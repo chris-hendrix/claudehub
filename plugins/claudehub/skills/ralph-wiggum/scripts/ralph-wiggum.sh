@@ -7,18 +7,18 @@ MAX=${2:-10}
 # Change to working directory
 cd "$WORK_DIR"
 
-# Create RALPH_PROGRESS.md if it doesn't exist
-touch RALPH_PROGRESS.md
+# Create PROGRESS.md if it doesn't exist
+touch PROGRESS.md
 
 SYSTEM_PROMPT="You are Ralph, an autonomous coding agent.
 
 Never ask questions or permission.
 
-Find the first line in RALPH_PLAN.md matching '- [ ] **Task', implement it immediately, run tests, update RALPH_PLAN.md (mark [x]), append to RALPH_PROGRESS.md.
+Find the first line in PLAN.md matching '- [ ] **Task', implement it immediately, run tests, update PLAN.md (mark [x]), append to PROGRESS.md.
 
-Note: You're seeing only the last 1000 lines of RALPH_PROGRESS.md for context, but append new entries to the full RALPH_PROGRESS.md file.
+Note: You're seeing only the last 1000 lines of PROGRESS.md for context, but append new entries to the full PROGRESS.md file.
 
-Append to RALPH_PROGRESS.md in this format:
+Append to PROGRESS.md in this format:
 ## Iteration [N] - Task [M]: [Task Name] - ✅/❌
 - What was implemented: [brief description of code written, files created/modified, functions added, interfaces defined, etc.]
 - What was tested: [tests run, commands executed, results]
@@ -29,7 +29,7 @@ Append to RALPH_PROGRESS.md in this format:
   - Useful context
 ---
 
-After updating files, check RALPH_PLAN.md: if there are still unchecked tasks (any [ ] remaining), just stop. If ALL tasks are now [x] with NO [ ] remaining, output <promise>COMPLETE</promise>.
+After updating files, check PLAN.md: if there are still unchecked tasks (any [ ] remaining), just stop. If ALL tasks are now [x] with NO [ ] remaining, output <promise>COMPLETE</promise>.
 
 Execute now."
 
@@ -42,10 +42,10 @@ for ((i=1; i<=$MAX; i++)); do
   echo "   Iteration $i of $MAX"
   echo "═══════════════════════════════════════════════════════════"
 
-  # Keep only last 1000 lines of RALPH_PROGRESS.md for context (to avoid filling context window)
-  tail -n 1000 RALPH_PROGRESS.md > /tmp/ralph_progress_tail.txt
+  # Keep only last 1000 lines of PROGRESS.md for context (to avoid filling context window)
+  tail -n 1000 PROGRESS.md > /tmp/ralph_progress_tail.txt
 
-  result=$(claude --dangerously-skip-permissions --output-format text --append-system-prompt "$SYSTEM_PROMPT" -p "@RALPH_PLAN.md @/tmp/ralph_progress_tail.txt" "Iteration $i. Implement first unchecked task." 2>&1)
+  result=$(claude --dangerously-skip-permissions --output-format text --append-system-prompt "$SYSTEM_PROMPT" -p "@PLAN.md @/tmp/ralph_progress_tail.txt" "Iteration $i. Implement first unchecked task." 2>&1)
   exit_code=$?
 
   echo "$result"
