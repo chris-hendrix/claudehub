@@ -3,6 +3,7 @@ set -e
 
 WORK_DIR=${1:-.}
 MAX=${2:-10}
+COMMIT_MODE=${3:-}
 
 # Change to working directory
 cd "$WORK_DIR"
@@ -29,12 +30,20 @@ Append to PROGRESS.md in this format:
   - Useful context
 ---
 
-After updating files, check PLAN.md: if there are still unchecked tasks (any [ ] remaining), just stop. If ALL tasks are now [x] with NO [ ] remaining, output <promise>COMPLETE</promise>.
+After updating files, check PLAN.md:
+- If task completed successfully (tests passed), output <promise>TASK_COMPLETE</promise>
+- If ALL tasks are now [x] with NO [ ] remaining, output <promise>COMPLETE</promise>
+- Otherwise just stop
 
 Execute now."
 
 echo "Starting Ralph in $(pwd)"
 echo "Max iterations: $MAX"
+if [ "$COMMIT_MODE" = "commit" ]; then
+  echo "Commit mode: ENABLED (will commit after each successful iteration)"
+else
+  echo "Commit mode: DISABLED"
+fi
 echo ""
 
 for ((i=1; i<=$MAX; i++)); do
@@ -56,6 +65,25 @@ for ((i=1; i<=$MAX; i++)); do
     echo "Retrying in 5 seconds..."
     sleep 5
     continue
+  fi
+
+  # Check if task was completed successfully
+  if echo "$result" | grep -q "<promise>TASK_COMPLETE</promise>"; then
+    # Commit changes if commit mode is enabled
+    if [ "$COMMIT_MODE" = "commit" ]; then
+      # Extract task info from PROGRESS.md
+      task_info=$(tail -n 20 PROGRESS.md | grep -m 1 "^## Iteration" || echo "Iteration $i")
+
+      # Stage all changes
+      git add -A
+
+      # Create commit with task info
+      git commit -m "Ralph iteration $i: $task_info
+
+Co-Authored-By: Ralph Wiggum <ralph@claudehub>" || echo "⚠️  No changes to commit"
+
+      echo "✅ Changes committed"
+    fi
   fi
 
   if echo "$result" | grep -q "<promise>COMPLETE</promise>"; then

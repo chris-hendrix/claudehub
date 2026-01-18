@@ -21,10 +21,18 @@ Each iteration maintains tight context:
 - PROGRESS.md (learnings + iteration log)
 - No conversation history
 
-## Output Signal
+## Output Signals
 
-Use this promise tag when all tasks are complete:
+Use these promise tags to communicate status:
+- `<promise>TASK_COMPLETE</promise>` - Current task completed successfully, tests passed
 - `<promise>COMPLETE</promise>` - All tasks checked off, implementation done
+
+## Optional Auto-Commit
+
+Ralph can automatically commit after each successful task completion:
+- Pass "commit" as third argument to script
+- Creates commits with task info after each successful iteration
+- Useful for tracking progress and enabling easy rollback
 
 ## Key Principle
 
