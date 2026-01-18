@@ -24,7 +24,7 @@ Your autonomous coding companion that implements features while you sleep.
 
 Ralph takes your research and plans, then executes them in tight iterative loops. Unlike one-shot implementations, Ralph validates after each small task, learns from failures, and adapts until success.
 
-**Key differentiator:** Agent-orchestrated outer loop. The agent parses nondeterministic output and makes intelligent decisions about continuation, retries, and failure handling.
+**Key differentiator:** Agent-orchestrated outer loop with fresh worker spawns per task. The orchestrator manages intelligent decision-making about continuation, retries, and failure handling, while each worker gets clean context to prevent context rot.
 
 **How it works:**
 
@@ -36,21 +36,32 @@ Ralph takes your research and plans, then executes them in tight iterative loops
 
 ```
 repeat {
-  claude --dangerously-skip-permissions \
-    -p "@PLAN.md @PROGRESS.md" \
-    "Complete next unchecked task. Learn from PROGRESS.md."
+  spawn fresh ralph-worker agent
+    → Finds first unchecked task in PLAN.md
+    → Implements task directly using tools
+    → Runs tests
+    → Updates PLAN.md checkbox on success
+    → Appends iteration report to PROGRESS.md
+    → Creates commit if autocommit enabled
 } until all tasks complete in PLAN.md
 ```
 
-That's it. Agent orchestrates the loop, parsing output and deciding whether to continue, retry, or stop.
+Orchestrator manages the loop, parsing iteration reports and deciding whether to continue, retry, or stop. Each worker gets fresh context (PLAN.md + last 200 lines of PROGRESS.md) to avoid context pollution across tasks.
 
 **Critical for success:** Break your feature into small, verifiable tasks. Each task should be independently validatable. Plans are never perfect upfront—they evolve during implementation, and Ralph adapts through learnings.
+
+**Architecture benefits:**
+
+* **Context isolation**: Fresh worker spawn per task prevents context rot
+* **Consistent quality**: Each task gets clean ~200K token budget
+* **Intelligent failure handling**: Learns from PROGRESS.md, retries up to 3 times per task
+* **Resume capability**: Picks up from last iteration if interrupted
 
 **Perfect for:**
 
 * Complex features that benefit from incremental validation
 * Long-running implementations where you want autonomous progress
-* Tasks where context efficiency and tight feedback matter
+* Multi-task workflows where context isolation matters
 
 _Inspired by Geoffrey Huntley's [Ralph methodology](https://ghuntley.com/ralph/)._
 
