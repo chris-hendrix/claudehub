@@ -24,10 +24,7 @@ Your autonomous coding companion that implements features while you sleep.
 
 Ralph takes your research and plans, then executes them in tight iterative loops. Unlike one-shot implementations, Ralph validates after each small task, learns from failures, and adapts until success.
 
-**The Problems Ralph Solves:**
-
-1. **Context Rot**: Long sessions accumulate bloated context. Ralph starts each iteration fresh.
-2. **Outer Loop Verification**: One-shot implementations only verify at the end. Ralph validates after each task.
+**Key differentiator:** Agent-orchestrated outer loop. The agent parses nondeterministic output and makes intelligent decisions about continuation, retries, and failure handling.
 
 **How it works:**
 
@@ -35,44 +32,25 @@ Ralph takes your research and plans, then executes them in tight iterative loops
 /ralph PLAN.md
 ```
 
-Ralph will:
+**The Core Loop:**
 
-1. 📋 **Load**: Read PLAN.md and PROGRESS.md from previous iterations
-2. 🛠️ **Execute**: Implement the first unchecked task with tight context
-3. ✅ **Verify**: Run tests and validate the changes
-4. 📝 **Document**: Mark task complete and log learnings to PROGRESS.md
-5. 🔄 **Iterate**: Start fresh context, retry if failed or move to next task
-6. 🎯 **Complete**: Loop until all tasks are checked off
+```
+repeat {
+  claude --dangerously-skip-permissions \
+    -p "@PLAN.md @PROGRESS.md" \
+    "Complete next unchecked task. Learn from PROGRESS.md."
+} until all tasks complete in PLAN.md
+```
 
-**Critical for success:** Break your feature into small, verifiable tasks. Each task should be independently validatable.
+That's it. Agent orchestrates the loop, parsing output and deciding whether to continue, retry, or stop.
+
+**Critical for success:** Break your feature into small, verifiable tasks. Each task should be independently validatable. Plans are never perfect upfront—they evolve during implementation, and Ralph adapts through learnings.
 
 **Perfect for:**
 
 * Complex features that benefit from incremental validation
 * Long-running implementations where you want autonomous progress
 * Tasks where context efficiency and tight feedback matter
-
-**How Ralph Works Under the Hood:**
-
-Ralph spawns fresh Claude Code sessions in a loop, passing only the plan and last 1000 lines of progress:
-
-```bash
-for ((i=1; i<=MAX_ITERATIONS; i++)); do
-  # Keep last 1000 lines of progress for context
-  tail -n 1000 PROGRESS.md > /tmp/progress_tail.txt
-
-  # Spawn fresh Claude session with tight context
-  claude --dangerously-skip-permissions \
-         --append-system-prompt "$RALPH_SYSTEM_PROMPT" \
-         -p "@PLAN.md @/tmp/progress_tail.txt" \
-         "Iteration $i. Implement first unchecked task."
-
-  # Exit if all tasks complete
-  grep -q "<promise>COMPLETE</promise>" && break
-done
-```
-
-Each iteration: fresh context, no bloat, just plan + recent learnings.
 
 _Inspired by Geoffrey Huntley's [Ralph methodology](https://ghuntley.com/ralph/)._
 
