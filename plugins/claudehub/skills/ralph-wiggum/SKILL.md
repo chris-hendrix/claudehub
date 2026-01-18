@@ -29,9 +29,9 @@ Use these promise tags to communicate status:
 
 ## Optional Auto-Commit
 
-Ralph can automatically commit after each successful task completion:
+Ralph can automatically commit after each iteration:
 - Pass "commit" as third argument to script
-- Creates commits with task info after each successful iteration
+- Creates commits with task info after every iteration (successful or not)
 - Useful for tracking progress and enabling easy rollback
 
 ## Key Principle

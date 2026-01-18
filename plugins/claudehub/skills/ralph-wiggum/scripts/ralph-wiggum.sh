@@ -39,8 +39,8 @@ Execute now."
 
 echo "Starting Ralph in $(pwd)"
 echo "Max iterations: $MAX"
-if [ "$COMMIT_MODE" = "commit" ]; then
-  echo "Commit mode: ENABLED (will commit after each successful iteration)"
+if [ "$COMMIT_MODE" ]; then
+  echo "Commit mode: ENABLED (will commit after each iteration)"
 else
   echo "Commit mode: DISABLED"
 fi
@@ -67,22 +67,21 @@ for ((i=1; i<=$MAX; i++)); do
     continue
   fi
 
-  # Check if task was completed successfully
-  if echo "$result" | grep -q "<promise>TASK_COMPLETE</promise>"; then
-    # Commit changes if commit mode is enabled
-    if [ "$COMMIT_MODE" = "commit" ]; then
-      # Extract task info from PROGRESS.md
-      task_info=$(tail -n 20 PROGRESS.md | grep -m 1 "^## Iteration" || echo "Iteration $i")
+  # Commit changes after each iteration if commit mode is enabled
+  if [ "$COMMIT_MODE" ]; then
+    # Extract task info from PROGRESS.md
+    task_info=$(tail -n 20 PROGRESS.md | grep -m 1 "^## Iteration" || echo "Iteration $i")
 
-      # Stage all changes
-      git add -A
+    # Stage all changes
+    git add -A
 
-      # Create commit with task info
-      git commit -m "Ralph iteration $i: $task_info
+    # Create commit with task info
+    if git commit -m "Ralph iteration $i: $task_info
 
-Co-Authored-By: Ralph Wiggum <ralph@claudehub>" || echo "⚠️  No changes to commit"
-
+Co-Authored-By: Ralph Wiggum <ralph@claudehub>"; then
       echo "✅ Changes committed"
+    else
+      echo "ℹ️  No changes to commit"
     fi
   fi
 

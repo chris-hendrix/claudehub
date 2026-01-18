@@ -51,7 +51,7 @@ Execute Ralph Wiggum to implement plan tasks iteratively.
    - Work in the project root directory
    - Use PLAN.md and PROGRESS.md
    - Implement tasks one at a time
-   - Optionally commit after each successful iteration
+   - Optionally commit after each iteration (with --commit flag)
    - Stop when all tasks complete or max iterations reached
 
 Input: $ARGUMENTS
