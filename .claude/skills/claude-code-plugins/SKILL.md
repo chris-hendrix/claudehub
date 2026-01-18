@@ -31,6 +31,30 @@ Plugins can contain:
 - `agents/` - Autonomous specialists (Task tool)
 - `hooks/` - Event-driven automation
 
+## Environment Variables
+
+Claude Code provides environment variables for referencing plugin resources:
+
+- `${CLAUDE_PLUGIN_ROOT}` - Absolute path to the plugin's root directory
+
+**Usage in agents and scripts:**
+```bash
+# Reference plugin scripts from agents
+bash "${CLAUDE_PLUGIN_ROOT}/.support/scripts/my-script.sh"
+
+# Reference plugin templates
+TEMPLATE="${CLAUDE_PLUGIN_ROOT}/.support/templates/template.md"
+```
+
+**Usage in hooks.json:**
+```json
+{
+  "command": "${CLAUDE_PLUGIN_ROOT}/hooks/run-hook.sh"
+}
+```
+
+This ensures portable paths across different plugin installation locations.
+
 ## Installation
 
 **Local installation:**
