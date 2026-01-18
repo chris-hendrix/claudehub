@@ -53,29 +53,38 @@ A good plan has:
 
 ### Implementation Checklist (Core)
 
-The **most important section**. Breaks work into **Tasks → Steps → Checks** with inline verification:
+The **most important section**. Breaks work into **Phases → Tasks → Steps** with task-level verification:
 
-- **Task**: A small, verifiable chunk of work (e.g., "Add GET /users endpoint with pagination")
-  - Has checkbox - checked when all steps and checks complete
-  - Atomic unit that can be completed in one iteration (may depend on previous tasks)
-  - Self-contained and verifiable on its own
-  - Should be completable in one focused work session
-  - Usually touches 1-3 related files
-  - Numbered sequentially (Task 1, Task 2, Task 3...)
-  - **Ralph compatibility**: One task per Ralph iteration
+**Phases** (optional):
+- Use `### Phase N: [Name]` headings to group related tasks
+- Optional for small features/issues - use only when logical grouping adds clarity
+- Each phase represents a major milestone or logical grouping
+- Example: "### Phase 1: Database Setup", "### Phase 2: API Implementation"
 
-- **Step**: Specific action within a task
-  - Has checkbox - checked when action complete
-  - Concrete and actionable (e.g., "Add route handler in `src/routes/users.ts`")
-  - Include file references when possible
+**Tasks**:
+- Small, verifiable chunk of work (e.g., "Add GET /users endpoint with pagination")
+- Has checkbox - unchecked in plan, checked when complete during implementation
+- Atomic unit that can be completed in one iteration (may depend on previous tasks)
+- Self-contained and verifiable on its own
+- Should be completable in one focused work session
+- Usually touches 1-3 related files
+- Numbered sequentially (Task 1, Task 2, Task 3...)
+- **Ralph compatibility**: One task per Ralph iteration
+- Format: `- [ ] **Task N: [Description]**`
 
-- **Check**: Verification that proves the task is complete
-  - Has checkbox - checked when verification passes
-  - Appears inline after steps within each task
-  - Exact command with success criteria (e.g., "Run `npm test users.test.ts` - all tests pass")
-  - Numbered per check (Check 1, Check 2, etc.)
+**Steps** (nested under tasks):
+- No checkboxes - just actionable bullets
+- Concrete and actionable (e.g., "Add route handler in `src/routes/users.ts`")
+- Include file references when possible
+- Format: `  - Step N: [Action]`
 
-**Key principle:** Tasks are small, verifiable chunks. Implement steps → run checks → verify complete → next task. This enables tight feedback loops for autonomous implementation (Ralph) or manual execution.
+**Checks** (nested under tasks):
+- Only include at task level (after all steps)
+- Verification that proves the task is complete
+- Exact command with success criteria (e.g., "Run `npm test users.test.ts` - all tests pass")
+- Format: `  - Check N: [Command/verification] - [expected result]`
+
+**Key principle:** Tasks are small, verifiable chunks. Implement steps → run checks → mark task complete → next task. This enables tight feedback loops for autonomous implementation (Ralph) or manual execution.
 
 ### Tracking Sections (End)
 

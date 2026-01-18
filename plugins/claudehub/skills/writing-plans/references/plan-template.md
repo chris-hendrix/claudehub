@@ -53,34 +53,40 @@ status: planned
 
 ## Implementation Checklist
 
-> **Note:** This is a living document. As you implement, check off completed items and record significant changes in the "Tracked Changes" section below.
+> **Note:** This is a living document. As you implement, check off completed tasks and record significant changes in the "Tracked Changes" section below.
 >
 > Each task is a small, verifiable chunk of work. Tasks are sequential (may depend on previous tasks) but each is self-contained and verifiable. This structure enables tight feedback loops for autonomous implementation.
+>
+> **Phases are optional** - use only for larger features where logical grouping adds clarity.
 
-- [ ] **Task 1: [Task Name - e.g., "Create database migration"]**
-  - [ ] Step 1: Create migration file in `db/migrations/YYYYMMDD_add_users.sql`
-  - [ ] Step 2: Add schema with users table (id, email, name, created_at)
-  - [ ] Step 3: Add rollback logic to drop table
-  - [ ] Check 1: Run `npm run migrate:up && npm run migrate:down` - migrations execute without errors
+### Phase 1: Database Setup
 
-- [ ] **Task 2: [Task Name - e.g., "Add user model"]**
-  - [ ] Step 1: Create `src/models/User.ts` with User interface
-  - [ ] Step 2: Add findById, create, update methods
-  - [ ] Step 3: Follow pattern from `src/models/Auth.ts:15-45`
-  - [ ] Check 1: Run `npm run type-check` - types pass
-  - [ ] Check 2: Run `npm test src/models/User.test.ts` - all tests pass
+- [ ] **Task 1: Create database migration**
+  - Step 1: Create migration file in `db/migrations/YYYYMMDD_add_users.sql`
+  - Step 2: Add schema with users table (id, email, name, created_at)
+  - Step 3: Add rollback logic to drop table
+  - Check 1: Run `npm run migrate:up && npm run migrate:down` - migrations execute without errors
 
-- [ ] **Task 3: [Task Name - e.g., "Create GET /api/users endpoint"]**
-  - [ ] Step 1: Add route handler in `src/routes/users.ts`
-  - [ ] Step 2: Implement pagination (limit, offset parameters)
-  - [ ] Step 3: Add authorization check for admin role
-  - [ ] Check 1: Run `npm test src/routes/users.test.ts` - all cases pass (200, 401, 403)
+- [ ] **Task 2: Add user model**
+  - Step 1: Create `src/models/User.ts` with User interface
+  - Step 2: Add findById, create, update methods
+  - Step 3: Follow pattern from `src/models/Auth.ts:15-45`
+  - Check 1: Run `npm run type-check` - types pass
+  - Check 2: Run `npm test src/models/User.test.ts` - all tests pass
 
-- [ ] **Task 4: [Task Name - e.g., "Add input validation"]**
-  - [ ] Step 1: Create zod schemas in `src/validation/users.ts`
-  - [ ] Step 2: Add validation middleware to user routes
-  - [ ] Step 3: Add test cases with invalid payloads
-  - [ ] Check 1: Run `npm test src/validation/users.test.ts` - validation catches all edge cases
+### Phase 2: API Implementation
+
+- [ ] **Task 3: Create GET /api/users endpoint**
+  - Step 1: Add route handler in `src/routes/users.ts`
+  - Step 2: Implement pagination (limit, offset parameters)
+  - Step 3: Add authorization check for admin role
+  - Check 1: Run `npm test src/routes/users.test.ts` - all cases pass (200, 401, 403)
+
+- [ ] **Task 4: Add input validation**
+  - Step 1: Create zod schemas in `src/validation/users.ts`
+  - Step 2: Add validation middleware to user routes
+  - Step 3: Add test cases with invalid payloads
+  - Check 1: Run `npm test src/validation/users.test.ts` - validation catches all edge cases
 
 ---
 
