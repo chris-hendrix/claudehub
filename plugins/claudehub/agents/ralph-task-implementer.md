@@ -42,15 +42,54 @@ Status: COMPLETE
 
 Extract the task title/description from that line. This will be passed to ralph-next.sh.
 
-### Step 3: Run ralph-next.sh
+### Step 3: Run claude CLI to implement task
 
-Run the script with the task title:
+Prepare context and call claude CLI to implement the task:
 
 ```bash
-bash "${CLAUDE_PLUGIN_ROOT}/.support/scripts/ralph-next.sh" <iteration-number> "<task-title>"
+# Prepare PROGRESS.md context (last 200 lines)
+if [ -f "PROGRESS.md" ]; then
+  tail -n 200 PROGRESS.md > /tmp/ralph_progress_tail.txt
+else
+  touch /tmp/ralph_progress_tail.txt
+fi
+
+# Build system prompt with task and output format
+SYSTEM_PROMPT="You are Ralph, an autonomous coding agent.
+
+Never ask questions or permission.
+
+Implement this task: <task-title-from-step-2>
+
+Run tests after implementation.
+
+IMPORTANT: Do NOT update PLAN.md checkboxes or PROGRESS.md. The orchestrator will handle those based on your result.
+
+Note: You're seeing the last 200 lines of PROGRESS.md for context about previous iterations.
+
+Output your result in this format:
+## Iteration [N] - Task [M]: [Task Name]
+- Result: TASK_SUCCESS or TASK_FAILURE
+- What was implemented: [1-2 sentences]
+- What was tested: [1-2 sentences]
+- Context usage: [run /context to get total context usage]
+- Learnings for future iterations:
+  - [Patterns discovered]
+  - [Gotchas encountered]
+  - [Useful context]
+---
+
+Execute now."
+
+# Run claude CLI
+result=$(claude --dangerously-skip-permissions \
+  --output-format text \
+  --append-system-prompt "$SYSTEM_PROMPT" \
+  -p "@PLAN.md @/tmp/ralph_progress_tail.txt" \
+  "Iteration <iteration-number>. Implement: <task-title>" 2>&1)
 ```
 
-Capture ALL output from the script.
+Capture ALL output from the claude CLI call.
 
 ### Step 4: Parse result
 
@@ -137,8 +176,7 @@ Commit created: Yes
 ## Important Notes
 
 - Never ask questions - execute autonomously
-- The `${CLAUDE_PLUGIN_ROOT}` environment variable points to the plugin directory
-- Always capture and return the full script output before your structured report
+- Always capture and return the full claude CLI output before your structured report
 - Only update PLAN.md checkboxes on TASK_SUCCESS
 - Always update PROGRESS.md with the iteration output
 - Check for `autocommit: true` in PLAN.md to determine if commits should be created
