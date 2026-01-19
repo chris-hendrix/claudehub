@@ -9,25 +9,46 @@ Ralph Wiggum is an agent-orchestrated loop methodology that runs autonomous impl
 ## Architecture
 
 **Command:** `/ralph [plan-file]`
-**Agent:** `ralph-worker`
+**Agents:**
+- `ralph-preparer` - Sets up PLAN.md and PROGRESS.md, handles git branching and initial commit
+- `ralph-worker` - Implements individual tasks
 
-The orchestrator manages the outer loop with intelligent failure analysis, while the worker agent handles task discovery, direct implementation, and file updates.
+The orchestrator manages the outer loop with intelligent failure analysis. The preparer agent handles all setup, and the worker agent handles task discovery, direct implementation, and file updates.
 
 ## What Ralph Wiggum Does
 
 The methodology:
-1. **Orchestrator** determines starting iteration from PROGRESS.md, counts unchecked tasks, asks user for max iterations
-2. **Loop** (up to max iterations):
+1. **Preparation Phase**:
+   - **Orchestrator** spawns `ralph-preparer` agent with plan file path
+   - **Preparer** checks if PLAN.md exists to determine fresh start vs resume
+   - **If resuming (PLAN.md exists)**:
+     - Read autocommit setting from PLAN.md frontmatter
+     - Determine starting iteration from PROGRESS.md (last iteration + 1)
+     - Skip all setup questions
+   - **If fresh start (PLAN.md missing)**:
+     - Ask user about autocommit and git branching
+     - Copy plan to PLAN.md with frontmatter settings
+     - Create empty PROGRESS.md
+     - Create initial commit (if autocommit enabled)
+   - **Preparer** returns configuration (mode, starting iteration, unchecked task count)
+2. **Planning Phase**:
+   - **Orchestrator** calculates suggested iterations (1.5x unchecked tasks)
+   - **Orchestrator** asks user to confirm max iterations
+3. **Implementation Loop** (up to max iterations):
    - **Orchestrator** spawns fresh `ralph-worker` agent with iteration number
+   - **Worker** verifies PLAN.md and PROGRESS.md exist (exits with error if missing)
    - **Worker** finds first unchecked task in PLAN.md
    - **Worker** implements task directly using tools (Read, Edit, Bash, Grep)
-   - **Worker** runs tests
-   - **Worker** updates PLAN.md checkbox on success
+   - **Worker** runs all checks (tests, linting, type-check, QA)
+   - **Worker** updates PLAN.md checkbox on success (all checks pass)
    - **Worker** appends iteration report to PROGRESS.md
    - **Worker** creates git commit if autocommit enabled
    - **Worker** returns iteration report
    - **Orchestrator** parses result and decides whether to continue
-3. **Orchestrator** stops when complete or after 3 consecutive failures on same task
+4. **Orchestrator** stops when:
+   - Worker returns "Status: ERROR" (missing required files)
+   - Worker returns "Status: COMPLETE" (no unchecked tasks)
+   - 3 consecutive failures on same task
 
 Each worker spawn gets fresh context:
 - PLAN.md (task list with frontmatter settings: `autocommit`, `parent-plan`)
@@ -42,11 +63,12 @@ Worker agent outputs iteration report that gets appended to PROGRESS.md:
 ## Iteration [N] - Task [M]: [Task Name]
 - Result: TASK_SUCCESS or TASK_FAILURE
 - What was implemented: [1-2 sentences]
-- What was tested: [1-2 sentences]
+- Checks run: [Which checks were run and their results]
 - Context usage: [context usage]
 - Learnings for future iterations:
   - [Patterns discovered]
   - [Gotchas encountered]
+  - [For failures: What failed and how to fix it]
   - [Useful context]
 ```
 
@@ -57,11 +79,22 @@ Status: COMPLETE
 
 Orchestrator parses the `Result:` field to determine success/failure and make continuation decisions.
 
+## Resumability
+
+Ralph is fully resumable. You can stop and restart anytime:
+- **First run**: Creates PLAN.md and PROGRESS.md, starts from iteration 1
+- **Resume run**: Detects existing PLAN.md, reads last iteration from PROGRESS.md, continues where it left off
+- All settings (autocommit, parent-plan) stored in PLAN.md frontmatter
+- PROGRESS.md tracks full history across sessions
+
+Stop Ralph anytime (Ctrl+C, timeout, failure limit) and restart with same command - it picks up automatically.
+
 ## Auto-Commit
 
 Ralph can automatically commit after each iteration (success or failure):
 - Controlled by `autocommit: true/false` in PLAN.md frontmatter
-- User is prompted when running `/ralph` (default: Yes)
+- User is prompted on fresh start (default: Yes)
+- On resume, uses existing setting from PLAN.md
 - Creates commits with format: "Ralph iteration N: [task] - [Result]"
 - Useful for tracking progress and enabling easy rollback
 

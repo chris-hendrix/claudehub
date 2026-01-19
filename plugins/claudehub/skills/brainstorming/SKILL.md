@@ -28,9 +28,12 @@ Brainstorming typically involves research to inform the alternatives:
 
 **Web research** (use `researching-web` skill):
 - When evaluating new libraries or frameworks
+- When choosing dependencies for the project
 - To understand API capabilities and limitations
 - To find best practices for new integrations
-- **CRITICAL**: Always check for current versions and recent best practices - LLM knowledge may be outdated. Search official docs for latest patterns (e.g., React hooks vs classes, ESLint flat config, etc.)
+- **CRITICAL**: Always research current best practices and latest recommendations when choosing dependencies or technical approaches - LLM knowledge cutoff means you may be unaware of newer, better options or deprecated approaches
+- Search for recent comparisons, official docs, and community consensus (e.g., "best React state management 2026", "modern authentication libraries comparison")
+- Verify that chosen dependencies are actively maintained and compatible with current project versions
 
 Research both when the task involves integrating new technologies into an existing codebase.
 
@@ -38,6 +41,7 @@ Research both when the task involves integrating new technologies into an existi
 
 - **One question at a time** - Don't overwhelm with multiple questions. Each answer informs the next question.
 - **Multiple choice preferred** - Bounded options accelerate decisions. Open-ended is fine for exploratory topics.
+- **Research before recommending** - When choosing dependencies, libraries, or technical approaches, research current best practices and recent recommendations. Don't rely solely on potentially outdated LLM knowledge.
 - **YAGNI ruthlessly** - Challenge every feature. Remove unnecessary complexity from all designs.
 - **Minimal code examples** - Brainstorming is about concepts and decisions, not implementation. Only show code when absolutely necessary to illustrate a specific point. Use brief snippets (5-10 lines max) or pseudo-code. Focus on architecture and trade-offs, not syntax.
 - **Explore alternatives** - Always consider 2-3 approaches before settling on one.
@@ -64,6 +68,8 @@ Sequential questioning maintains focus. Avoid question dumps.
 ## Exploring Approaches
 
 Present 2-3 different approaches with their trade-offs. Lead with the recommended option and explain why. Frame trade-offs conversationally.
+
+**When approaches involve dependencies or libraries**: Research current best practices and recent recommendations before presenting options. Don't rely solely on LLM knowledge - verify through web search what the community currently recommends.
 
 Common approach patterns:
 - **Minimal** - Smallest viable solution (quick validation, low risk)
