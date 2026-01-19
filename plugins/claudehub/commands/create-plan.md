@@ -20,16 +20,18 @@ model: opus
 
 1. Gather context from input
 
-2. Research codebase for patterns, architecture, and existing implementations
+2. Draft success criteria - if unclear from input, create them and confirm with user before proceeding
 
-3. Ask clarifying questions to resolve ambiguity
+3. Research codebase for patterns, architecture, and existing implementations
 
-4. Propose high-level phase breakdown and key decisions, get confirmation
+4. Ask clarifying questions to resolve ambiguity
 
-5. Write specification sections (Overview, Current State, Architecture with code snippets)
+5. Propose high-level phase breakdown and key decisions, get confirmation
 
-6. Create detailed implementation checklist broken into phases → tasks → steps
+6. Write specification sections (Overview, Success Criteria, Current State, Architecture with code snippets)
 
-7. Save to `.thoughts/plans/YYYY-MM-DD-[ticket-or-issue-id-]<topic>.md`
+7. Create detailed implementation checklist broken into phases → tasks → steps
+
+8. Save to `.thoughts/plans/YYYY-MM-DD-[ticket-or-issue-id-]<topic>.md`
 
 Input: $ARGUMENTS
