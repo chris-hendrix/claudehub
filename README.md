@@ -18,7 +18,7 @@ Proven methodology for transforming messy ideas into production-ready code.
 
 _Inspired by [CipherPowers](https://github.com/cipherstash/cipherpowers/), [Superpowers](https://github.com/obra/superpowers), and [HumanLayer](https://github.com/humanlayer/humanlayer)._
 
-### 🔄 **Ralph Wiggum: Autonomous Implementation Agent**
+### 🔄 **Ralph Wiggum**
 
 Your autonomous coding companion that implements features while you sleep.
 
