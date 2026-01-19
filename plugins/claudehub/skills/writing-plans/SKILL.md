@@ -42,7 +42,7 @@ A good plan has:
 
 **Overview** - What we're building and why
 
-**Success Criteria** - Requirements that must pass for implementation to be successful. Checkboxes for acceptance criteria (functional and technical). These define "done" for the entire implementation, verified at the end. QA checks are integrated into individual tasks.
+**Success Criteria** - Requirements that must pass for implementation to be successful. Checkboxes for acceptance criteria (functional, technical, and documentation). These define "done" for the entire implementation, verified at the end. QA checks are integrated into individual tasks. Should include user-facing documentation updates.
 
 **Current State** - Existing files, patterns, architecture (with `file:line` references)
 
@@ -73,6 +73,8 @@ A good plan has:
 The **most important section**. Breaks work into **Phases → Tasks → Steps** with task-level verification.
 
 **Test-driven approach**: The first task is typically "Set up test files" which creates empty test files with basic structure. Subsequent tasks add test cases and implementation in parallel. Each task that involves logic should update relevant tests before marking complete.
+
+**Documentation approach**: User-facing documentation (README, guides, API docs) should be its own phase at the end, after implementation is complete. This ensures docs reflect the final implemented feature. Code-level documentation (docstrings, inline comments) should be part of the implementation tasks.
 
 **Phases** (optional):
 - Use `### Phase N: [Name]` headings to group related tasks

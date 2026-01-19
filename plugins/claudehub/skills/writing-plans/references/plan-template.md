@@ -102,6 +102,8 @@ QA checks are integrated into each task's verification steps (see Implementation
 > **Phases are optional** - use only for larger features where logical grouping adds clarity.
 >
 > **Test-driven approach:** Task 1 typically sets up empty test files. Subsequent tasks add tests and implementation together.
+>
+> **Documentation phase:** User-facing documentation (README, guides) is typically a separate final phase after implementation is complete.
 
 ### Phase 1: Test Setup
 
@@ -147,6 +149,16 @@ QA checks are integrated into each task's verification steps (see Implementation
   - Check 2: Run `npm test src/validation/users.test.ts` - validation catches all edge cases
   - Check 3: Run `npm test tests/integration/users.test.ts` - integration tests still pass
   - Check 4: Simple QA validation of input validation live (submit invalid data, verify error handling)
+
+### Phase 4: Documentation
+
+- [ ] **Task 6: Update README with new feature**
+  - Step 1: Add user management section to README
+  - Step 2: Document GET /api/users endpoint with parameters and examples
+  - Step 3: Add usage examples for pagination and filtering
+  - Step 4: Update API reference section
+  - Check 1: README accurately reflects implemented feature
+  - Check 2: All code examples in README are correct and tested
 
 ---
 
