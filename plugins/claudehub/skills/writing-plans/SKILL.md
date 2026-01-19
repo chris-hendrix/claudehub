@@ -29,6 +29,7 @@ A good plan has:
 
 - **Self-contained context**: Architecture section must include all details needed to implement without prior conversation history
 - **Task-level verification**: Each task is independently verifiable with inline checks for tight feedback loops
+- **Test-driven approach**: Plans include testing strategy; tests are set up first and updated as implementation progresses
 - **Enough detail for LLM implementation**: Include code structure and patterns, not full code
 - **Balance specificity with context**: Provide enough detail without consuming excessive context
 - **Actionable and granular**: Break work down to specific actions an LLM can execute
@@ -41,7 +42,7 @@ A good plan has:
 
 **Overview** - What we're building and why
 
-**Success Criteria** - Requirements that must pass for implementation to be successful. Checkboxes for acceptance criteria (functional and technical). These define "done" for the entire implementation, verified at the end.
+**Success Criteria** - Requirements that must pass for implementation to be successful. Checkboxes for acceptance criteria (functional and technical). These define "done" for the entire implementation, verified at the end. QA checks are integrated into individual tasks.
 
 **Current State** - Existing files, patterns, architecture (with `file:line` references)
 
@@ -53,9 +54,25 @@ A good plan has:
 - Frontend/UI (if applicable) - Components, state management with component structure
 - Integration Points - How parts connect, data flow
 
+**Testing Strategy** - Define the testing approach for the implementation:
+- What types of tests will be set up: unit, integration, e2e
+- What will be tested at each level
+- Test file locations and naming conventions
+- Testing framework/tools to use
+- Linting and code quality checks (e.g., ESLint, TypeScript, Prettier)
+- This establishes the test-driven foundation: tests are set up first, then filled in as implementation progresses
+
+**QA Testing** - QA checks are integrated into task-level verification:
+- Each task with e2e/integration tests should include a simple QA check
+- Validates that automated tests actually work in the running application
+- Brief check tied directly to the test (e.g., "Simple QA: Test GET /users endpoint live")
+- Performed as part of task completion for tight feedback loops
+
 ### Implementation Checklist (Core)
 
-The **most important section**. Breaks work into **Phases → Tasks → Steps** with task-level verification:
+The **most important section**. Breaks work into **Phases → Tasks → Steps** with task-level verification.
+
+**Test-driven approach**: The first task is typically "Set up test files" which creates empty test files with basic structure. Subsequent tasks add test cases and implementation in parallel. Each task that involves logic should update relevant tests before marking complete.
 
 **Phases** (optional):
 - Use `### Phase N: [Name]` headings to group related tasks
@@ -83,15 +100,20 @@ The **most important section**. Breaks work into **Phases → Tasks → Steps** 
 **Checks** (nested under tasks):
 - Only include at task level (after all steps)
 - Verification that proves the task is complete
-- Exact command with success criteria (e.g., "Run `npm test users.test.ts` - all tests pass")
+- Should include code quality checks (e.g., "Run `npm run type-check` - types pass", "Run `npm run lint` - no errors")
+- Should include test execution when task involves logic (e.g., "Run `npm test users.test.ts` - all tests pass")
+- All relevant tests and quality checks must pass before marking task complete
+- Should include simple QA validation for e2e/integration flows (e.g., "Simple QA: Test GET /users endpoint live with pagination")
+- Exact command with success criteria
 - Format: `  - Check N: [Command/verification] - [expected result]`
 
 **Key principle:** Tasks are small, verifiable chunks. Implement steps → run checks → mark task complete → next task. This enables tight feedback loops for autonomous implementation (Ralph) or manual execution.
 
 **Success Criteria vs Task Checks:**
-- **Success Criteria** = end-to-end requirements verified after all tasks complete (e.g., "feature works", "all tests pass", "docs updated")
-- **Task Checks** = verify individual task completion during implementation (e.g., "endpoint returns 200", "migration runs")
+- **Success Criteria** = end-to-end requirements verified after all tasks complete (e.g., "feature works in running app", "all tests pass", "docs updated")
+- **Task Checks** = verify individual task completion during implementation (e.g., "automated tests pass", "Simple QA validation of X")
 - Success Criteria are the gate for "done"; task checks are the building blocks that get you there
+- QA checks are integrated at task level for tight feedback loops
 
 ### Tracking Sections (End)
 
@@ -159,13 +181,19 @@ As you implement from the plan:
    - Check steps as you complete each action
    - Check task-level checks after running verification commands
    - Check tasks when all their steps and checks are done
-2. **Tight feedback loop** - implement steps → run checks → mark complete → next task
-3. **Record significant changes** in Tracked Changes:
+2. **Test-driven workflow** - For tasks involving logic:
+   - Add/update test cases for new behavior
+   - Implement the functionality
+   - Run automated tests to verify correctness
+   - Run simple QA check if task has e2e/integration tests
+   - Only mark task complete when all checks pass
+3. **Tight feedback loop** - implement steps → update tests → run automated checks → run QA check → mark complete → next task
+4. **Record significant changes** in Tracked Changes:
    - Changed approach due to constraint
    - Added unexpected requirement
    - Discovered better pattern
    - Removed unnecessary work
-4. **Don't record minor changes** like variable names
+5. **Don't record minor changes** like variable names
 
 ## Important Rules
 
@@ -173,6 +201,7 @@ As you implement from the plan:
 2. **Verify everything** - Research to verify facts yourself
 3. **Task-by-task verification** - Each task has exact verification command and success criteria
 4. **Include scope boundaries** - Explicitly state what we're NOT doing
+5. **QA checks in tasks** - Tasks with e2e/integration tests should include simple QA validation checks
 
 ## References
 
