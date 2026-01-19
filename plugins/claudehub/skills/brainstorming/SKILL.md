@@ -39,6 +39,7 @@ Research both when the task involves integrating new technologies into an existi
 - **One question at a time** - Don't overwhelm with multiple questions. Each answer informs the next question.
 - **Multiple choice preferred** - Bounded options accelerate decisions. Open-ended is fine for exploratory topics.
 - **YAGNI ruthlessly** - Challenge every feature. Remove unnecessary complexity from all designs.
+- **Minimal code examples** - Brainstorming is about concepts and decisions, not implementation. Only show code when absolutely necessary to illustrate a specific point. Use brief snippets (5-10 lines max) or pseudo-code. Focus on architecture and trade-offs, not syntax.
 - **Explore alternatives** - Always consider 2-3 approaches before settling on one.
 - **Incremental validation** - Present design in sections, validate each before continuing.
 - **Be flexible** - Go back and clarify when something doesn't make sense.

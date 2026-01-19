@@ -41,6 +41,8 @@ A good plan has:
 
 **Overview** - What we're building and why
 
+**Success Criteria** - Requirements that must pass for implementation to be successful. Checkboxes for acceptance criteria (functional and technical). These define "done" for the entire implementation, verified at the end.
+
 **Current State** - Existing files, patterns, architecture (with `file:line` references)
 
 **What We're NOT Doing** - Explicit scope boundaries
@@ -85,6 +87,11 @@ The **most important section**. Breaks work into **Phases → Tasks → Steps** 
 - Format: `  - Check N: [Command/verification] - [expected result]`
 
 **Key principle:** Tasks are small, verifiable chunks. Implement steps → run checks → mark task complete → next task. This enables tight feedback loops for autonomous implementation (Ralph) or manual execution.
+
+**Success Criteria vs Task Checks:**
+- **Success Criteria** = end-to-end requirements verified after all tasks complete (e.g., "feature works", "all tests pass", "docs updated")
+- **Task Checks** = verify individual task completion during implementation (e.g., "endpoint returns 200", "migration runs")
+- Success Criteria are the gate for "done"; task checks are the building blocks that get you there
 
 ### Tracking Sections (End)
 

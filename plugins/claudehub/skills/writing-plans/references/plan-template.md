@@ -18,6 +18,16 @@ status: planned
 
 [Brief description of what we're implementing and why. Include context about the problem this solves.]
 
+## Success Criteria
+
+How we'll know this implementation is complete and successful:
+
+- [ ] [Functional requirement - e.g., "Users can log in with GitHub OAuth"]
+- [ ] [Technical requirement - e.g., "All existing tests pass"]
+- [ ] [Quality requirement - e.g., "New feature has >80% test coverage"]
+- [ ] [Technical requirement - e.g., "No TypeScript/linting errors"]
+- [ ] [Documentation requirement - e.g., "README updated with new feature"]
+
 ## Current State
 
 [What exists now - relevant files, patterns, and architecture]
