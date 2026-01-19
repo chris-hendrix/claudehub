@@ -1,27 +1,21 @@
 ---
 description: Archive Ralph PLAN.md and PROGRESS.md to .thoughts/ralph/
 argument-hint: [short-description]
-allowed-tools: Read, Write, Bash, Skill, Glob
+allowed-tools: Read, Write, Bash
 ---
 
 ## Important
 
-- Always load referenced skills using the Skill tool
-
-## Skills
-
-- `claudehub:writing-documentation` - Document naming and frontmatter conventions
+- Use Write tool for creating files, not bash commands
 
 ## Process
 
-1. Verify `PLAN.md` exists in working directory
+1. Verify `PLAN.md` exists
 
-2. Determine short description from `$ARGUMENTS`, `parent-plan:` frontmatter field, or by generating from PLAN.md content
+2. Determine short description from `$ARGUMENTS`, or generate from first 10 lines of PLAN.md
 
-3. Archive to `.thoughts/ralph/YYYY-MM-DD-short-description.PLAN.md` with frontmatter (date, topic, commit)
+3. Move `PLAN.md` and `PROGRESS.md` (if exists) to `.thoughts/ralph/YYYY-MM-DD-{description}.{PLAN|PROGRESS}.md` using `mv` command
 
-4. Archive `PROGRESS.md` if it exists to `.thoughts/ralph/YYYY-MM-DD-short-description.PROGRESS.md` with frontmatter
-
-5. Delete original `PLAN.md` and `PROGRESS.md` files
+4. Update frontmatter in archived PLAN.md to add current commit and branch
 
 Input: $ARGUMENTS
