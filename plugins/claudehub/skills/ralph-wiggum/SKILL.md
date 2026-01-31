@@ -138,4 +138,4 @@ Before starting Ralph execution, validate the environment can run verification s
 5. If feature flags mentioned, verify required flags are enabled locally
 6. Report what works and what doesn't
 
-Use the `environment-validator` agent to perform this check.
+Use the `ralph-validator` agent to perform this check.

@@ -74,7 +74,7 @@ Interactively create the three planning documents required for Ralph execution:
 
     Ask user if they want to validate the environment now.
 
-    If yes, spawn the `environment-validator` agent to verify test infrastructure works.
+    If yes, spawn the `ralph-validator` agent to verify test infrastructure works.
 
 11. **Summary**:
     - List created files and task count

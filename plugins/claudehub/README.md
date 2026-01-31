@@ -74,7 +74,7 @@ Ralph executes engineering tasks through a Python orchestrator that spawns Claud
 - `coder` - Write implementation + tests
 - `verifier` - Run tests, linting, type-checking
 - `reviewer` - Code review and quality assessment
-- `environment-validator` - Validate test infrastructure works
+- `ralph-validator` - Validate test infrastructure works
 
 ### File Structure
 
