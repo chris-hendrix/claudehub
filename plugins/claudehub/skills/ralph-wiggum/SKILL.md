@@ -1,130 +1,143 @@
 ---
-description: This skill should be used when implementing through autonomous loops with tight context windows. Ralph Wiggum runs one task per iteration, learns from failures, and maintains continuity through plan and progress files.
+description: This skill should be used when executing engineering tasks using the Ralph workflow methodology. Applies to task execution with researcher, coder, verifier, and reviewer agents in sequence.
 ---
 
-# Ralph Wiggum: Agent-Orchestrated Loop Implementation
+# Ralph Engineering Workflow
 
-Ralph Wiggum is an agent-orchestrated loop methodology that runs autonomous implementation iterations. Execute tasks from a plan file one at a time, learning from failures through a progress file, with intelligent decision-making about retries and failures.
+The Ralph engineering workflow executes tasks through a structured agent pipeline. Each task follows the same sequence: research, code, verify, review.
 
-## Architecture
+## Task Execution Flow
 
-**Command:** `/ralph [plan-file]`
-**Agents:**
-- `ralph-preparer` - Sets up PLAN.md and PROGRESS.md, handles git branching and initial commit
-- `ralph-worker` - Implements individual tasks
+For each task from TASKS.md:
 
-The orchestrator manages the outer loop with intelligent failure analysis. The preparer agent handles all setup, and the worker agent handles task discovery, direct implementation, and file updates.
+1. **Find task** - Locate first unchecked `- [ ]` item
+2. **Research** - Use `researcher` agent to gather context
+3. **Code** - Use `coder` agent to implement + write tests
+4. **Verify** - Use `verifier` agent to run all checks
+5. **Review** - Use `reviewer` agent to assess quality
+6. **Complete** - Mark `[x]` in TASKS.md, append to PROGRESS.md
 
-## What Ralph Wiggum Does
+## Agent Sequence
 
-The methodology:
-1. **Preparation Phase**:
-   - **Orchestrator** spawns `ralph-preparer` agent with plan file path
-   - **Preparer** checks if PLAN.md exists to determine fresh start vs resume
-   - **If resuming (PLAN.md exists)**:
-     - Read autocommit setting from PLAN.md frontmatter
-     - Determine starting iteration from PROGRESS.md (last iteration + 1)
-     - Skip all setup questions
-   - **If fresh start (PLAN.md missing)**:
-     - Ask user about autocommit and git branching
-     - Copy plan to PLAN.md with frontmatter settings
-     - Create empty PROGRESS.md
-     - Create initial commit (if autocommit enabled)
-   - **Preparer** returns configuration (mode, starting iteration, unchecked task count)
-2. **Planning Phase**:
-   - **Orchestrator** calculates suggested iterations (1.5x unchecked tasks)
-   - **Orchestrator** asks user to confirm max iterations
-3. **Implementation Loop** (up to max iterations):
-   - **Orchestrator** spawns fresh `ralph-worker` agent with iteration number
-   - **Worker** verifies PLAN.md and PROGRESS.md exist (exits with error if missing)
-   - **Worker** finds first unchecked task in PLAN.md
-   - **Worker** implements task directly using tools (Read, Edit, Bash, Grep)
-   - **Worker** runs all checks (tests, linting, type-check, QA)
-   - **Worker** updates PLAN.md checkbox on success (all checks pass)
-   - **Worker** appends iteration report to PROGRESS.md
-   - **Worker** creates git commit if autocommit enabled
-   - **Worker** returns iteration report
-   - **Orchestrator** parses result and decides whether to continue
-4. **Orchestrator** stops when:
-   - Worker returns "Status: ERROR" (missing required files)
-   - Worker returns "Status: COMPLETE" (no unchecked tasks)
-   - 3 consecutive failures on same task
-
-Each worker spawn gets fresh context:
-- PLAN.md (task list with frontmatter settings: `autocommit`, `parent-plan`)
-- PROGRESS.md last 200 lines (learnings from previous iterations)
-- Fresh ~200K token budget (no accumulated context from previous tasks)
-
-## Output Format
-
-Worker agent outputs iteration report that gets appended to PROGRESS.md:
-
-```markdown
-## Iteration [N] - Task [M]: [Task Name]
-- Result: TASK_SUCCESS or TASK_FAILURE
-- What was implemented: [1-2 sentences]
-- Checks run: [Which checks were run and their results]
-- Context usage: [context usage]
-- Learnings for future iterations:
-  - [Patterns discovered]
-  - [Gotchas encountered]
-  - [For failures: What failed and how to fix it]
-  - [Useful context]
+```
+researcher → coder → verifier → reviewer
 ```
 
-Special case - when no unchecked tasks remain:
+Each agent receives context from the previous. The session orchestrates the handoff.
+
+## File Locations
+
+All Ralph files live in `.ralph/`:
+
+| File | Purpose |
+|------|---------|
+| `ARCHITECTURE.md` | Technical approach (services, schema, APIs, components) |
+| `TASKS.md` | Tasks with checkboxes, organized by phase |
+| `VERIFICATION.md` | How to verify (test commands, env setup, feature flags) |
+| `PROGRESS.md` | Learnings and results from each iteration |
+| `screenshots/` | Visual proof from manual testing (tracked) |
+| `logs/{branch}/` | Session logs per iteration (gitignored) |
+
+For context file formats (loaded each iteration), see `references/context-files.md`.
+
+## Branch Naming
+
+**Format:** `ralph/yyyymmdd-hhmm-short-description`
+
+Examples:
+- `ralph/20260126-1430-user-auth`
+- `ralph/20260127-0915-payment-flow`
+
+```bash
+DEFAULT_BRANCH=$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')
+git checkout $DEFAULT_BRANCH && git pull
+git checkout -b ralph/$(date +%Y%m%d-%H%M)-short-description
 ```
-Status: COMPLETE
+
+This enables `/claudehub:ralph-run-again` to search for previous runs.
+
+## Tracking Progress Remotely
+
+Generate a compare URL to view all commits made during a Ralph run. Display this URL whenever showing status or confirming execution start.
+
+```bash
+REPO_URL=$(git remote get-url origin | sed 's/\.git$//' | sed 's/git@github.com:/https:\/\/github.com\//')
+DEFAULT_BRANCH=$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')
+CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+echo "${REPO_URL}/compare/${DEFAULT_BRANCH}...${CURRENT_BRANCH}"
 ```
 
-Orchestrator parses the `Result:` field to determine success/failure and make continuation decisions.
+Example: `https://github.com/org/repo/compare/main...ralph/20260128-1123-feature`
 
-## Resumability
+## Task Completion Criteria
 
-Ralph is fully resumable. You can stop and restart anytime:
-- **First run**: Creates PLAN.md and PROGRESS.md, starts from iteration 1
-- **Resume run**: Detects existing PLAN.md, reads last iteration from PROGRESS.md, continues where it left off
-- All settings (autocommit, parent-plan) stored in PLAN.md frontmatter
-- PROGRESS.md tracks full history across sessions
+A task is complete when:
+1. Verifier reports all checks PASS
+2. Reviewer assessment is APPROVED or NEEDS_WORK (not BLOCKED)
 
-Stop Ralph anytime (Ctrl+C, timeout, failure limit) and restart with same command - it picks up automatically.
+If verifier fails or reviewer blocks, the task remains unchecked for retry.
 
-## Auto-Commit
+## Session Instructions
 
-Ralph can automatically commit after each iteration (success or failure):
-- Controlled by `autocommit: true/false` in PLAN.md frontmatter
-- User is prompted on fresh start (default: Yes)
-- On resume, uses existing setting from PLAN.md
-- Creates commits with format: "Ralph iteration N: [task] - [Result]"
-- Useful for tracking progress and enabling easy rollback
+When spawned by the Ralph orchestrator:
 
-## Intelligent Failure Handling
+1. Read `.ralph/TASKS.md` and find first `- [ ]` task
+2. Read `.ralph/ARCHITECTURE.md` for context
+3. Read `.ralph/VERIFICATION.md` for check commands
+4. Read last 50 lines of `.ralph/PROGRESS.md` for learnings
+5. Execute agent sequence: researcher → coder → verifier → reviewer
+6. If all checks pass and review approves:
+   - Mark task `[x]` in TASKS.md
+   - Append iteration report to PROGRESS.md
+7. If checks fail or review blocks:
+   - Keep task `[ ]`
+   - Append failure details to PROGRESS.md for next iteration
 
-The orchestrator reasons about failures:
-- Tracks consecutive failures per task
-- Stops after 3 consecutive failures on same task
-- Allows Ralph to retry with learnings from PROGRESS.md
-- Different from blind retry - uses context to improve
+## Commit Modes
 
-## Key Principles
+| Mode | Behavior |
+|------|----------|
+| `no-commit` | Leave changes uncommitted |
+| `commit` | Commit on success |
+| `commit-push` | Commit and push on success (default) |
 
-- **One task per spawn**: Each worker agent implements exactly one task then terminates
-- **Context isolation**: Fresh agent spawn prevents context rot across iterations
-- **Tests must pass**: Only mark complete when verification succeeds
-- **Learn from failures**: Document what happened so next iteration can adapt
-- **Software is clay**: Iterate and refine through tight feedback loops
+Commit message format: `"Ralph: Task X.Y - [task name]"`
 
-## Architecture Benefits
+## Testing Types
 
-**Why spawn fresh workers instead of one long-running agent?**
+| Type | Purpose | Requires |
+|------|---------|----------|
+| Unit tests | Test isolated functions | Test runner only |
+| Integration tests | Test components together | Services (Docker, DB) |
+| E2E tests (automated) | Scripted regression tests for critical paths | Running app + browser |
+| Manual testing | Visual/UX verification, edge case exploration | Playwright MCP + running app |
+| Linting | Code style/errors | Linter installed |
+| Type checking | Static type verification | Type checker installed |
+| Feature flags | Gate feature availability | Flags enabled locally |
 
-Context isolation. If a single agent implemented all tasks sequentially:
-- Iteration 1: 40K tokens used
-- Iteration 2: 40K new + 40K old = 80K tokens
-- Iteration 10: 400K tokens of accumulated context
+For detailed guidance on each testing type, see `references/testing-types.md`.
 
-By spawning fresh workers:
-- Each task gets clean 200K budget
-- Worker only sees: PLAN.md + last 200 lines of PROGRESS.md
-- No pollution from unrelated previous work
-- Consistent decision-making quality across all iterations
+**E2E tests ≠ Manual testing.** E2E tests prove code runs; manual testing proves it looks/works right. When E2E is required, manual browser testing with screenshots is also required.
+
+## Screenshots
+
+During manual testing with Playwright, capture screenshots as visual proof:
+
+**Location:** `.ralph/screenshots/` (tracked in git)
+
+**Naming:** `iteration-{NNN}-{description}.png`
+
+**When to capture:** Key states, before/after actions, error states, final success.
+
+## Environment Validation
+
+Before starting Ralph execution, validate the environment can run verification steps:
+
+1. Parse VERIFICATION.md for test commands
+2. For each test suite, run ONE existing test to verify runner works
+3. For URLs/endpoints listed, verify they're reachable
+4. If manual verification requires browser, check Playwright MCP is available
+5. If feature flags mentioned, verify required flags are enabled locally
+6. Report what works and what doesn't
+
+Use the `environment-validator` agent to perform this check.
