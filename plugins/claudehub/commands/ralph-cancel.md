@@ -11,17 +11,18 @@ Stop the currently running Ralph execution loop.
 
 1. **Check for running Ralph process**:
    ```bash
-   pgrep -f "ralph.py" || echo "No Ralph process found"
+   pgrep -f "skills/ralph-wiggum/scripts/ralph.py" || echo "No Ralph process found"
    ```
 
 2. **If found, kill the process**:
    ```bash
-   pkill -f "ralph.py"
+   pkill -f "skills/ralph-wiggum/scripts/ralph.py"
    ```
+   - More specific pattern includes full path to avoid killing wrong processes
 
 3. **Verify termination**:
    ```bash
-   sleep 1 && pgrep -f "ralph.py" && echo "Warning: Process still running" || echo "Ralph stopped"
+   sleep 1 && pgrep -f "skills/ralph-wiggum/scripts/ralph.py" && echo "Warning: Process still running" || echo "Ralph stopped"
    ```
 
 4. **Report status**:

@@ -54,8 +54,6 @@ git checkout $DEFAULT_BRANCH && git pull
 git checkout -b ralph/$(date +%Y%m%d-%H%M)-short-description
 ```
 
-This enables `/claudehub:ralph-run-again` to search for previous runs.
-
 ## Tracking Progress Remotely
 
 Generate a compare URL to view all commits made during a Ralph run. Display this URL whenever showing status or confirming execution start.

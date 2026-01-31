@@ -21,13 +21,19 @@ Start the Ralph execution loop. If planning docs don't exist, runs `/claudehub:r
 3. **If planning docs are missing**, run `/claudehub:ralph-plan` with the description from `$ARGUMENTS`
    - If no description provided and no planning docs, tell user to provide one and stop
 
-4. **Run the Python orchestrator in background**:
+4. **Validate script exists**:
+   ```bash
+   test -f "${CLAUDE_PLUGIN_ROOT}/skills/ralph-wiggum/scripts/ralph.py"
+   ```
+   - If script not found, tell user: "Ralph orchestrator script not found. Please reinstall the claudehub plugin."
+
+5. **Run the Python orchestrator in background**:
    ```bash
    python3 "${CLAUDE_PLUGIN_ROOT}/skills/ralph-wiggum/scripts/ralph.py" --max-iterations <N> --commit-mode <MODE>
    ```
    Use `run_in_background: true`.
 
-5. **Confirm startup**:
+6. **Confirm startup**:
 
    Generate compare URL (see "Tracking Progress Remotely" in skill).
 

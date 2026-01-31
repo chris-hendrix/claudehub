@@ -19,6 +19,13 @@ from allowed_tools import get_allowed_tools_args
 from prompts import build_system_prompt, build_user_prompt, CommitMode
 
 
+# Validate Python version
+if sys.version_info < (3, 8):
+    print("Error: Ralph requires Python 3.8 or higher", file=sys.stderr)
+    print(f"Current version: {sys.version}", file=sys.stderr)
+    sys.exit(1)
+
+
 def parse_args():
     """Parse command line arguments."""
     parser = argparse.ArgumentParser(description="Ralph Orchestrator")
