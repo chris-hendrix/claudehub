@@ -42,15 +42,21 @@ def parse_args():
         default=CommitMode.COMMIT_PUSH,
         help="Commit behavior (default: commit-push)",
     )
+    parser.add_argument(
+        "--skip-permissions",
+        action="store_true",
+        help="Bypass permission prompts (sets permission-mode to bypassPermissions)",
+    )
     return parser.parse_args()
 
 
 class RalphOrchestrator:
     """Orchestrates Claude Code sessions to execute tasks from TASKS.md."""
 
-    def __init__(self, max_iterations: int, commit_mode: CommitMode):
+    def __init__(self, max_iterations: int, commit_mode: CommitMode, skip_permissions: bool = False):
         self.max_iterations = max_iterations
         self.commit_mode = commit_mode
+        self.skip_permissions = skip_permissions
         self.branch = self._get_branch_name()
         self.iteration = 0
         self.start_iteration = 0
@@ -322,13 +328,14 @@ class RalphOrchestrator:
         print(f"{'=' * 60}\n")
 
         try:
+            permission_mode = "bypassPermissions" if self.skip_permissions else "acceptEdits"
             cmd = [
                 "claude",
                 "-p", user_prompt,
                 "--system-prompt", system_prompt,
                 "--output-format", "stream-json",
                 "--verbose",
-                "--permission-mode", "acceptEdits",
+                "--permission-mode", permission_mode,
                 *get_allowed_tools_args(),
             ]
 
@@ -370,6 +377,7 @@ class RalphOrchestrator:
         print("🤖 Ralph Orchestrator Starting\n")
         print(f"Max iterations: {self.max_iterations}")
         print(f"Commit mode: {self.commit_mode.value}")
+        print(f"Permission mode: {'bypassPermissions' if self.skip_permissions else 'acceptEdits'}")
         print()
 
         # Validate setup
@@ -449,7 +457,8 @@ def main():
     args = parse_args()
     orchestrator = RalphOrchestrator(
         max_iterations=args.max_iterations,
-        commit_mode=args.commit_mode
+        commit_mode=args.commit_mode,
+        skip_permissions=args.skip_permissions
     )
     orchestrator.run()
 

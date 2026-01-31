@@ -12,6 +12,11 @@ ALLOWED_TOOLS = [
     "Bash(git status*)",
     "Bash(git diff*)",
     "Bash(git log*)",
+    # Docker Compose operations
+    "Bash(docker-compose up *)",
+    "Bash(docker-compose exec *)",
+    "Bash(docker-compose restart *)",
+    "Bash(docker-compose down *)",
 ]
 
 

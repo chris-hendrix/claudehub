@@ -1,6 +1,6 @@
 ---
 description: Run Ralph execution loop, using /claudehub:ralph-plan if docs are missing
-argument-hint: "[description] [--max-iterations N] [--commit-mode MODE]"
+argument-hint: "[description] [--max-iterations N] [--commit-mode MODE] [--skip-permissions]"
 allowed-tools: ["Bash", "Read", "Write", "Edit", "Grep", "Glob", "Task", "Skill"]
 references-skills: claudehub:ralph-wiggum
 ---
@@ -29,9 +29,10 @@ Start the Ralph execution loop. If planning docs don't exist, runs `/claudehub:r
 
 5. **Run the Python orchestrator in background**:
    ```bash
-   python3 "${CLAUDE_PLUGIN_ROOT}/skills/ralph-wiggum/scripts/ralph.py" --max-iterations <N> --commit-mode <MODE>
+   python3 "${CLAUDE_PLUGIN_ROOT}/skills/ralph-wiggum/scripts/ralph.py" --max-iterations <N> --commit-mode <MODE> [--skip-permissions]
    ```
    Use `run_in_background: true`.
+   - Only add `--skip-permissions` flag if present in `$ARGUMENTS`
 
 6. **Confirm startup**:
 
@@ -46,6 +47,7 @@ Start the Ralph execution loop. If planning docs don't exist, runs `/claudehub:r
 - First positional: Description of what to build (required if no planning docs)
 - `--max-iterations N`: Stop after N iterations (default: 50)
 - `--commit-mode MODE`: `no-commit`, `commit`, or `commit-push` (default: `commit-push`)
+- `--skip-permissions`: Bypass all permission prompts (uses bypassPermissions mode)
 
 ## Examples
 
@@ -58,6 +60,9 @@ Start the Ralph execution loop. If planning docs don't exist, runs `/claudehub:r
 
 # With options
 /claudehub:ralph-run "refactor payment flow" --max-iterations 20
+
+# Skip permission prompts (for trusted environments)
+/claudehub:ralph-run --skip-permissions
 ```
 
 Input: $ARGUMENTS
