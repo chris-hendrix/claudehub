@@ -45,6 +45,19 @@ Your task is to find and complete the next unchecked task from .ralph/TASKS.md.
      - Keep "- [ ]" unchanged
      - Append failure details to .ralph/PROGRESS.md
 
+## Handling Fundamental Issues
+
+If you discover a fundamental issue during implementation (architecture problem, missing dependency, breaking bug):
+
+1. **Add a sub-task** to TASKS.md immediately after the current task:
+   - Format: `- [ ] {{parent}}.1 FIX: {{issue_description}}`
+   - Example: Working on "2 Add authentication" → add "- [ ] 2.1 FIX: database auth configuration"
+   - Use hierarchical numbering: 1.1, 1.2, 2.1, 2.1.1, etc.
+
+2. **Mark current task incomplete** and document the blocker in PROGRESS.md
+
+3. **Debug mode**: When working on FIX tasks, WebSearch tool is available for finding solutions to errors, configuration issues, or technical problems. Use it if helpful.
+
 ## Screenshots
 
 When doing manual testing with Playwright, capture screenshots as visual proof:

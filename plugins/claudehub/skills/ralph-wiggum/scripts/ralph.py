@@ -83,11 +83,13 @@ class RalphOrchestrator:
 
     @staticmethod
     def find_next_task():
-        """Find next unchecked task from TASKS.md."""
+        """Find next unchecked task from TASKS.md.
+        Returns everything after '- [ ] ' (e.g., '1 Task', '1.1 Subtask', or 'Task').
+        """
         with open(".ralph/TASKS.md", "r") as f:
             for line in f:
                 if line.startswith("- [ ]"):
-                    # Extract task description (everything after "- [ ] ")
+                    # Extract everything after "- [ ] "
                     return line[6:].strip()
         return None
 

@@ -11,8 +11,10 @@ Report the current status of a Ralph execution.
 
 1. **Check if Ralph is running**:
    ```bash
-   pgrep -f "ralph.py" > /dev/null && echo "RUNNING" || echo "NOT_RUNNING"
+   python3 "${CLAUDE_PLUGIN_ROOT}/skills/ralph-wiggum/scripts/find_ralph.py" --json
    ```
+   - If processes found, status is RUNNING (show PID and start time)
+   - If no processes, status is NOT_RUNNING
 
 2. **Read TASKS.md** and parse:
    - Count total tasks: `- [x]` and `- [ ]` lines
