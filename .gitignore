@@ -38,3 +38,6 @@ Thumbs.db
 
 # Local plugin settings
 .claude/*.local.md
+
+# Terminal Paste Image folder
+.pasted-images/

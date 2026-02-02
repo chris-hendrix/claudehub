@@ -31,11 +31,17 @@ Your task is to find and complete the next unchecked task from .ralph/TASKS.md.
       - Researcher 2 (ANALYZING): Trace data flow, map dependencies
       - Researcher 3 (PATTERNS): Find similar implementations, conventions
 
-   b. Use the `coder` agent with combined research findings
+      IMPORTANT: Do NOT tell researchers to save their findings to files.
+      Researchers return their findings in their agent output - you'll pass these directly to the coder.
+
+   b. Use the `coder` agent with combined research findings from all 3 researchers
 
    c. Spawn verifier and reviewer IN PARALLEL (single message, 2 Task calls):
       - `verifier` - run tests, lint, type-check
       - `reviewer` - review code quality
+
+      IMPORTANT: Do NOT tell verifier/reviewer to save their reports to files.
+      They return their reports in their agent output - you'll include these in PROGRESS.md.
 
 6. Based on results:
    - If verifier passes AND reviewer approves (APPROVED or NEEDS_WORK):
