@@ -62,6 +62,9 @@ class RalphOrchestrator:
         self.start_iteration = 0
         self.consecutive_failures = 0
         self.last_failed_task = ""
+        # Create session directory name with timestamp
+        timestamp = time.strftime("%Y%m%d-%H%M")
+        self.session_dir = f".ralph/logs/{timestamp}-{self.branch}"
 
 
     @staticmethod
@@ -278,6 +281,18 @@ class RalphOrchestrator:
         except subprocess.CalledProcessError:
             return "unknown-branch"
 
+    @staticmethod
+    def _sanitize_task_name(task: str) -> str:
+        """Convert task name to kebab-case filename."""
+        # Remove special chars and convert to lowercase
+        sanitized = re.sub(r'[^a-zA-Z0-9\s-]', '', task.lower())
+        # Replace spaces with hyphens
+        sanitized = re.sub(r'\s+', '-', sanitized.strip())
+        # Remove multiple consecutive hyphens
+        sanitized = re.sub(r'-+', '-', sanitized)
+        # Truncate to reasonable length
+        return sanitized[:80]
+
 
     @staticmethod
     def stream_session_output(process, log_file):
@@ -319,10 +334,10 @@ class RalphOrchestrator:
         system_prompt = build_system_prompt(iteration)
         user_prompt = build_user_prompt(task, iteration)
 
-        # Set up logging in branch subfolder
-        log_dir = f".ralph/logs/{self.branch}"
-        os.makedirs(log_dir, exist_ok=True)
-        log_file = f"{log_dir}/iteration-{iteration:03d}.jsonl"
+        # Set up logging in session directory with task-based filename
+        os.makedirs(self.session_dir, exist_ok=True)
+        task_slug = self._sanitize_task_name(task)
+        log_file = f"{self.session_dir}/{task_slug}.jsonl"
 
         print(f"\n{'=' * 60}")
         print(f"Iteration {iteration}: {task}")

@@ -36,7 +36,7 @@ All Ralph files live in `.ralph/`:
 | `VERIFICATION.md` | How to verify (test commands, env setup, feature flags) |
 | `PROGRESS.md` | Learnings and results from each iteration |
 | `screenshots/` | Visual proof from manual testing (tracked) |
-| `logs/{branch}/` | Session logs per iteration (gitignored) |
+| `logs/{timestamp}-{branch}/` | Session logs per task (gitignored) |
 
 For context file formats (loaded each iteration), see `references/context-files.md`.
 
