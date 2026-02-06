@@ -46,4 +46,4 @@ Stop the currently running Ralph execution loop.
 - This is a kill switch that stops everything immediately
 - Both the orchestrator and any active Claude Code sessions are terminated
 - It's fine if execution stops halfway through a task
-- Progress is preserved - you can resume with `/claudehub:ralph-run`
+- Progress is preserved - you can resume with `/claudehub:ralph/run`

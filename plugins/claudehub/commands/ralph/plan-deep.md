@@ -16,7 +16,7 @@ Interactively create the three planning documents required for Ralph execution:
 
 ## Process
 
-1. **Load the `ralph-wiggum` skill** using the Skill tool
+1. **Load the `claudehub:ralph-wiggum` skill** using the Skill tool
 
 2. **Create new Ralph branch** (always create fresh, never checkout existing):
 
@@ -103,7 +103,7 @@ Interactively create the three planning documents required for Ralph execution:
     - List created files and task count
     - Show environment validation results
     - State final confidence level
-    - Instruct user to run `/claudehub:ralph-run`
+    - Instruct user to run `/claudehub:ralph/run`
 
 ## Arguments
 
@@ -113,7 +113,7 @@ Interactively create the three planning documents required for Ralph execution:
 ## Example
 
 ```
-/claudehub:ralph-plan-deep docs/prd-user-auth.md --designs docs/designs/
+/claudehub:ralph/plan-deep docs/prd-user-auth.md --designs docs/designs/
 ```
 
 Input: $ARGUMENTS

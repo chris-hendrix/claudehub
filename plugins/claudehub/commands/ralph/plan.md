@@ -13,7 +13,7 @@ See `claudehub:ralph-wiggum/references/context-files.md` for detailed format spe
 
 ## Process
 
-1. **Load the `ralph-wiggum` skill** using the Skill tool
+1. **Load the `claudehub:ralph-wiggum` skill** using the Skill tool
 2. **Parse description** from `$ARGUMENTS` (first non-flag argument)
    * If no description provided, tell user to provide one and stop
 3. **Create new Ralph branch** (always create fresh, never checkout existing):
@@ -61,7 +61,7 @@ See `claudehub:ralph-wiggum/references/context-files.md` for detailed format spe
 
 7. **Confirm completion**:
    > "Planning docs created with X design decisions - review `.ralph/ARCHITECTURE.md` if needed.
-   > Run `/claudehub:ralph-run` to start execution."
+   > Run `/claudehub:ralph/run` to start execution."
 
 ## Design Decisions Section
 
@@ -81,10 +81,10 @@ This transparency lets users review and adjust before execution.
 
 ```bash
 # Create planning docs for a feature
-/claudehub:ralph-plan "add user authentication with JWT"
+/claudehub:ralph/plan "add user authentication with JWT"
 
 # Then start Ralph execution
-/claudehub:ralph-run
+/claudehub:ralph/run
 ```
 
 Input: $ARGUMENTS

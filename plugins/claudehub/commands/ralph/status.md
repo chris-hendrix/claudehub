@@ -69,8 +69,8 @@ Report the current status of a Ralph execution.
 
 ```bash
 # Check status while Ralph is running
-/ralph:status
+/claudehub:ralph/status
 
 # Check status after Ralph stopped
-/ralph:status
+/claudehub:ralph/status
 ```
