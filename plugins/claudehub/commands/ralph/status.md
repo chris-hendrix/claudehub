@@ -13,7 +13,8 @@ Report the current status of a Ralph execution.
    ```bash
    python3 "${CLAUDE_PLUGIN_ROOT}/skills/ralph-wiggum/scripts/find_ralph.py" --json
    ```
-   - If processes found, status is RUNNING (show PID and start time)
+   - Parse JSON to get `ralph_processes` array
+   - If processes found, status is RUNNING (show PID, start time, and child session count)
    - If no processes, status is NOT_RUNNING
 
 2. **Read TASKS.md** and parse:
@@ -40,6 +41,19 @@ Report the current status of a Ralph execution.
    ```
    Ralph Status: [RUNNING | STOPPED | COMPLETE]
 
+   Running Processes:
+   ┌──────────────────────────────────────────────────┐
+   │ Ralph Orchestrator                               │
+   ├──────────────────────────────────────────────────┤
+   │ PID: 12345                                       │
+   │ Started: 2026-02-05 14:30:22                     │
+   │ Working dir: /home/user/project                  │
+   └──────────────────────────────────────────────────┘
+
+   Child Claude Sessions: 2
+   - PID 12346 (active session)
+   - PID 12347 (active session)
+
    Current: Iteration N - Task X.Y: [task name]
 
    Progress: X/Y tasks complete
@@ -57,6 +71,8 @@ Report the current status of a Ralph execution.
    │ Phase 4: [Name]     │ 4.1-4.2 │ ⏳ Pending│
    └─────────────────────┴─────────┴───────────┘
    ```
+
+   If Ralph is STOPPED or COMPLETE, omit the "Running Processes" section.
 
 ## Status Icons
 

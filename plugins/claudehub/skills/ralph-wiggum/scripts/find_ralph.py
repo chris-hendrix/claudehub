@@ -11,12 +11,34 @@ import os
 from datetime import datetime
 
 
-def find_ralph_processes():
-    """Find all running ralph.py processes.
+def get_child_pids(parent_pid):
+    """Get all child process PIDs for a given parent PID."""
+    children = []
+    try:
+        # Find all processes with parent_pid as their parent
+        result = subprocess.run(
+            ["ps", "-o", "pid=", "--ppid", str(parent_pid)],
+            capture_output=True,
+            text=True,
+            check=True
+        )
+        for line in result.stdout.strip().split('\n'):
+            if line.strip():
+                children.append(int(line.strip()))
+    except (subprocess.CalledProcessError, ValueError):
+        pass
+    return children
 
-    Returns list of dicts with: pid, cwd, cmdline, started
+
+def find_ralph_processes():
+    """Find all running ralph.py processes and their child Claude sessions.
+
+    Returns dict with:
+    - ralph_processes: list of ralph.py process dicts (pid, cwd, cmdline, started)
+    - child_pids: list of child process PIDs (Claude Code sessions)
     """
-    processes = []
+    ralph_processes = []
+    child_pids = []
 
     try:
         # Use ps to find Python processes running ralph.py
@@ -66,12 +88,16 @@ def find_ralph_processes():
                             else:
                                 starttime = "unknown"
 
-                        processes.append({
+                        ralph_processes.append({
                             "pid": int(pid),
                             "cwd": cwd,
                             "cmdline": cmdline,
                             "started": starttime
                         })
+
+                        # Find all child processes (Claude Code sessions)
+                        child_pids.extend(get_child_pids(int(pid)))
+
                     except (FileNotFoundError, PermissionError):
                         # Process might have ended or we don't have permission
                         continue
@@ -80,7 +106,10 @@ def find_ralph_processes():
         # ps command failed, try alternative method
         pass
 
-    return processes
+    return {
+        "ralph_processes": ralph_processes,
+        "child_pids": child_pids
+    }
 
 
 def main():
@@ -96,31 +125,50 @@ def main():
     parser.add_argument(
         "--count",
         action="store_true",
-        help="Just output count"
+        help="Just output count of Ralph processes"
+    )
+    parser.add_argument(
+        "--pids",
+        action="store_true",
+        help="Output all PIDs (Ralph + children) separated by newlines"
     )
     args = parser.parse_args()
 
-    processes = find_ralph_processes()
+    result = find_ralph_processes()
+    ralph_processes = result["ralph_processes"]
+    child_pids = result["child_pids"]
 
     if args.count:
-        print(len(processes))
+        print(len(ralph_processes))
+        return
+
+    if args.pids:
+        # Output all PIDs to kill (Ralph + children)
+        all_pids = [p["pid"] for p in ralph_processes] + child_pids
+        for pid in all_pids:
+            print(pid)
         return
 
     if args.json:
-        print(json.dumps(processes, indent=2))
+        print(json.dumps(result, indent=2))
         return
 
     # Human-readable output
-    if not processes:
+    if not ralph_processes:
         print("No running Ralph processes found.")
         return
 
-    print(f"Found {len(processes)} running Ralph process(es):\n")
-    for p in processes:
+    print(f"Found {len(ralph_processes)} running Ralph process(es):\n")
+    for p in ralph_processes:
         print(f"PID: {p['pid']}")
         print(f"Started: {p['started']}")
         print(f"Working directory: {p['cwd']}")
         print(f"Command: {p['cmdline']}")
+        print()
+
+    if child_pids:
+        print(f"Child processes (Claude Code sessions): {len(child_pids)}")
+        print(f"PIDs: {', '.join(map(str, child_pids))}")
         print()
 
 
