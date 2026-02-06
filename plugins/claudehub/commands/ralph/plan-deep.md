@@ -103,7 +103,7 @@ Interactively create the three planning documents required for Ralph execution:
     - List created files and task count
     - Show environment validation results
     - State final confidence level
-    - Instruct user to run `/claudehub:ralph/run`
+    - Instruct user to run `/claudehub:ralph:run`
 
 ## Arguments
 
@@ -113,7 +113,7 @@ Interactively create the three planning documents required for Ralph execution:
 ## Example
 
 ```
-/claudehub:ralph/plan-deep docs/prd-user-auth.md --designs docs/designs/
+/claudehub:ralph:plan-deep docs/prd-user-auth.md --designs docs/designs/
 ```
 
 Input: $ARGUMENTS

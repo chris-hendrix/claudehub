@@ -18,12 +18,12 @@ See the [main README](../../README.md) for marketplace setup.
 | `/claudehub:brainstorm` | Brainstorm an idea into a validated design |
 | `/claudehub:create-plan` | Create detailed implementation plans through research |
 | `/claudehub:implement` | Implement from a plan or description |
-| `/claudehub:ralph/run` | Start Ralph execution loop (auto-plans if needed) |
-| `/claudehub:ralph/plan` | Create Ralph planning docs quickly with autonomous decisions |
-| `/claudehub:ralph/plan-deep` | Interactive deep planning (90% confidence required) |
-| `/claudehub:ralph/validate` | Validate test environment and suites before execution |
-| `/claudehub:ralph/status` | Show current Ralph execution progress |
-| `/claudehub:ralph/cancel` | Stop the active Ralph execution loop |
+| `/claudehub:ralph:run` | Start Ralph execution loop (auto-plans if needed) |
+| `/claudehub:ralph:plan` | Create Ralph planning docs quickly with autonomous decisions |
+| `/claudehub:ralph:plan-deep` | Interactive deep planning (90% confidence required) |
+| `/claudehub:ralph:validate` | Validate test environment and suites before execution |
+| `/claudehub:ralph:status` | Show current Ralph execution progress |
+| `/claudehub:ralph:cancel` | Stop the active Ralph execution loop |
 | `/claudehub:evaluate` | Assess output across relevant quality dimensions |
 | `/claudehub:create-doc` | Create a new document in .thoughts/ |
 
@@ -94,18 +94,18 @@ All Ralph files live in `.ralph/`:
 
 ```bash
 # Quick autonomous planning + execution
-/claudehub:ralph/run "add user authentication with JWT"
+/claudehub:ralph:run "add user authentication with JWT"
 
 # Or plan interactively first (90% confidence required)
-/claudehub:ralph/plan-deep docs/prd.md
-/claudehub:ralph/validate  # Validate test environment works
-/claudehub:ralph/run
+/claudehub:ralph:plan-deep docs/prd.md
+/claudehub:ralph:validate  # Validate test environment works
+/claudehub:ralph:run
 
 # Check status
-/claudehub:ralph/status
+/claudehub:ralph:status
 
 # Stop execution
-/claudehub:ralph/cancel
+/claudehub:ralph:cancel
 ```
 
 ### Branch Naming

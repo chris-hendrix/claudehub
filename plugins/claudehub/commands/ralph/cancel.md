@@ -66,4 +66,4 @@ Stop the currently running Ralph execution loop and optionally discard uncommitt
 - Uses find_ralph.py utility to locate all running Ralph processes and child sessions
 - Kills both the orchestrator and any active Claude Code sessions
 - Optionally discards uncommitted changes (useful if Ralph made bad changes)
-- Progress is preserved in PROGRESS.md - you can resume with `/claudehub:ralph/run`
+- Progress is preserved in PROGRESS.md - you can resume with `/claudehub:ralph:run`

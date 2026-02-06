@@ -42,7 +42,7 @@ For context file formats (loaded each iteration), see `references/context-files.
 
 ## Task Granularity
 
-When creating TASKS.md (via `/claudehub:ralph/plan-deep`), you'll be asked to choose task granularity:
+When creating TASKS.md (via `/claudehub:ralph:plan-deep`), you'll be asked to choose task granularity:
 
 | Granularity | Description | Best For |
 |-------------|-------------|----------|
