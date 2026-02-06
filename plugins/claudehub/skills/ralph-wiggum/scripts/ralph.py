@@ -283,15 +283,17 @@ class RalphOrchestrator:
 
     @staticmethod
     def _sanitize_task_name(task: str) -> str:
-        """Convert task name to kebab-case filename."""
+        """Convert task name to kebab-case filename.
+
+        Returns sanitized task name (may be long - truncation happens in spawn_session).
+        """
         # Remove special chars and convert to lowercase
         sanitized = re.sub(r'[^a-zA-Z0-9\s-]', '', task.lower())
         # Replace spaces with hyphens
         sanitized = re.sub(r'\s+', '-', sanitized.strip())
         # Remove multiple consecutive hyphens
         sanitized = re.sub(r'-+', '-', sanitized)
-        # Truncate to reasonable length
-        return sanitized[:80]
+        return sanitized
 
 
     @staticmethod
@@ -338,7 +340,18 @@ class RalphOrchestrator:
         log_dir = ".ralph/logs"
         os.makedirs(log_dir, exist_ok=True)
         task_slug = self._sanitize_task_name(task)
-        log_file = f"{log_dir}/{self.session_prefix}-{task_slug}.jsonl"
+
+        # Truncate filename to stay under 150 chars total
+        # Format: {session_prefix}-{task_slug}.jsonl
+        max_filename_length = 150
+        extension = ".jsonl"
+        prefix_with_separator = f"{self.session_prefix}-"
+        available_for_task = max_filename_length - len(prefix_with_separator) - len(extension)
+
+        if len(task_slug) > available_for_task:
+            task_slug = task_slug[:available_for_task]
+
+        log_file = f"{log_dir}/{prefix_with_separator}{task_slug}{extension}"
 
         print(f"\n{'=' * 60}")
         print(f"Iteration {iteration}: {task}")
