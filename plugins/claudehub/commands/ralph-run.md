@@ -35,14 +35,26 @@ Start the Ralph execution loop. If planning docs don't exist, runs `/claudehub:r
    ```
    - If script not found, tell user: "Ralph orchestrator script not found. Please reinstall the claudehub plugin."
 
-6. **Run the Python orchestrator in background**:
+6. **Ask about permissions if not specified**:
+   - Parse `$ARGUMENTS` to check if `--skip-permissions` is present
+   - If NOT present, use `AskUserQuestion` to ask:
+     - Question: "Would you like to skip permission prompts during Ralph execution?"
+     - Header: "Permissions"
+     - Options:
+       - "Yes (Recommended)" - Skip all permission prompts for faster execution
+       - "No" - Require permission prompts for each operation
+   - Store the user's choice to determine whether to add `--skip-permissions` flag
+
+7. **Run the Python orchestrator in background**:
    ```bash
    python3 "${CLAUDE_PLUGIN_ROOT}/skills/ralph-wiggum/scripts/ralph.py" --max-iterations <N> --commit-mode <MODE> [--skip-permissions]
    ```
    Use `run_in_background: true`.
-   - Only add `--skip-permissions` flag if present in `$ARGUMENTS`
+   - Add `--skip-permissions` flag if:
+     - It was present in `$ARGUMENTS`, OR
+     - User selected "Yes (Recommended)" in the permissions question
 
-7. **Confirm startup**:
+8. **Confirm startup**:
 
    Generate compare URL (see "Tracking Progress Remotely" in skill).
 

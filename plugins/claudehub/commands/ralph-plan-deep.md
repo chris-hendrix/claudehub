@@ -56,27 +56,50 @@ Interactively create the three planning documents required for Ralph execution:
    Follow the format in `claudehub:ralph-wiggum/references/context-files.md`.
    Research codebase as needed to understand existing patterns.
 
-8. **Create TASKS.md**:
+8. **Ask user about task granularity** using AskUserQuestion:
 
-   Follow the format in `claudehub:ralph-wiggum/references/context-files.md`. Pay attention to TDD philosophy - tests go WITH implementation tasks.
+   Question: "What level of task granularity do you prefer for TASKS.md?"
+
+   Options:
+   - **Small (Recommended)**: Smallest chunks of verifiable work. Each task is highly focused and can be completed quickly. More tasks overall, but each task has clear, minimal scope. Best for catching issues early and maintaining steady progress.
+   - **Medium**: Balanced task sizes. Each task covers a logical feature component with reasonable scope. Good middle ground between granularity and task count.
+   - **Large**: Fewer, larger tasks. Each task covers significant functionality. Fewer tasks to track, but each takes longer to complete and verify. Best when you want less overhead.
+
+   Store the user's choice and use it when breaking down work in the next step.
+
+9. **Create TASKS.md**:
+
+   Follow the format in `claudehub:ralph-wiggum/references/context-files.md`.
+
+   **CRITICAL FORMAT REQUIREMENTS:**
+   - Checkboxes ONLY on task lines: `- [ ] Task 1.1: Description`
+   - Steps are indented bullets WITHOUT checkboxes: `  - Implement: Details`
+   - Tasks are list items, NEVER headings (never use `### 1.1`)
+
+   **Task Granularity Guidelines:**
+   - **Small**: Each task should be completable in 1 iteration. Break features into smallest verifiable units (e.g., "Create user schema", "Add user endpoints", "Write user tests" as separate tasks)
+   - **Medium**: Each task should cover a complete feature component (e.g., "Implement user authentication service with tests")
+   - **Large**: Each task should cover a major feature area (e.g., "Implement complete authentication system with all endpoints and tests")
+
+   Pay attention to TDD philosophy - tests go WITH implementation tasks.
 
    Ask user to confirm task breakdown before writing.
 
-9. **Create VERIFICATION.md**:
+10. **Create VERIFICATION.md**:
 
-   Scan repo for infrastructure (Dockerfile, docker-compose, package.json). Ask user about:
-   - How to run locally, environment variables, test credentials
-   - Feature flags to enable, third-party service setup
+    Scan repo for infrastructure (Dockerfile, docker-compose, package.json). Ask user about:
+    - How to run locally, environment variables, test credentials
+    - Feature flags to enable, third-party service setup
 
-   Include all discovered ports, URLs, and feature flag requirements.
+    Include all discovered ports, URLs, and feature flag requirements.
 
-10. **Validate environment** (optional):
+11. **Validate environment** (optional):
 
     Ask user if they want to validate the environment now.
 
     If yes, spawn the `ralph-validator` agent to verify test infrastructure works.
 
-11. **Summary**:
+12. **Summary**:
     - List created files and task count
     - Show environment validation results
     - State final confidence level

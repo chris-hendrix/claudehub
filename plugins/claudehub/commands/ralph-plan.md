@@ -49,6 +49,8 @@ See `claudehub:ralph-wiggum/references/context-files.md` for detailed format spe
 
    a. **Write TASKS.md**
       - Follow format in `claudehub:ralph-wiggum/references/context-files.md`
+      - **CRITICAL:** Checkboxes ONLY on task lines (`- [ ] Task 1.1:`), NEVER on step lines
+      - **CRITICAL:** Tasks are list items, NOT headings (never use `### 1.1`)
       - Include tests WITH implementation tasks (TDD)
       - Add Final Verification phase
 

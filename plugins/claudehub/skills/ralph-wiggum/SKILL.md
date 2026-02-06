@@ -32,13 +32,31 @@ All Ralph files live in `.ralph/`:
 | File | Purpose |
 |------|---------|
 | `ARCHITECTURE.md` | Technical approach (services, schema, APIs, components) |
-| `TASKS.md` | Tasks with checkboxes, organized by phase |
+| `TASKS.md` | Tasks with checkboxes at task level (`- [ ] Task 1.1:`), NOT on steps |
 | `VERIFICATION.md` | How to verify (test commands, env setup, feature flags) |
 | `PROGRESS.md` | Learnings and results from each iteration |
 | `screenshots/` | Visual proof from manual testing (tracked) |
 | `logs/{branch}/` | Session logs per iteration (gitignored) |
 
 For context file formats (loaded each iteration), see `references/context-files.md`.
+
+## Task Granularity
+
+When creating TASKS.md (via `/claudehub:ralph-plan-deep`), you'll be asked to choose task granularity:
+
+| Granularity | Description | Best For |
+|-------------|-------------|----------|
+| **Small** (Recommended) | Smallest chunks of verifiable work. Each task is highly focused (e.g., "Create schema", "Add endpoints", "Write tests" as separate tasks) | Catching issues early, maintaining steady progress, clear milestones |
+| **Medium** | Balanced task sizes. Each task covers a complete feature component (e.g., "Implement auth service with tests") | Good balance between granularity and task count |
+| **Large** | Fewer, larger tasks. Each task covers significant functionality (e.g., "Implement complete authentication system") | Less overhead, fewer tasks to track |
+
+**Small granularity is recommended** because:
+- Each task completes faster, providing frequent progress milestones
+- Issues are isolated to smaller scopes, making debugging easier
+- Easier to resume work after interruptions
+- More granular PROGRESS.md provides better learning history
+
+See `references/context-files.md` for concrete examples of the same feature at different granularities.
 
 ## Branch Naming
 

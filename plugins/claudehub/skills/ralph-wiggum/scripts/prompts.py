@@ -44,12 +44,25 @@ Your task is to find and complete the next unchecked task from .ralph/TASKS.md.
       They return their reports in their agent output - you'll include these in PROGRESS.md.
 
 6. Based on results:
-   - If verifier passes AND reviewer approves (APPROVED or NEEDS_WORK):
+   - If verifier passes AND reviewer returns APPROVED:
      - Change "- [ ]" to "- [x]" for the task in .ralph/TASKS.md
      - Append iteration report to .ralph/PROGRESS.md
-   - If verifier fails OR reviewer blocks:
+
+   - If verifier passes AND reviewer returns NEEDS_WORK:
+     - Analyze the feedback to determine if it's a small or big fix
+     - If SMALL FIX (simple changes, minor refactoring, adding comments):
+       - Call the coder agent again with the feedback to fix it
+       - Re-run verifier and reviewer
+       - If now APPROVED, mark complete; otherwise treat as big fix
+     - If BIG FIX (major changes, redesign, complex refactoring):
+       - Keep "- [ ]" unchanged
+       - Append details to PROGRESS.md with specific feedback
+       - Task will be retried in next iteration
+
+   - If verifier fails OR reviewer returns BLOCKED:
      - Keep "- [ ]" unchanged
      - Append failure details to .ralph/PROGRESS.md
+     - Consider adding a FIX sub-task if needed
 
 ## Handling Fundamental Issues
 
@@ -77,7 +90,10 @@ When doing manual testing with Playwright, capture screenshots as visual proof:
 - Complete exactly ONE task per session
 - Do NOT skip any agent in the sequence
 - Do NOT commit or push - the orchestrator handles git operations
-- Report honestly - don't mark incomplete tasks as done
+- Report honestly - only mark tasks complete when reviewer returns APPROVED
+- NEEDS_WORK means NOT finished - attempt small fixes or retry in next iteration
+- Make all decisions autonomously - no human intervention expected
+- If testing environment has issues, fix them yourself before proceeding
 - Document learnings for future iterations"""
 
 USER_PROMPT_TEMPLATE = """Execute Ralph iteration {iteration}.
@@ -90,6 +106,8 @@ Follow the engineering workflow:
 1. 3x researcher IN PARALLEL (LOCATING, ANALYZING, PATTERNS)
 2. coder - implement + tests
 3. verifier + reviewer IN PARALLEL
+4. If NEEDS_WORK: attempt small fix or document for retry
+5. Only mark complete if APPROVED
 
 Then update TASKS.md and PROGRESS.md based on results."""
 

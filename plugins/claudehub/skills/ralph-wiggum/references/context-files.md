@@ -31,6 +31,19 @@ Technical approach for the feature. Structure based on what the feature needs - 
 
 Three-level hierarchy: **Phase → Task → Step**
 
+**CRITICAL FORMAT REQUIREMENTS:**
+
+1. **Phases** are H2 headers: `## Phase 1: Database Layer`
+2. **Tasks** are CHECKBOX LIST ITEMS: `- [ ] Task 1.1: Define schemas` (NOT headings like `### 1.1`)
+3. **Steps** are INDENTED BULLETS WITHOUT CHECKBOXES: `  - Implement: Create schema file` (NOT `  - [ ] Create schema file`)
+
+**CHECKBOX PLACEMENT - THIS IS NON-NEGOTIABLE:**
+- ✅ Checkboxes ONLY on task lines (e.g., `- [ ] Task 1.1: Description`)
+- ❌ NEVER put checkboxes on step lines (the indented bullets under tasks)
+- ❌ NEVER make task numbers into headings (### 1.1)
+
+Ralph's orchestrator finds the next task by searching for `- [ ]` at the start of a line. If you put checkboxes on steps instead of tasks, Ralph will try to complete individual steps instead of complete tasks, breaking the workflow.
+
 ### Phases
 
 Logical groupings (e.g., "Database Layer", "API Endpoints", "UI Components")
@@ -44,10 +57,34 @@ A unit of work Ralph completes in one iteration
 - Tests are written alongside code (TDD), not deferred to later
 - Task is not done until its tests pass
 - Each task runs full test suite to catch regressions early
+- **Format:** `- [ ] Task X.Y: Brief description of what this task accomplishes`
+
+### Task Granularity
+
+Choose granularity based on how you want to track progress:
+
+**Small (Recommended)**: Smallest chunks of verifiable work
+- Each task is highly focused with minimal scope
+- Example: "Create user schema", "Add user endpoints", "Write user tests" as separate tasks
+- Pros: Clear progress, catch issues early, easier to resume after interruptions
+- Cons: More tasks to manage, more PROGRESS.md entries
+
+**Medium**: Balanced task sizes
+- Each task covers a complete feature component
+- Example: "Implement user service with endpoints and tests"
+- Pros: Good balance between granularity and task count
+- Cons: Less granular progress tracking
+
+**Large**: Fewer, larger tasks
+- Each task covers significant functionality
+- Example: "Implement complete authentication system with all endpoints, middleware, and tests"
+- Pros: Fewer tasks to track, less overhead
+- Cons: Takes longer per task, harder to isolate issues, less frequent progress milestones
 
 ### Steps
 
 Sub-bullets under each task specifying exactly what to do:
+- **Format:** Two-space indent, bullet (no checkbox), prefix label
 - `Implement:` - specific code to write
 - `Test:` - specific tests to write (unit, integration, E2E as appropriate)
 - `Seed:` - (optional) specific data to create for manual testing
@@ -71,30 +108,103 @@ Tests are written WITH implementation, not after:
 - ❌ "Task 5.2: Add manual test coverage" - manual tests go with the features they verify
 - ✅ Each task is self-contained: implement → test → verify
 
-### Example
+### Granularity Examples
+
+Same feature broken down at different granularities:
+
+**SMALL Granularity** (6 tasks for auth feature):
+```markdown
+## Phase 1: Authentication
+
+- [ ] Task 1.1: Create user database schema
+  - Implement: Create `schema/users.ts` with users table
+  - Test: Verify schema compiles
+  - Verify: run full test suite
+
+- [ ] Task 1.2: Create auth service
+  - Implement: Create `services/auth.service.ts` with token generation
+  - Test: Write unit tests for token methods
+  - Verify: run full test suite
+
+- [ ] Task 1.3: Create auth controller
+  - Implement: Create `controllers/auth.controller.ts` with login/logout
+  - Test: Write controller unit tests
+  - Verify: run full test suite
+
+- [ ] Task 1.4: Add auth routes
+  - Implement: Create `routes/auth.routes.ts` and register in server
+  - Test: Write integration tests for endpoints
+  - Verify: run full test suite
+
+- [ ] Task 1.5: Create auth middleware
+  - Implement: Create `middleware/auth.middleware.ts` for JWT verification
+  - Test: Write middleware unit tests
+  - Verify: run full test suite
+
+- [ ] Task 1.6: Add frontend auth flow
+  - Implement: Create login page and auth context
+  - Test: Write component tests and E2E test
+  - Verify: run full test suite, manual test with screenshots
+```
+
+**MEDIUM Granularity** (3 tasks for auth feature):
+```markdown
+## Phase 1: Authentication
+
+- [ ] Task 1.1: Implement backend auth system
+  - Implement: Create user schema, auth service, and controller
+  - Test: Write unit tests for service and controller
+  - Test: Write integration tests for auth endpoints
+  - Verify: run full test suite
+
+- [ ] Task 1.2: Add auth middleware and routes
+  - Implement: Create auth middleware and register routes
+  - Test: Write middleware unit tests and endpoint integration tests
+  - Verify: run full test suite
+
+- [ ] Task 1.3: Build frontend auth UI
+  - Implement: Create login page, auth context, and API client
+  - Test: Write component tests and E2E test for login flow
+  - Verify: run full test suite, manual test with screenshots
+```
+
+**LARGE Granularity** (1 task for auth feature):
+```markdown
+## Phase 1: Authentication
+
+- [ ] Task 1.1: Implement complete authentication system
+  - Implement: Create user schema, auth service, controller, middleware, and routes
+  - Implement: Create login page, auth context, and API integration
+  - Test: Write unit tests for all backend components
+  - Test: Write integration tests for auth endpoints
+  - Test: Write component tests and E2E test for frontend flow
+  - Verify: run full test suite, manual test with screenshots
+```
+
+### Example - CORRECT FORMAT
 
 ```markdown
-## Phase 1: [Phase Name]
+## Phase 1: Database Layer
 
-- [ ] Task 1.1: [Task description]
-  - Implement: [specific code/file to create or modify]
-  - Test: [unit test for this code]
-  - Test: [integration test if applicable]
+- [ ] Task 1.1: Define Drizzle schemas
+  - Implement: Create `apps/api/src/db/schema/users.ts` with users table schema
+  - Implement: Create `apps/api/src/db/schema/trips.ts` with trips table schema
+  - Test: Verify schema compilation with `pnpm typecheck`
   - Verify: run full test suite, all tests pass
 
-- [ ] Task 1.2: [Task description with UI]
-  - Implement: [component code]
-  - Test: [component test]
-  - Test: [E2E test for user flow]
-  - Seed: [create test user/data needed for manual testing]
+- [ ] Task 1.2: Generate and run migrations
+  - Implement: Run `pnpm db:generate` to create migration SQL
+  - Implement: Run `pnpm db:migrate` to apply migration
+  - Test: Write integration test to verify tables exist
   - Verify: run full test suite, all tests pass
-  - Verify: manual test [specific flow], screenshot each step
+  - Verify: manual check using Drizzle Studio
 
-## Phase 2: [Phase Name]
+## Phase 2: API Endpoints
 
-- [ ] Task 2.1: [Task description]
-  - Implement: [code]
-  - Test: [tests for this code]
+- [ ] Task 2.1: Create auth endpoints
+  - Implement: Create `src/routes/auth.routes.ts` and controller
+  - Test: Write integration tests for POST /api/auth/request-code
+  - Test: Write integration tests for POST /api/auth/verify-code
   - Verify: run full test suite, all tests pass
 
 ## Phase N: Final Verification
@@ -104,12 +214,23 @@ Tests are written WITH implementation, not after:
   - Verify: all integration tests pass
   - Verify: all E2E tests pass
   - Verify: linting and type checking pass
-
-- [ ] Task N.2: Full manual smoke test
-  - Verify: [complete user flow 1], screenshot each step
-  - Verify: [complete user flow 2], screenshot each step
-  - Verify: [edge case scenario], screenshot each step
 ```
+
+### WRONG FORMAT - DO NOT DO THIS
+
+```markdown
+## Phase 1: Database Layer
+
+### 1.1 Define Drizzle schemas                    ❌ WRONG: Task is a heading
+- [ ] Create users table schema                   ❌ WRONG: Checkbox on step
+- [ ] Create trips table schema                   ❌ WRONG: Checkbox on step
+
+### 1.2 Generate migrations                       ❌ WRONG: Task is a heading
+- [ ] Run pnpm db:generate                        ❌ WRONG: Checkbox on step
+- [ ] Run pnpm db:migrate                         ❌ WRONG: Checkbox on step
+```
+
+**Why this breaks Ralph:** Ralph's `find_next_task()` searches for lines starting with `- [ ]`. In the wrong format, it finds "Create users table schema" instead of "Task 1.1: Define Drizzle schemas", causing Ralph to work on individual steps instead of complete tasks.
 
 ## PROGRESS.md
 
