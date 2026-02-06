@@ -88,7 +88,7 @@ All Ralph files live in `.ralph/`:
 | `VERIFICATION.md` | Test commands, environment setup |
 | `PROGRESS.md` | Learnings and results from each iteration |
 | `screenshots/` | Visual proof from manual testing |
-| `logs/{timestamp}-{branch}/` | Session logs per task (gitignored) |
+| `logs/` | Flat session logs: `{timestamp}-{branch}-{task}.jsonl` (gitignored) |
 
 ### Quick Start
 

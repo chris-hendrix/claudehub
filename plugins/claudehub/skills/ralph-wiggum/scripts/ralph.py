@@ -62,9 +62,9 @@ class RalphOrchestrator:
         self.start_iteration = 0
         self.consecutive_failures = 0
         self.last_failed_task = ""
-        # Create session directory name with timestamp
+        # Create session prefix with timestamp and branch
         timestamp = time.strftime("%Y%m%d-%H%M")
-        self.session_dir = f".ralph/logs/{timestamp}-{self.branch}"
+        self.session_prefix = f"{timestamp}-{self.branch}"
 
 
     @staticmethod
@@ -334,10 +334,11 @@ class RalphOrchestrator:
         system_prompt = build_system_prompt(iteration)
         user_prompt = build_user_prompt(task, iteration)
 
-        # Set up logging in session directory with task-based filename
-        os.makedirs(self.session_dir, exist_ok=True)
+        # Set up flat logging with timestamp-branch-task filename
+        log_dir = ".ralph/logs"
+        os.makedirs(log_dir, exist_ok=True)
         task_slug = self._sanitize_task_name(task)
-        log_file = f"{self.session_dir}/{task_slug}.jsonl"
+        log_file = f"{log_dir}/{self.session_prefix}-{task_slug}.jsonl"
 
         print(f"\n{'=' * 60}")
         print(f"Iteration {iteration}: {task}")
