@@ -123,19 +123,22 @@ When spawned by the Ralph orchestrator:
 
 Commit message format: `"Ralph: Task X.Y - [task name]"`
 
-## Testing Types
+## Testing Types — The Agent Does ALL of Them
 
-| Type | Purpose | Requires |
-|------|---------|----------|
-| Unit tests | Test isolated functions | Test runner only |
-| Integration tests | Test components together | Services (Docker, DB) |
-| E2E tests (automated) | Scripted regression tests for critical paths | Running app + browser |
-| Manual testing | Visual/UX verification, edge case exploration | Playwright MCP + running app |
-| Linting | Code style/errors | Linter installed |
-| Type checking | Static type verification | Type checker installed |
-| Feature flags | Gate feature availability | Flags enabled locally |
+**There is no human in the loop.** Every check in VERIFICATION.md — automated or manual — is performed by the agent. If the environment isn't ready, the agent sets it up. If a service isn't running, the agent starts it.
 
-For detailed guidance on each testing type, see `references/testing-types.md`.
+| Type | Purpose | Agent Action |
+|------|---------|--------------|
+| Unit tests | Test isolated functions | Run test commands |
+| Integration tests | Test components together | Start services (Docker, DB) if needed, then run tests |
+| E2E tests (automated) | Scripted regression tests | Start the app, run E2E suite |
+| Manual testing (FE) | Visual/UX verification | Open browser with Playwright (installed locally), navigate, interact, screenshot |
+| Manual testing (BE) | API endpoint verification | Curl endpoints, verify responses, test error cases |
+| Linting | Code style/errors | Run linter |
+| Type checking | Static type verification | Run type checker |
+| Feature flags | Gate feature availability | Enable flags locally, mock if needed |
+
+For detailed guidance on each testing type, see `references/testing-types.md`. For Playwright installation and usage, see `references/playwright.md`.
 
 **E2E tests ≠ Manual testing.** E2E tests prove code runs; manual testing proves it looks/works right. When E2E is required, manual browser testing with screenshots is also required.
 
@@ -151,13 +154,15 @@ During manual testing with Playwright, capture screenshots as visual proof:
 
 ## Environment Validation
 
-Before starting Ralph execution, validate the environment can run verification steps:
+Before starting Ralph execution, validate AND fix the environment so all verification steps can run:
 
 1. Parse VERIFICATION.md for test commands
-2. For each test suite, run ONE existing test to verify runner works
-3. For URLs/endpoints listed, verify they're reachable
-4. If manual verification requires browser, check Playwright MCP is available
-5. If feature flags mentioned, verify required flags are enabled locally
-6. Report what works and what doesn't
+2. For each test suite, run ONE existing test to verify runner works. **If it doesn't, install dependencies / fix config until it does.**
+3. For URLs/endpoints listed, verify they're reachable. **If they're not, start the services yourself.**
+4. If manual verification requires browser, check Playwright is installed. **If not, install it** (see `references/playwright.md`).
+5. If feature flags mentioned, verify required flags are enabled locally. **If not, enable or mock them.**
+6. Report what works, what was fixed, and what's still broken
+
+The goal is a working environment, not just a report. Fix problems, don't just list them.
 
 Use the `ralph-validator` agent to perform this check.

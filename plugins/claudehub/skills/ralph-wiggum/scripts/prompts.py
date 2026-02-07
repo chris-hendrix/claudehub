@@ -43,11 +43,7 @@ Your task is to find and complete the next unchecked task from .ralph/TASKS.md.
       IMPORTANT: Do NOT tell verifier/reviewer to save their reports to files.
       They return their reports in their agent output - you'll include these in PROGRESS.md.
 
-6. Based on results:
-   - If verifier PASSES AND reviewer returns APPROVED:
-     - Change "- [ ]" to "- [x]" for the task in .ralph/TASKS.md
-     - Append iteration report to .ralph/PROGRESS.md
-
+6. Fix loop - keep going until the task passes or is BLOCKED:
    - If verifier FAILS:
      - The task DOES NOT PASS. Period. No exceptions.
      - Call the coder agent with the failure output to fix it
@@ -63,8 +59,17 @@ Your task is to find and complete the next unchecked task from .ralph/TASKS.md.
 
    - If reviewer returns BLOCKED:
      - Keep "- [ ]" unchanged
-     - Append failure details to .ralph/PROGRESS.md
      - Add a FIX sub-task for the blocking issue
+     - Append to PROGRESS.md: what was attempted, why it's blocked, what the FIX task needs to resolve
+
+   - If verifier PASSES AND reviewer returns APPROVED:
+     - Change "- [ ]" to "- [x]" for the task in .ralph/TASKS.md
+     - Append completed iteration report to .ralph/PROGRESS.md
+
+7. PROGRESS.md must NEVER contain outstanding work.
+   - Every entry is either a completed task or a BLOCKED task with a FIX sub-task already added to TASKS.md
+   - If something needs to be done, it goes in TASKS.md, not PROGRESS.md
+   - PROGRESS.md is a log of what happened, not a to-do list
 
 ## Handling Fundamental Issues
 
@@ -87,6 +92,17 @@ When doing manual testing with Playwright, capture screenshots as visual proof:
 - Capture key states, before/after actions, errors, and final success
 - Reference screenshots in PROGRESS.md
 
+## Manual Checks — YOU Do Them, Not a Human
+
+There is NO human in the loop. Every manual check listed in VERIFICATION.md is YOUR responsibility:
+
+- **Frontend/UI:** Install Playwright locally if needed (`pip install playwright && playwright install --with-deps chromium`), write a Python script, and run it via Bash. Navigate to pages, click buttons, fill forms, and take screenshots as proof. If the app isn't running, start it yourself. Do NOT use the Playwright MCP — install and run it directly.
+- **Backend/API:** Curl endpoints, verify response codes and bodies, test error cases. If the server isn't running, start it yourself.
+- **Environment setup:** If the local environment isn't ready (missing deps, DB not running, services down), fix it. Install packages, run migrations, start Docker containers — whatever it takes.
+- **Screenshots:** Save to `.ralph/screenshots/` as visual proof. Reference them in PROGRESS.md.
+
+If VERIFICATION.md says "manually verify X", that means YOU verify X. Do not skip it. Do not mark a task complete without performing every listed check.
+
 ## Important
 
 - Complete exactly ONE task per session
@@ -97,7 +113,8 @@ When doing manual testing with Playwright, capture screenshots as visual proof:
 - Test failures mean NOT finished - fix it NOW, do not defer to next iteration
 - Make all design decisions autonomously - you have full authority, no human intervention expected
 - If testing environment has issues, fix them yourself before proceeding
-- Document learnings for future iterations"""
+- Document learnings for future iterations
+- PROGRESS.md is a log of COMPLETED work, never a to-do list"""
 
 USER_PROMPT_TEMPLATE = """Execute Ralph iteration {iteration}.
 

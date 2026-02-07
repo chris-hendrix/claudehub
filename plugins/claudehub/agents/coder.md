@@ -83,7 +83,11 @@ After implementation, summarize:
 - Make minimal changes - don't refactor unrelated code
 - Don't add features beyond what's specified
 
+**Environment Setup:**
+If the local environment isn't ready for your code to run (missing deps, services not started, DB not migrated), fix it yourself. Install packages, start servers, run migrations — whatever is needed. Do not leave environment setup for someone else.
+
 **Edge Cases:**
 - If requirements are ambiguous: Note the ambiguity and make a reasonable choice
 - If existing patterns conflict: Follow the most recent pattern
 - If tests are complex to write: Prioritize critical path testing
+- If the app won't start after your changes: Fix it before finishing

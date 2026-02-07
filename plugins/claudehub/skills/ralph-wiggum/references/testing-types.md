@@ -99,9 +99,10 @@ Static type verification.
 
 Interactive testing through a browser. **This is NOT the same as E2E tests** - manual testing catches things automated tests cannot.
 
+**YOU are the one doing this. There is no human in the loop.** When VERIFICATION.md lists manual browser checks, the coding agent performs them using Playwright (installed locally). You navigate to pages, interact with elements, take screenshots, and verify the result. If you skip manual checks, the task is NOT complete.
+
 **Tools:**
-- Playwright MCP (for LLM-driven browser control)
-- Human testing
+- Playwright installed locally — run scripts via Bash (see `references/playwright.md`). Do NOT use the Playwright MCP server.
 
 **Characteristics:**
 - Exploratory, not scripted
@@ -127,7 +128,8 @@ Interactive testing through a browser. **This is NOT the same as E2E tests** - m
 **Both are required for UI work.** E2E tests alone are not sufficient - they only prove the code runs, not that it's correct or usable.
 
 **Environment validation:**
-- Check Playwright MCP is available
+- Check Playwright is installed (`python3 -c "from playwright.sync_api import sync_playwright"` or `node -e "require('playwright')"`)
+- If not installed, install it: `pip install playwright && playwright install --with-deps chromium` or `npm install playwright && npx playwright install --with-deps chromium`
 - Verify app loads at URL
 - Attempt login with test credentials if provided
 - Verify required feature flags are enabled (see Feature Flags section)
@@ -135,19 +137,20 @@ Interactive testing through a browser. **This is NOT the same as E2E tests** - m
 
 ## API/Backend Verification
 
-Testing backend endpoints directly.
+Testing backend endpoints directly. **YOU do this yourself.** When VERIFICATION.md lists API checks, use curl or similar tools to hit the endpoints, inspect responses, and verify correctness. Do not skip this and do not assume someone else will do it.
 
 **Tools:**
-- curl
-- httpie
-- Postman/Newman
+- curl / httpie (run via Bash)
 
-**Characteristics:**
-- Requires backend running
-- May require authentication tokens
+**Process:**
+1. Ensure the backend is running. If it's not, start it yourself.
+2. Curl each endpoint listed in VERIFICATION.md
+3. Verify response status codes, body structure, and data correctness
+4. Test error cases (bad input, missing auth, etc.)
+5. If authentication is required, obtain tokens yourself (login endpoint, test credentials from VERIFICATION.md)
 
 **Environment validation:**
-- Check endpoint is reachable
+- Check endpoint is reachable. If not, start the service yourself.
 - Verify authentication works if required
 
 ## Feature Flags
