@@ -44,25 +44,27 @@ Your task is to find and complete the next unchecked task from .ralph/TASKS.md.
       They return their reports in their agent output - you'll include these in PROGRESS.md.
 
 6. Based on results:
-   - If verifier passes AND reviewer returns APPROVED:
+   - If verifier PASSES AND reviewer returns APPROVED:
      - Change "- [ ]" to "- [x]" for the task in .ralph/TASKS.md
      - Append iteration report to .ralph/PROGRESS.md
 
-   - If verifier passes AND reviewer returns NEEDS_WORK:
-     - Analyze the feedback to determine if it's a small or big fix
-     - If SMALL FIX (simple changes, minor refactoring, adding comments):
-       - Call the coder agent again with the feedback to fix it
-       - Re-run verifier and reviewer
-       - If now APPROVED, mark complete; otherwise treat as big fix
-     - If BIG FIX (major changes, redesign, complex refactoring):
-       - Keep "- [ ]" unchanged
-       - Append details to PROGRESS.md with specific feedback
-       - Task will be retried in next iteration
+   - If verifier FAILS:
+     - The task DOES NOT PASS. Period. No exceptions.
+     - Call the coder agent with the failure output to fix it
+     - Re-run verifier (and reviewer if code changed)
+     - Repeat until verifier passes - do NOT defer to next iteration
 
-   - If verifier fails OR reviewer returns BLOCKED:
+   - If reviewer returns NEEDS_WORK:
+     - The task DOES NOT PASS. NEEDS_WORK means NOT done.
+     - Call the coder agent with ALL reviewer feedback to fix it NOW
+     - Re-run verifier and reviewer after fixes
+     - Repeat until reviewer returns APPROVED - do NOT defer to next iteration
+     - You have full authority to make design decisions when implementing feedback
+
+   - If reviewer returns BLOCKED:
      - Keep "- [ ]" unchanged
      - Append failure details to .ralph/PROGRESS.md
-     - Consider adding a FIX sub-task if needed
+     - Add a FIX sub-task for the blocking issue
 
 ## Handling Fundamental Issues
 
@@ -90,9 +92,10 @@ When doing manual testing with Playwright, capture screenshots as visual proof:
 - Complete exactly ONE task per session
 - Do NOT skip any agent in the sequence
 - Do NOT commit or push - the orchestrator handles git operations
-- Report honestly - only mark tasks complete when reviewer returns APPROVED
-- NEEDS_WORK means NOT finished - attempt small fixes or retry in next iteration
-- Make all decisions autonomously - no human intervention expected
+- Report honestly - only mark tasks complete when verifier PASSES and reviewer APPROVED
+- NEEDS_WORK means NOT finished - fix it NOW, do not defer to next iteration
+- Test failures mean NOT finished - fix it NOW, do not defer to next iteration
+- Make all design decisions autonomously - you have full authority, no human intervention expected
 - If testing environment has issues, fix them yourself before proceeding
 - Document learnings for future iterations"""
 
@@ -106,8 +109,9 @@ Follow the engineering workflow:
 1. 3x researcher IN PARALLEL (LOCATING, ANALYZING, PATTERNS)
 2. coder - implement + tests
 3. verifier + reviewer IN PARALLEL
-4. If NEEDS_WORK: attempt small fix or document for retry
-5. Only mark complete if APPROVED
+4. If tests FAIL: fix and re-verify until they pass. No exceptions.
+5. If NEEDS_WORK: implement ALL feedback NOW and re-verify. Do NOT defer.
+6. Only mark complete when verifier PASSES and reviewer APPROVED
 
 Then update TASKS.md and PROGRESS.md based on results."""
 

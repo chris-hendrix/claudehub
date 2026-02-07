@@ -87,11 +87,15 @@ Example: `https://github.com/org/repo/compare/main...ralph/20260128-1123-feature
 
 ## Task Completion Criteria
 
-A task is complete when:
-1. Verifier reports all checks PASS
-2. Reviewer assessment is APPROVED or NEEDS_WORK (not BLOCKED)
+A task is complete ONLY when BOTH conditions are met:
+1. Verifier reports all checks **PASS**
+2. Reviewer assessment is **APPROVED**
 
-If verifier fails or reviewer blocks, the task remains unchecked for retry.
+**NEEDS_WORK is NOT complete.** Implement all reviewer feedback immediately and re-verify until APPROVED.
+
+**Test failures are NOT complete.** Fix all failures immediately and re-verify until passing.
+
+Only BLOCKED (fundamental architectural issues) defers to next iteration.
 
 ## Session Instructions
 
@@ -102,12 +106,12 @@ When spawned by the Ralph orchestrator:
 3. Read `.ralph/VERIFICATION.md` for check commands
 4. Read last 50 lines of `.ralph/PROGRESS.md` for learnings
 5. Execute agent sequence: researcher → coder → verifier → reviewer
-6. If all checks pass and review approves:
+6. If all checks pass and review APPROVED:
    - Mark task `[x]` in TASKS.md
    - Append iteration report to PROGRESS.md
-7. If checks fail or review blocks:
-   - Keep task `[ ]`
-   - Append failure details to PROGRESS.md for next iteration
+7. If checks fail: fix NOW and re-verify until passing
+8. If review returns NEEDS_WORK: implement ALL feedback NOW and re-verify until APPROVED
+9. If review returns BLOCKED: keep task `[ ]`, append details to PROGRESS.md
 
 ## Commit Modes
 

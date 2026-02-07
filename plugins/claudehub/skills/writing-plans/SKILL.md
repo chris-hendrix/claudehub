@@ -34,7 +34,7 @@ A good plan has:
 - **Balance specificity with context**: Provide enough detail without consuming excessive context
 - **Actionable and granular**: Break work down to specific actions an LLM can execute
 - **Living document**: Checkboxes track progress; the plan is the source of truth across sessions
-- **Ralph-compatible**: Structure supports autonomous implementation through iterative loops
+- **Automation-compatible**: Structure supports autonomous implementation through iterative loops
 
 ## Plan Structure
 
@@ -90,7 +90,7 @@ The **most important section**. Breaks work into **Phases → Tasks → Steps** 
 - Should be completable in one focused work session
 - Usually touches 1-3 related files
 - Numbered sequentially (Task 1, Task 2, Task 3...)
-- **Ralph compatibility**: One task per Ralph iteration
+- **Automation-compatible**: One task per iteration
 - Format: `- [ ] **Task N: [Description]**`
 
 **Steps** (nested under tasks):
@@ -109,7 +109,7 @@ The **most important section**. Breaks work into **Phases → Tasks → Steps** 
 - Exact command with success criteria
 - Format: `  - Check N: [Command/verification] - [expected result]`
 
-**Key principle:** Tasks are small, verifiable chunks. Implement steps → run checks → mark task complete → next task. This enables tight feedback loops for autonomous implementation (Ralph) or manual execution.
+**Key principle:** Tasks are small, verifiable chunks. Implement steps → run checks → mark task complete → next task. This enables tight feedback loops for autonomous or manual execution.
 
 **Success Criteria vs Task Checks:**
 - **Success Criteria** = end-to-end requirements verified after all tasks complete (e.g., "feature works in running app", "all tests pass", "docs updated")
@@ -131,16 +131,20 @@ Planning is interactive, not linear. These phases may overlap:
 
 Research the codebase deeply. Read files fully, include `file:line` references, identify patterns to follow.
 
-### 2. Resolving Ambiguity
+### 2. Deep-Dive Alignment (90% Confidence Gate)
 
-Surface unstated assumptions by identifying:
-- Edge cases and error handling
-- Integration points and dependencies
-- Scope boundaries
-- Technical constraints
-- Backward compatibility concerns
+**Do NOT write any planning documents until you reach 90% confidence.**
 
-Ask questions clearly and wait for answers.
+Use the deep-dive questioning process (see `references/deep-dive.md`) to build confidence through iterative question rounds. After each round, report your confidence level:
+> "Current confidence: X%. [Reason for gaps if below 90%]"
+
+Keep asking until you could explain the plan back and the user would say "yes, exactly." Cover:
+- Requirements clarity and edge cases
+- Technical decisions and integration points
+- Scope boundaries (what's in, what's out)
+- Testing and verification strategy (TDD mindset)
+
+This is a hard gate — proceed to writing only at 90%+.
 
 ### 3. Iterative Writing
 
@@ -208,3 +212,4 @@ As you implement from the plan:
 ## References
 
 - `references/plan-template.md` - Full template with examples and hierarchy guidelines
+- `references/deep-dive.md` - Deep-dive questioning categories and confidence progression
