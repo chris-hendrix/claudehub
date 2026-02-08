@@ -30,11 +30,11 @@ Ralph executes tasks through a Python orchestrator that spawns Claude Code sessi
 
 ```bash
 # Quick autonomous planning + execution
-/claudehub:ralph-run "add user authentication with JWT"
+/claudehub:ralph:run "add user authentication with JWT"
 
 # Or plan interactively first
-/claudehub:ralph-plan-deep docs/prd.md
-/claudehub:ralph-run
+/claudehub:ralph:plan-deep docs/prd.md
+/claudehub:ralph:run
 ```
 
 **The Agent Pipeline:**
@@ -63,7 +63,7 @@ All Ralph files live in `.ralph/`:
 * **Parallel execution**: 3x researcher + verifier/reviewer run concurrently
 * **Specialized agents**: Each agent has a focused responsibility
 * **Context isolation**: Fresh session per task prevents context rot
-* **Built-in planning**: `/claudehub:ralph-plan` for quick autonomous planning or `/claudehub:ralph-plan-deep` for interactive deep planning
+* **Built-in planning**: `/claudehub:ralph-plan` for quick autonomous planning or `/claudehub:ralph:plan-deep` for interactive deep planning
 * **Progress tracking**: `/claudehub:ralph-status` shows real-time progress
 
 **Perfect for:**
@@ -81,6 +81,10 @@ _Inspired by Geoffrey Huntley's [Ralph methodology](https://ghuntley.com/ralph/)
 
 ```bash
 /plugin install claudehub@claudehub
+
+# Optional: Install custom statusline
+/claudehub:install-statusline
+# claudehub │ main │ [Sonnet 4.5] │ ▓▓▓▓▓░░░░░ 50%
 ```
 
 **Brainstorm an idea:**
@@ -99,11 +103,11 @@ _Inspired by Geoffrey Huntley's [Ralph methodology](https://ghuntley.com/ralph/)
 
 ```bash
 # Quick autonomous approach
-/claudehub:ralph-run "add user authentication with OAuth"
+/claudehub:ralph:run "add user authentication with OAuth"
 
 # Or manual planning first
-/claudehub:ralph-plan-deep docs/prd.md
-/claudehub:ralph-run
+/claudehub:ralph:plan-deep docs/prd.md
+/claudehub:ralph:run
 ```
 
 ## 📦 Additional Plugins

@@ -26,6 +26,7 @@ See the [main README](../../README.md) for marketplace setup.
 | `/claudehub:ralph:cancel` | Stop the active Ralph execution loop |
 | `/claudehub:evaluate` | Assess output across relevant quality dimensions |
 | `/claudehub:create-doc` | Create a new document in .thoughts/ |
+| `/claudehub:install-statusline` | Install custom statusline with clickable repo link |
 
 ## Skills
 
