@@ -1,20 +1,18 @@
-.PHONY: help install install-marketplace install-plugins uninstall reinstall
+.PHONY: help install-marketplace uninstall-marketplace add-claudehub remove-claudehub add-github remove-github
 
 # Get the absolute path to this directory
 ROOT_DIR := $(shell pwd)
 
 help:
-	@echo "Claude Hub Plugin Management"
+	@echo "Claude Hub Marketplace Management"
 	@echo ""
 	@echo "Usage:"
-	@echo "  make install              Install marketplace and all plugins"
-	@echo "  make install-marketplace  Install just the marketplace"
-	@echo "  make install-plugins      Install all plugins (requires marketplace)"
-	@echo "  make uninstall            Uninstall marketplace (uninstalls all plugins)"
-	@echo "  make reinstall            Reinstall everything (uninstall then install)"
-
-install: install-marketplace install-plugins
-	@echo "✓ Installation complete"
+	@echo "  make install-marketplace    Install the marketplace"
+	@echo "  make uninstall-marketplace  Uninstall the marketplace"
+	@echo "  make add-claudehub          Install marketplace then reinstall claudehub plugin"
+	@echo "  make remove-claudehub       Uninstall the claudehub plugin"
+	@echo "  make add-github             Install marketplace then reinstall github plugin"
+	@echo "  make remove-github          Uninstall the github plugin"
 
 install-marketplace:
 	@if claude plugin marketplace list 2>/dev/null | grep -q "claudehub"; then \
@@ -25,44 +23,39 @@ install-marketplace:
 		echo "✓ Marketplace installed"; \
 	fi
 
-install-plugins:
-	@echo "Installing plugins..."
-	@if claude plugin list 2>/dev/null | grep -q "github@claudehub"; then \
-		echo "Plugin 'github' already installed"; \
-	else \
-		claude plugin install github@claudehub; \
-		echo "✓ Plugin 'github' installed"; \
-	fi
-	@if claude plugin list 2>/dev/null | grep -q "claudehub@claudehub"; then \
-		echo "Plugin 'claudehub' already installed"; \
-	else \
-		claude plugin install claudehub@claudehub; \
-		echo "✓ Plugin 'claudehub' installed"; \
-	fi
-	@echo "✓ All plugins installed"
-
-uninstall:
-	@echo "Uninstalling plugins..."
-	@if claude plugin list 2>/dev/null | grep -q "github@claudehub"; then \
-		claude plugin uninstall github@claudehub; \
-		echo "✓ Plugin 'github' uninstalled"; \
-	else \
-		echo "Plugin 'github' not installed"; \
-	fi
-	@if claude plugin list 2>/dev/null | grep -q "claudehub@claudehub"; then \
-		claude plugin uninstall claudehub@claudehub; \
-		echo "✓ Plugin 'claudehub' uninstalled"; \
-	else \
-		echo "Plugin 'claudehub' not installed"; \
-	fi
+uninstall-marketplace:
 	@if claude plugin marketplace list 2>/dev/null | grep -q "claudehub"; then \
 		echo "Uninstalling marketplace..."; \
 		claude plugin marketplace remove claudehub; \
 		echo "✓ Marketplace uninstalled"; \
 	else \
-		echo "Marketplace not installed, skipping"; \
+		echo "Marketplace not installed"; \
 	fi
-	@echo "✓ Uninstall complete"
 
-reinstall: uninstall install
-	@echo "✓ Reinstall complete"
+add-claudehub: install-marketplace remove-claudehub
+	@echo "Installing claudehub plugin..."
+	@claude plugin install claudehub@claudehub
+	@echo "✓ claudehub plugin installed"
+
+remove-claudehub:
+	@if claude plugin list 2>/dev/null | grep -q "claudehub@claudehub"; then \
+		echo "Uninstalling claudehub plugin..."; \
+		claude plugin uninstall claudehub@claudehub; \
+		echo "✓ claudehub plugin uninstalled"; \
+	else \
+		echo "claudehub plugin not installed"; \
+	fi
+
+add-github: install-marketplace remove-github
+	@echo "Installing github plugin..."
+	@claude plugin install github@claudehub
+	@echo "✓ github plugin installed"
+
+remove-github:
+	@if claude plugin list 2>/dev/null | grep -q "github@claudehub"; then \
+		echo "Uninstalling github plugin..."; \
+		claude plugin uninstall github@claudehub; \
+		echo "✓ github plugin uninstalled"; \
+	else \
+		echo "github plugin not installed"; \
+	fi
