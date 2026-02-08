@@ -72,6 +72,15 @@ Create a GitHub issue with AI-generated content.
 5. Creates issue using `gh issue create`
 6. Shows issue URL and number
 
+### `/setup-templates`
+
+Set up GitHub PR and issue templates in the repository.
+
+**What it does:**
+1. Creates `.github/PULL_REQUEST_TEMPLATE/pull_request_template.md` if it doesn't exist
+2. Creates `.github/ISSUE_TEMPLATE/issue_template.md` if it doesn't exist
+3. Skips existing templates to avoid overwriting customizations
+
 ## Skills
 
 ### `github`

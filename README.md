@@ -20,48 +20,58 @@ _Inspired by [CipherPowers](https://github.com/cipherstash/cipherpowers/), [Supe
 
 ### 🔄 **Ralph Wiggum**
 
-Your autonomous coding companion that implements features while you sleep.
+Your autonomous coding companion that implements features through a structured engineering workflow.
 
-Ralph takes your research and plans, then executes them in tight iterative loops. Unlike one-shot implementations, Ralph validates after each small task, learns from failures, and adapts until success.
+Ralph executes tasks through a Python orchestrator that spawns Claude Code sessions. Each session runs a specialized agent pipeline to complete one task with proper research, implementation, verification, and review.
 
-**Key differentiator:** Agent-orchestrated outer loop with fresh worker spawns per task. The orchestrator manages intelligent decision-making about continuation, retries, and failure handling, while each worker gets clean context to prevent context rot.
+**Key differentiator:** Multi-agent pipeline with parallel execution. The Python orchestrator manages session spawning and progress tracking, while specialized agents handle research, coding, testing, and review for each task.
 
 **How it works:**
 
 ```bash
-/ralph PLAN.md
+# Quick autonomous planning + execution
+/claudehub:ralph:run "add user authentication with JWT"
+
+# Or plan interactively first
+/claudehub:ralph:plan-deep docs/prd.md
+/claudehub:ralph:run
 ```
 
-**The Core Loop:**
+**The Agent Pipeline:**
 
 ```
-repeat {
-  spawn fresh ralph-worker agent
-    → Finds first unchecked task in PLAN.md
-    → Implements task directly using tools
-    → Runs tests
-    → Updates PLAN.md checkbox on success
-    → Appends iteration report to PROGRESS.md
-    → Creates commit if autocommit enabled
-} until all tasks complete in PLAN.md
+3x researcher (parallel) → coder → verifier + reviewer (parallel)
 ```
 
-Orchestrator manages the loop, parsing iteration reports and deciding whether to continue, retry, or stop. Each worker gets fresh context (PLAN.md + last 200 lines of PROGRESS.md) to avoid context pollution across tasks.
+Each task goes through:
+1. **Research** - Three parallel researchers gather context (LOCATING, ANALYZING, PATTERNS)
+2. **Code** - Coder implements + writes tests
+3. **Verify** - Verifier runs tests, linting, type-checking
+4. **Review** - Reviewer assesses code quality
+5. **Complete** - Mark task done in `.ralph/TASKS.md`, log to `.ralph/PROGRESS.md`
 
-**Critical for success:** Break your feature into small, verifiable tasks. Each task should be independently validatable. Plans are never perfect upfront—they evolve during implementation, and Ralph adapts through learnings.
+**File Structure:**
+
+All Ralph files live in `.ralph/`:
+- `ARCHITECTURE.md` - Technical approach
+- `TASKS.md` - Tasks with checkboxes, organized by phase
+- `VERIFICATION.md` - Test commands, environment setup
+- `PROGRESS.md` - Learnings from each iteration
 
 **Architecture benefits:**
 
-* **Context isolation**: Fresh worker spawn per task prevents context rot
-* **Consistent quality**: Each task gets clean ~200K token budget
-* **Intelligent failure handling**: Learns from PROGRESS.md, retries up to 3 times per task
-* **Resume capability**: Picks up from last iteration if interrupted
+* **Parallel execution**: 3x researcher + verifier/reviewer run concurrently
+* **Specialized agents**: Each agent has a focused responsibility
+* **Context isolation**: Fresh session per task prevents context rot
+* **Built-in planning**: `/claudehub:ralph-plan` for quick autonomous planning or `/claudehub:ralph:plan-deep` for interactive deep planning
+* **Progress tracking**: `/claudehub:ralph-status` shows real-time progress
 
 **Perfect for:**
 
-* Complex features that benefit from incremental validation
-* Long-running implementations where you want autonomous progress
-* Multi-task workflows where context isolation matters
+* Complex features with clear requirements (PRDs, design docs)
+* Projects needing thorough testing and review
+* Teams wanting structured engineering workflow
+* Long-running implementations with autonomous progress
 
 _Inspired by Geoffrey Huntley's [Ralph methodology](https://ghuntley.com/ralph/)._
 
@@ -71,24 +81,33 @@ _Inspired by Geoffrey Huntley's [Ralph methodology](https://ghuntley.com/ralph/)
 
 ```bash
 /plugin install claudehub@claudehub
+
+# Optional: Install custom statusline
+/claudehub:install-statusline
+# claudehub │ main │ [Sonnet 4.5] │ ▓▓▓▓▓░░░░░ 50%
 ```
 
 **Brainstorm an idea:**
 
 ```bash
-/brainstorm "Add user authentication with OAuth"
+/claudehub:brainstorm "Add user authentication with OAuth"
 ```
 
 **Create a detailed plan:**
 
 ```bash
-/create-plan brainstorm.md
+/claudehub:create-plan brainstorm.md
 ```
 
 **Run Ralph to implement:**
 
 ```bash
-/ralph PLAN.md
+# Quick autonomous approach
+/claudehub:ralph:run "add user authentication with OAuth"
+
+# Or manual planning first
+/claudehub:ralph:plan-deep docs/prd.md
+/claudehub:ralph:run
 ```
 
 ## 📦 Additional Plugins
