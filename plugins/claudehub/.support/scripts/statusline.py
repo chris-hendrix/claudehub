@@ -88,7 +88,18 @@ if repo_name:
         parts.append(f"{BLUE}{repo_name}{RESET}")
 
 if branch:
-    parts.append(f"{GREEN}{branch}{RESET}")
+    MAX_BRANCH = 30
+    display_branch = branch
+    if len(branch) > MAX_BRANCH:
+        keep = MAX_BRANCH - 1  # 1 char for ellipsis
+        head = keep // 2
+        tail = keep - head
+        display_branch = branch[:head] + '…' + branch[-tail:]
+    if repo_url:
+        branch_url = f"{repo_url}/tree/{branch}"
+        parts.append(f"\033]8;;{branch_url}\a{GREEN}{display_branch}{RESET}\033]8;;\a")
+    else:
+        parts.append(f"{GREEN}{display_branch}{RESET}")
 
 parts.append(f"{YELLOW}[{model}]{RESET}")
 parts.append(f"{bar_color}{bar}{RESET} {pct}%")
