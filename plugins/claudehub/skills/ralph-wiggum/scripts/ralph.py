@@ -377,7 +377,8 @@ class RalphOrchestrator:
                 text=True,
                 bufsize=1,
                 # CI=true prevents Jest/Cypress from running in watch mode
-                env={**os.environ, "CI": "true"},
+                # Remove CLAUDECODE to allow nested Claude Code sessions
+                env={k: v for k, v in os.environ.items() if k != "CLAUDECODE"} | {"CI": "true"},
             )
 
             self.stream_session_output(process, log_file)

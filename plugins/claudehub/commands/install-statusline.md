@@ -22,13 +22,18 @@ claude-hub │ main │ [Sonnet] │ ▓▓▓▓▓░░░░░ 50%
    - Read `~/.claude/settings.json`
    - If statusLine exists, inform the user and ask if they want to replace it
 
-2. **Find the installed plugin path**
-   - Use bash to find the latest claudehub plugin version: `ls -d ~/.claude/plugins/cache/claudehub/claudehub/*/ | tail -1`
-   - Construct the absolute path to the statusline script
+2. **Find the statusline script using bash**
+   - Run this exact command to locate the script:
+     ```bash
+     find ~/.claude/plugins/cache -path "*/claudehub/*/.support/scripts/statusline.py" 2>/dev/null | head -1
+     ```
+   - If no result, the claudehub plugin may not be installed — inform the user
+   - **Validate** the found path exists before using it: `test -f "$SCRIPT_PATH"`
 
 3. **Update settings.json**
-   - Add or update the statusLine configuration to point to the claudehub statusline script
-   - Use the absolute path found in step 2
+   - Add or update the statusLine configuration using the exact path found in step 2
+   - The path MUST end with `/.support/scripts/statusline.py` — do NOT append extra directory segments
+   - Example of a correct path: `~/.claude/plugins/cache/claudehub/claudehub/1.0.0/.support/scripts/statusline.py`
 
 4. **Confirm installation**
    - Inform the user that the statusline has been installed
@@ -47,11 +52,8 @@ The statusLine configuration should use an absolute path (not `${CLAUDE_PLUGIN_R
 }
 ```
 
-Note: The exact path will vary based on the installed plugin version. Use bash to detect it dynamically.
-
 ## Important Notes
 
 - The statusline script requires Python 3 (which is already available)
 - The statusline updates after each assistant message, permission mode change, or vim mode toggle
 - If the user has an existing statusline, ask before replacing it
-- The script is located in the plugin's .support folder and will work as long as the claudehub plugin is installed
