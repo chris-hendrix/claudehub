@@ -17,6 +17,10 @@ For each task from TASKS.md:
 5. **Review** - Use `reviewer` agent to assess quality
 6. **Complete** - Mark `[x]` in TASKS.md, append to PROGRESS.md
 
+### Cleanup Phase
+
+A dedicated Cleanup phase runs after all feature phases and before Final Verification. It contains a single triage task that reads ALL of PROGRESS.md, identifies every unaddressed item (failures, blocks, reviewer caveats, deferred work), and creates individual fix tasks in TASKS.md. Each fix task goes through the full agent sequence (researcher → coder → verifier → reviewer). One triage pass only — remaining issues are caught by Final Verification. See `references/context-files.md` for format and examples.
+
 ## Agent Sequence
 
 ```
@@ -46,15 +50,15 @@ When creating TASKS.md (via `/claudehub:ralph:plan-deep`), you'll be asked to ch
 
 | Granularity | Description | Best For |
 |-------------|-------------|----------|
-| **Small** (Recommended) | Smallest chunks of verifiable work. Each task is highly focused (e.g., "Create schema", "Add endpoints", "Write tests" as separate tasks) | Catching issues early, maintaining steady progress, clear milestones |
-| **Medium** | Balanced task sizes. Each task covers a complete feature component (e.g., "Implement auth service with tests") | Good balance between granularity and task count |
+| **Small** | Smallest chunks of verifiable work. Each task is highly focused (e.g., "Create schema", "Add endpoints", "Write tests" as separate tasks) | Catching issues early, maintaining steady progress, clear milestones |
+| **Medium** (Recommended) | Balanced task sizes. Each task covers a complete feature component (e.g., "Implement auth service with tests") | Good balance between granularity and task count |
 | **Large** | Fewer, larger tasks. Each task covers significant functionality (e.g., "Implement complete authentication system") | Less overhead, fewer tasks to track |
 
-**Small granularity is recommended** because:
-- Each task completes faster, providing frequent progress milestones
-- Issues are isolated to smaller scopes, making debugging easier
-- Easier to resume work after interruptions
-- More granular PROGRESS.md provides better learning history
+**Medium granularity is recommended** because:
+- Each task covers a complete feature component, reducing overhead
+- Good balance between progress tracking and task count
+- Fewer context switches between tasks
+- Still granular enough to isolate issues and resume after interruptions
 
 See `references/context-files.md` for concrete examples of the same feature at different granularities.
 
