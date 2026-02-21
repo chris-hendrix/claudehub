@@ -1,5 +1,6 @@
 ---
 name: evaluating
+disable-model-invocation: true
 description: This skill should be used when assessing artifacts, outputs, or content across multiple dimensions - provides frameworks for dimension selection, parallel evaluation, and concrete upgrade paths to achieve 10/10 quality.
 version: 1.0.0
 ---

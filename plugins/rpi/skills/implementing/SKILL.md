@@ -1,5 +1,6 @@
 ---
 name: implementing
+disable-model-invocation: true
 description: This skill should be used when the user wants to "implement this", "execute a plan", "work on a ticket or issue", "build from a description", mentions implementation execution, or is working on implementing from plans, tickets or issues, or descriptions.
 version: 1.0.0
 allowed-tools: Read, Write, Bash, Edit, AskUserQuestion, Glob, Task, Grep, TodoWrite
