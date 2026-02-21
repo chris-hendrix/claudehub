@@ -1,7 +1,7 @@
 ---
 description: Run Ralph execution loop, using /ralph:plan if docs are missing
 argument-hint: "[description] [--max-iterations N] [--commit-mode MODE] [--skip-permissions]"
-allowed-tools: ["Bash", "Read", "Write", "Edit", "Grep", "Glob", "Task", "Skill"]
+allowed-tools: ["Bash", "Read", "Write", "Edit", "Grep", "Glob", "Task", "Skill", "AskUserQuestion"]
 references-skills: ralph:ralph-wiggum
 ---
 
@@ -29,13 +29,33 @@ Start the Ralph execution loop. If planning docs don't exist, runs `/ralph:plan`
 4. **If planning docs are missing**, run `/ralph:plan` with the description from `$ARGUMENTS`
    - If no description provided and no planning docs, tell user to provide one and stop
 
-5. **Validate script exists**:
+5. **Ensure proper branch isolation**:
+
+   Detection:
+   1. Get current branch: `git rev-parse --abbrev-ref HEAD`
+   2. Check if in a worktree: compare `git rev-parse --show-toplevel` with the first worktree path from `git worktree list --porcelain`
+
+   Decision:
+   - If current branch starts with `ralph/` → already on a Ralph branch, proceed
+   - If in a worktree (toplevel differs from main worktree) → proceed
+   - Otherwise → create a Ralph branch:
+     - Read description from `.ralph/CONFIG.md` if it exists
+     - Fallback: parse from `$ARGUMENTS`, or ask user
+     - Create branch:
+       ```bash
+       DEFAULT_BRANCH=$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')
+       git checkout $DEFAULT_BRANCH && git pull
+       git checkout -b ralph/$(date +%Y%m%d-%H%M)-<description>
+       ```
+     - Untracked `.ralph/` files carry over naturally
+
+6. **Validate script exists**:
    ```bash
    test -f "${CLAUDE_PLUGIN_ROOT}/skills/ralph-wiggum/scripts/ralph.py"
    ```
    - If script not found, tell user: "Ralph orchestrator script not found. Please reinstall the claudehub plugin."
 
-6. **Ask about permissions if not specified**:
+7. **Ask about permissions if not specified**:
    - Parse `$ARGUMENTS` to check if `--skip-permissions` is present
    - If NOT present, use `AskUserQuestion` to ask:
      - Question: "Would you like to skip permission prompts during Ralph execution?"
@@ -45,7 +65,7 @@ Start the Ralph execution loop. If planning docs don't exist, runs `/ralph:plan`
        - "No" - Require permission prompts for each operation
    - Store the user's choice to determine whether to add `--skip-permissions` flag
 
-7. **Run the Python orchestrator in background**:
+8. **Run the Python orchestrator in background**:
    ```bash
    python3 "${CLAUDE_PLUGIN_ROOT}/skills/ralph-wiggum/scripts/ralph.py" --max-iterations <N> --commit-mode <MODE> [--skip-permissions]
    ```
@@ -54,7 +74,7 @@ Start the Ralph execution loop. If planning docs don't exist, runs `/ralph:plan`
      - It was present in `$ARGUMENTS`, OR
      - User selected "Yes (Recommended)" in the permissions question
 
-8. **Confirm startup**:
+9. **Confirm startup**:
 
    Generate compare URL (see "Tracking Progress Remotely" in skill).
 

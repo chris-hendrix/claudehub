@@ -40,6 +40,7 @@ All Ralph files live in `.ralph/`:
 | `TASKS.md` | Tasks with checkboxes at task level (`- [ ] Task 1.1:`), NOT on steps |
 | `VERIFICATION.md` | How to verify (test commands, env setup, feature flags) |
 | `PROGRESS.md` | Learnings and results from each iteration |
+| `CONFIG.md` | Branch description and isolation mode (worktree vs branch) |
 | `screenshots/` | Visual proof from manual testing (tracked) |
 | `logs/` | Flat session logs: `{timestamp}-{branch}-{task}.jsonl` (gitignored) |
 
@@ -71,7 +72,13 @@ Examples:
 - `ralph/20260126-1430-user-auth`
 - `ralph/20260127-0915-payment-flow`
 
+Branch creation depends on the isolation mode chosen during planning (stored in `.ralph/CONFIG.md`):
+
+- **Branch mode:** Branch is created by `/ralph:run` before execution starts. Planning docs are written on the current branch and carry over when the ralph branch is created.
+- **Worktree mode:** A worktree is created during planning via `EnterWorktree`. Planning docs are written directly in the worktree. `/ralph:run` detects the worktree and skips branch creation.
+
 ```bash
+# Branch creation (used by /ralph:run in branch mode)
 DEFAULT_BRANCH=$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')
 git checkout $DEFAULT_BRANCH && git pull
 git checkout -b ralph/$(date +%Y%m%d-%H%M)-short-description

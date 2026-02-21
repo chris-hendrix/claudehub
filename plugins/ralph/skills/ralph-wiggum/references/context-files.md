@@ -299,3 +299,12 @@ Environment setup and test commands. Structure varies by project but typically i
 - **Test credentials** - Accounts for manual testing
 - **Feature flags** - Flags that must be enabled for the feature
 - **Seed data** - How to create test data
+
+## CONFIG.md
+
+Metadata for Ralph execution, written during planning.
+
+| Field | Purpose |
+|-------|---------|
+| `description` | Kebab-case short description for branch naming |
+| `mode` | `worktree` or `branch` — how work is isolated |
