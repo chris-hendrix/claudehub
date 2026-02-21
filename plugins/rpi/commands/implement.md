@@ -12,9 +12,9 @@ model: opus
 
 ## Skills
 
-- `claudehub:implementing` - execution methodology
-- `claudehub:researching-codebase` - understanding context when needed
-- `claudehub:writing-documentation` - summary file naming and frontmatter
+- `rpi:implementing` - execution methodology
+- `rpi:researching-codebase` - understanding context when needed
+- `rpi:writing-documentation` - summary file naming and frontmatter
 
 ## Process
 

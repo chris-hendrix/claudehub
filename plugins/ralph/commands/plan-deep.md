@@ -2,7 +2,7 @@
 description: Create ARCHITECTURE.md, TASKS.md, and VERIFICATION.md for Ralph execution
 argument-hint: "[PRD path] [--designs PATH]"
 allowed-tools: ["Bash", "Read", "Write", "Edit", "Grep", "Glob", "AskUserQuestion", "WebFetch", "WebSearch", "Task"]
-references-skills: claudehub:ralph-wiggum
+references-skills: ralph:ralph-wiggum
 ---
 
 # Ralph Plan Deep
@@ -12,11 +12,11 @@ Interactively create the three planning documents required for Ralph execution:
 - `.ralph/TASKS.md`
 - `.ralph/VERIFICATION.md`
 
-**Requires 90% confidence before writing docs.** See `claudehub:ralph-wiggum/references/deep-dive.md` for questioning framework.
+**Requires 90% confidence before writing docs.** See `ralph:ralph-wiggum/references/deep-dive.md` for questioning framework.
 
 ## Process
 
-1. **Load the `claudehub:ralph-wiggum` skill** using the Skill tool
+1. **Load the `ralph:ralph-wiggum` skill** using the Skill tool
 
 2. **Create new Ralph branch** (always create fresh, never checkout existing):
 
@@ -42,7 +42,7 @@ Interactively create the three planning documents required for Ralph execution:
 
 6. **Deep-dive questioning** (REQUIRED - iterate until 90% confidence):
 
-   Follow the questioning framework in `claudehub:ralph-wiggum/references/deep-dive.md`. Cover all categories:
+   Follow the questioning framework in `ralph:ralph-wiggum/references/deep-dive.md`. Cover all categories:
    - Requirements clarity
    - Technical decisions
    - Scope boundaries
@@ -53,7 +53,7 @@ Interactively create the three planning documents required for Ralph execution:
 
 7. **Create ARCHITECTURE.md** (only after 90% confidence):
 
-   Follow the format in `claudehub:ralph-wiggum/references/context-files.md`.
+   Follow the format in `ralph:ralph-wiggum/references/context-files.md`.
    Research codebase as needed to understand existing patterns.
 
 8. **Ask user about task granularity** using AskUserQuestion:
@@ -69,7 +69,7 @@ Interactively create the three planning documents required for Ralph execution:
 
 9. **Create TASKS.md**:
 
-   Follow the format in `claudehub:ralph-wiggum/references/context-files.md`.
+   Follow the format in `ralph:ralph-wiggum/references/context-files.md`.
 
    **CRITICAL FORMAT REQUIREMENTS:**
    - Checkboxes ONLY on task lines: `- [ ] Task 1.1: Description`
@@ -103,7 +103,7 @@ Interactively create the three planning documents required for Ralph execution:
     - List created files and task count
     - Show environment validation results
     - State final confidence level
-    - Instruct user to run `/claudehub:ralph:run`
+    - Instruct user to run `/ralph:run`
 
 ## Arguments
 
@@ -113,7 +113,7 @@ Interactively create the three planning documents required for Ralph execution:
 ## Example
 
 ```
-/claudehub:ralph:plan-deep docs/prd-user-auth.md --designs docs/designs/
+/ralph:plan-deep docs/prd-user-auth.md --designs docs/designs/
 ```
 
 Input: $ARGUMENTS

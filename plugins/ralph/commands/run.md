@@ -1,24 +1,24 @@
 ---
-description: Run Ralph execution loop, using /claudehub:ralph:plan if docs are missing
+description: Run Ralph execution loop, using /ralph:plan if docs are missing
 argument-hint: "[description] [--max-iterations N] [--commit-mode MODE] [--skip-permissions]"
 allowed-tools: ["Bash", "Read", "Write", "Edit", "Grep", "Glob", "Task", "Skill"]
-references-skills: claudehub:ralph-wiggum
+references-skills: ralph:ralph-wiggum
 ---
 
 # Run
 
-Start the Ralph execution loop. If planning docs don't exist, runs `/claudehub:ralph:plan` first to create them.
+Start the Ralph execution loop. If planning docs don't exist, runs `/ralph:plan` first to create them.
 
 ## Process
 
-1. **Load the `claudehub:ralph-wiggum` skill** using the Skill tool
+1. **Load the `ralph:ralph-wiggum` skill** using the Skill tool
 
 2. **Check if Ralph is already running**:
    ```bash
    python3 "${CLAUDE_PLUGIN_ROOT}/skills/ralph-wiggum/scripts/find_ralph.py" --count
    ```
    - If count > 0, show running processes and ask user:
-     - "Ralph is already running (PID: X, started: Y). Use `/claudehub:ralph:cancel` to stop it first, or continue anyway?"
+     - "Ralph is already running (PID: X, started: Y). Use `/ralph:cancel` to stop it first, or continue anyway?"
    - If user says cancel/stop, stop here
 
 3. **Check if planning docs exist**:
@@ -26,7 +26,7 @@ Start the Ralph execution loop. If planning docs don't exist, runs `/claudehub:r
    test -f .ralph/TASKS.md && test -f .ralph/ARCHITECTURE.md && test -f .ralph/VERIFICATION.md
    ```
 
-4. **If planning docs are missing**, run `/claudehub:ralph:plan` with the description from `$ARGUMENTS`
+4. **If planning docs are missing**, run `/ralph:plan` with the description from `$ARGUMENTS`
    - If no description provided and no planning docs, tell user to provide one and stop
 
 5. **Validate script exists**:
@@ -58,7 +58,7 @@ Start the Ralph execution loop. If planning docs don't exist, runs `/claudehub:r
 
    Generate compare URL (see "Tracking Progress Remotely" in skill).
 
-   > "Ralph started (task ID: `<id>`). Use `/claudehub:ralph:cancel` to stop.
+   > "Ralph started (task ID: `<id>`). Use `/ralph:cancel` to stop.
    >
    > View commits: `<compare-url>`"
 
@@ -73,16 +73,16 @@ Start the Ralph execution loop. If planning docs don't exist, runs `/claudehub:r
 
 ```bash
 # With description (creates planning docs automatically)
-/claudehub:ralph:run "add user authentication with JWT"
+/ralph:run "add user authentication with JWT"
 
 # If planning docs already exist
-/claudehub:ralph:run
+/ralph:run
 
 # With options
-/claudehub:ralph:run "refactor payment flow" --max-iterations 20
+/ralph:run "refactor payment flow" --max-iterations 20
 
 # Skip permission prompts (for trusted environments)
-/claudehub:ralph:run --skip-permissions
+/ralph:run --skip-permissions
 ```
 
 Input: $ARGUMENTS

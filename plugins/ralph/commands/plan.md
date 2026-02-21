@@ -2,18 +2,18 @@
 description: Create Ralph planning docs quickly with autonomous design decisions
 argument-hint: "<description>"
 allowed-tools: ["Bash", "Read", "Write", "Edit", "Grep", "Glob"]
-references-skills: claudehub:ralph-wiggum
+references-skills: ralph:ralph-wiggum
 ---
 
 # Ralph Plan
 
 Create Ralph planning docs (ARCHITECTURE.md, TASKS.md, VERIFICATION.md) quickly by making autonomous design decisions.
 
-See `claudehub:ralph-wiggum/references/context-files.md` for detailed format specs.
+See `ralph:ralph-wiggum/references/context-files.md` for detailed format specs.
 
 ## Process
 
-1. **Load the `claudehub:ralph-wiggum` skill** using the Skill tool
+1. **Load the `ralph:ralph-wiggum` skill** using the Skill tool
 2. **Parse description** from `$ARGUMENTS` (first non-flag argument)
    * If no description provided, tell user to provide one and stop
 3. **Create new Ralph branch** (always create fresh, never checkout existing):
@@ -48,7 +48,7 @@ See `claudehub:ralph-wiggum/references/context-files.md` for detailed format spe
 6. **Spawn two agents in parallel:**
 
    a. **Write TASKS.md**
-      - Follow format in `claudehub:ralph-wiggum/references/context-files.md`
+      - Follow format in `ralph:ralph-wiggum/references/context-files.md`
       - **CRITICAL:** Checkboxes ONLY on task lines (`- [ ] Task 1.1:`), NEVER on step lines
       - **CRITICAL:** Tasks are list items, NOT headings (never use `### 1.1`)
       - Include tests WITH implementation tasks (TDD)
@@ -61,7 +61,7 @@ See `claudehub:ralph-wiggum/references/context-files.md` for detailed format spe
 
 7. **Confirm completion**:
    > "Planning docs created with X design decisions - review `.ralph/ARCHITECTURE.md` if needed.
-   > Run `/claudehub:ralph:run` to start execution."
+   > Run `/ralph:run` to start execution."
 
 ## Design Decisions Section
 
@@ -81,10 +81,10 @@ This transparency lets users review and adjust before execution.
 
 ```bash
 # Create planning docs for a feature
-/claudehub:ralph:plan "add user authentication with JWT"
+/ralph:plan "add user authentication with JWT"
 
 # Then start Ralph execution
-/claudehub:ralph:run
+/ralph:run
 ```
 
 Input: $ARGUMENTS

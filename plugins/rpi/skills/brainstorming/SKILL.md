@@ -15,7 +15,7 @@ Brainstorming is about **exploring alternatives and making an informed decision*
 - Evaluating 2-3 different approaches with trade-offs
 - Choosing the best approach with clear rationale
 
-**Do not conflate with planning** - detailed architecture, component design, and implementation steps belong in the plan (created with `/claudehub:create-plan`). The brainstorm focuses on the decision of *which* approach to take, not *how* to implement it.
+**Do not conflate with planning** - detailed architecture, component design, and implementation steps belong in the plan (created with `/rpi:create-plan`). The brainstorm focuses on the decision of *which* approach to take, not *how* to implement it.
 
 ## Research
 

@@ -11,8 +11,8 @@ allowed-tools: AskUserQuestion, Skill, Read, Grep, Glob, Write, Bash, Task
 
 ## Skills
 
-- `claudehub:researching-codebase` - Codebase investigation methodology (see references for research types and structure)
-- `claudehub:writing-documentation` - Documentation creation standards (see references for naming and format)
+- `rpi:researching-codebase` - Codebase investigation methodology (see references for research types and structure)
+- `rpi:writing-documentation` - Documentation creation standards (see references for naming and format)
 
 ## Process
 

@@ -11,9 +11,9 @@ allowed-tools: Read, Glob, AskUserQuestion, Write, Skill, Task
 
 ## Skills
 
-- `claudehub:evaluating` - dimension selection, evaluation format, revision methodology
-- `claudehub:researching-codebase` - investigate artifacts in the codebase before evaluation
-- `claudehub:writing-documentation` - file naming and frontmatter for saving evaluations
+- `rpi:evaluating` - dimension selection, evaluation format, revision methodology
+- `rpi:researching-codebase` - investigate artifacts in the codebase before evaluation
+- `rpi:writing-documentation` - file naming and frontmatter for saving evaluations
 
 ## Process
 

@@ -11,7 +11,7 @@ allowed-tools: AskUserQuestion, Skill, WebSearch, WebFetch, Write, Bash
 
 ## Skills
 
-- `claudehub:researching-web` - Web research methodology (see references for search strategy and synthesis format)
+- `rpi:researching-web` - Web research methodology (see references for search strategy and synthesis format)
 
 ## Process
 

@@ -12,10 +12,10 @@ model: opus
 
 ## Skills
 
-- `claudehub:brainstorming` - dialogue methodology
-- `claudehub:researching-codebase` - gathering project context
-- `claudehub:researching-web` - web research for new libraries/frameworks
-- `claudehub:writing-documentation` - file naming and frontmatter
+- `rpi:brainstorming` - dialogue methodology
+- `rpi:researching-codebase` - gathering project context
+- `rpi:researching-web` - web research for new libraries/frameworks
+- `rpi:writing-documentation` - file naming and frontmatter
 
 ## Process
 
