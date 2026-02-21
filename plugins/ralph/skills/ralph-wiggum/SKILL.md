@@ -1,5 +1,5 @@
 ---
-disable-model-invocation: true
+user-invocable: false
 description: This skill should be used when executing engineering tasks using the Ralph workflow methodology. Applies to task execution with researcher, coder, verifier, and reviewer agents in sequence.
 ---
 

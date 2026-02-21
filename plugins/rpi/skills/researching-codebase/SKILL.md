@@ -1,6 +1,6 @@
 ---
 name: researching-codebase
-disable-model-invocation: true
+user-invocable: false
 description: This skill should be used when investigating code, understanding implementations, finding patterns, locating files, or gathering context about how a codebase works. Applies to tasks like "find where X is implemented", "how does Y work", "find examples of Z", or general codebase exploration.
 version: 1.0.0
 allowed-tools: Read, Grep, Glob, LS

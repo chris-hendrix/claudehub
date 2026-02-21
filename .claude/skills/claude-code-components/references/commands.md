@@ -35,7 +35,7 @@ description: "Shows in command list" (required)
 argument-hint: [placeholder] (optional)
 allowed-tools: AskUserQuestion, Skill, Bash, Read, Glob (optional, but always include AskUserQuestion and Skill)
 model: sonnet | opus | haiku (optional)
-disable-model-invocation: true (optional, prevents model from invoking)
+user-invocable: false (optional, prevents model from invoking)
 ---
 ```
 

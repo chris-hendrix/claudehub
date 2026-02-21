@@ -1,6 +1,6 @@
 ---
 name: writing-plans
-disable-model-invocation: true
+user-invocable: false
 description: This skill should be used when the user wants to "create a plan", "write an implementation plan", "plan a feature", "design a solution", "plan implementation", mentions "implementation plan", "technical plan", "architecture plan", or is working on creating detailed implementation plans for features or changes.
 version: 1.0.0
 allowed-tools: Write, Read, Bash, AskUserQuestion, Glob, Task, Grep, TodoWrite

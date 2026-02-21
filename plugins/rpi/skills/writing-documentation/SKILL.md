@@ -1,6 +1,6 @@
 ---
 name: writing-documentation
-disable-model-invocation: true
+user-invocable: false
 description: This skill should be used when the user wants to "start a doc", "write documentation", "create notes", "research something", "document findings", "write up", "create a thought doc", mentions ".thoughts", "thoughts folder", or mentions needing to capture information, specs, or research in a markdown file. For implementation plans, see the `writing-plans` skill instead.
 version: 1.0.0
 allowed-tools: Write, Read, Bash, AskUserQuestion, Glob, Task, Grep, TodoWrite
