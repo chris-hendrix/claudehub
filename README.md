@@ -1,119 +1,176 @@
-# ClaudeHub 🛠️
+# ClaudeHub
 
 **Supercharge your development workflow with systematic research, planning, and autonomous implementation.**
 
 The most critical factor in successful LLM-assisted development is **alignment**: ensuring you and the AI are on the same page before writing code. ClaudeHub's spec-driven workflow gets you there through collaborative research, brainstorming, and detailed planning before autonomous implementation.
 
-## ✨ Key Features
+_Inspired by [CipherPowers](https://github.com/cipherstash/cipherpowers/), [Superpowers](https://github.com/obra/superpowers), and [HumanLayer](https://github.com/humanlayer/humanlayer)._
 
-### 📋 **Spec Driven Workflow**
+## Plugins
+
+ClaudeHub is a marketplace of 4 focused plugins:
+
+| Plugin | Description |
+|--------|-------------|
+| **claudehub** | Setup coordinator - installs ecosystem plugins, MCPs, and skills |
+| **rpi** | Research-plan-implement workflow for systematic development |
+| **ralph** | Autonomous agent execution through researcher-coder-verifier-reviewer pipeline |
+| **github** | Git and GitHub workflow automation with best practices |
+
+## Quick Start
+
+**1. Install the marketplace:**
+
+```bash
+# From local clone
+claude plugin marketplace add /path/to/claudehub
+
+# Or from GitHub
+claude plugin marketplace add chris-hendrix/claudehub
+```
+
+**2. Install the coordinator and run setup:**
+
+```bash
+claude plugin install claudehub@claudehub
+/claudehub:setup
+```
+
+This installs all plugins, MCP servers (context7, playwright), the skills CLI, and the statusline.
+
+**3. Or install plugins individually:**
+
+```bash
+claude plugin install rpi@claudehub      # Research-plan-implement
+claude plugin install ralph@claudehub    # Autonomous execution
+claude plugin install github@claudehub   # GitHub workflows
+```
+
+## RPI - Research, Plan, Implement
 
 Proven methodology for transforming messy ideas into production-ready code.
 
-* **Research & Explore**: Deep codebase understanding before making changes
-* **Brainstorm**: Refine rough concepts into validated designs through collaborative dialogue
-* **Plan**: Generate detailed, reviewable implementation plans
-* **Implement**: Execute with built-in review checkpoints and phase verification
-* **Evaluate**: Multi-dimensional quality assessment of your work
+```bash
+# Research a codebase
+/rpi:research-codebase "how does authentication work"
 
-_Inspired by [CipherPowers](https://github.com/cipherstash/cipherpowers/), [Superpowers](https://github.com/obra/superpowers), and [HumanLayer](https://github.com/humanlayer/humanlayer)._
+# Brainstorm an idea
+/rpi:brainstorm "Add user authentication with OAuth"
 
-### 🔄 **Ralph Wiggum**
+# Create a detailed plan
+/rpi:plan brainstorm.md
 
-Your autonomous coding companion that implements features through a structured engineering workflow.
+# Implement from the plan
+/rpi:implement plan.md
 
-Ralph executes tasks through a Python orchestrator that spawns Claude Code sessions. Each session runs a specialized agent pipeline to complete one task with proper research, implementation, verification, and review.
+# Evaluate the output
+/rpi:evaluate
+```
 
-**Key differentiator:** Multi-agent pipeline with parallel execution. The Python orchestrator manages session spawning and progress tracking, while specialized agents handle research, coding, testing, and review for each task.
+**Commands:**
 
-**How it works:**
+| Command | Description |
+|---------|-------------|
+| `/rpi:research-web` | Search the web and save findings to research doc |
+| `/rpi:research-codebase` | Investigate code and create documentation |
+| `/rpi:brainstorm` | Brainstorm an idea into a validated design |
+| `/rpi:plan` | Create detailed implementation plans |
+| `/rpi:implement` | Implement from a plan or description |
+| `/rpi:evaluate` | Assess output across quality dimensions |
+| `/rpi:create-doc` | Create a new document in .thoughts/ |
+
+## Ralph - Autonomous Execution
+
+Your autonomous coding companion that implements features through a structured engineering workflow. Ralph executes tasks through a Python orchestrator that spawns Claude Code sessions, each running a specialized agent pipeline.
 
 ```bash
 # Quick autonomous planning + execution
-/claudehub:ralph:run "add user authentication with JWT"
+/ralph:run "add user authentication with JWT"
 
-# Or plan interactively first
-/claudehub:ralph:plan-deep docs/prd.md
-/claudehub:ralph:run
+# Or plan interactively first (90% confidence required)
+/ralph:plan-deep docs/prd.md
+/ralph:validate
+/ralph:run
+
+# Check status or cancel
+/ralph:status
+/ralph:cancel
 ```
 
 **The Agent Pipeline:**
 
 ```
-3x researcher (parallel) → coder → verifier + reviewer (parallel)
+3x researcher (parallel) -> coder -> verifier + reviewer (parallel)
 ```
 
-Each task goes through:
-1. **Research** - Three parallel researchers gather context (LOCATING, ANALYZING, PATTERNS)
-2. **Code** - Coder implements + writes tests
-3. **Verify** - Verifier runs tests, linting, type-checking
-4. **Review** - Reviewer assesses code quality
-5. **Complete** - Mark task done in `.ralph/TASKS.md`, log to `.ralph/PROGRESS.md`
+**Commands:**
 
-**File Structure:**
-
-All Ralph files live in `.ralph/`:
-- `ARCHITECTURE.md` - Technical approach
-- `TASKS.md` - Tasks with checkboxes, organized by phase
-- `VERIFICATION.md` - Test commands, environment setup
-- `PROGRESS.md` - Learnings from each iteration
-
-**Architecture benefits:**
-
-* **Parallel execution**: 3x researcher + verifier/reviewer run concurrently
-* **Specialized agents**: Each agent has a focused responsibility
-* **Context isolation**: Fresh session per task prevents context rot
-* **Built-in planning**: `/claudehub:ralph-plan` for quick autonomous planning or `/claudehub:ralph:plan-deep` for interactive deep planning
-* **Progress tracking**: `/claudehub:ralph-status` shows real-time progress
-
-**Perfect for:**
-
-* Complex features with clear requirements (PRDs, design docs)
-* Projects needing thorough testing and review
-* Teams wanting structured engineering workflow
-* Long-running implementations with autonomous progress
+| Command | Description |
+|---------|-------------|
+| `/ralph:run` | Start execution loop (auto-plans if needed) |
+| `/ralph:plan` | Quick autonomous planning |
+| `/ralph:plan-deep` | Interactive deep planning (90% confidence required) |
+| `/ralph:validate` | Validate test environment before execution |
+| `/ralph:status` | Show current execution progress |
+| `/ralph:cancel` | Stop the active execution loop |
 
 _Inspired by Geoffrey Huntley's [Ralph methodology](https://ghuntley.com/ralph/)._
 
-## 🚀 Quick Start
+## GitHub - Workflow Automation
 
-**Installation:**
-
-```bash
-/plugin install claudehub@claudehub
-
-# Optional: Install custom statusline
-/claudehub:install-statusline
-# claudehub │ main │ [Sonnet 4.5] │ ▓▓▓▓▓░░░░░ 50%
-```
-
-**Brainstorm an idea:**
+Streamlined git workflows: intelligent PR creation, branch management, and commit automation.
 
 ```bash
-/claudehub:brainstorm "Add user authentication with OAuth"
+/github:submit-pr          # Commit, push, create draft PR
+/github:create-branch      # Create branch with AI-suggested name
+/github:describe-pr        # Generate PR title and description
+/github:checkout-default   # Switch to default branch and sync
+/github:clean-branches     # Delete merged/closed local branches
+/github:create-issue       # Create issue with AI content
+/github:setup-templates    # Set up PR and issue templates
 ```
 
-**Create a detailed plan:**
+## Coordinator Commands
+
+| Command | Description |
+|---------|-------------|
+| `/claudehub:setup` | Install the full ecosystem (runs all install commands) |
+| `/claudehub:install-plugins` | Install rpi, ralph, and github plugins |
+| `/claudehub:install-mcps` | Install context7 and playwright MCP servers |
+| `/claudehub:install-skills-cli` | Install the skills.sh CLI |
+| `/claudehub:install-statusline` | Install custom statusline |
+| `/claudehub:find-skills` | Discover and install 3rd party skills |
+
+## Makefile
+
+For development and local management:
 
 ```bash
-/claudehub:create-plan brainstorm.md
+make add-all       # Install all 4 plugins
+make remove-all    # Uninstall all 4 plugins
+make add-rpi       # Install just the rpi plugin
+make add-ralph     # Install just the ralph plugin
+make help          # Show all available targets
 ```
 
-**Run Ralph to implement:**
+## Migration from v1
 
-```bash
-# Quick autonomous approach
-/claudehub:ralph:run "add user authentication with OAuth"
+If you were using the monolithic claudehub plugin, commands have moved to new namespaces:
 
-# Or manual planning first
-/claudehub:ralph:plan-deep docs/prd.md
-/claudehub:ralph:run
-```
+| Old Command | New Command |
+|-------------|-------------|
+| `/claudehub:brainstorm` | `/rpi:brainstorm` |
+| `/claudehub:create-plan` | `/rpi:plan` |
+| `/claudehub:implement` | `/rpi:implement` |
+| `/claudehub:evaluate` | `/rpi:evaluate` |
+| `/claudehub:research-web` | `/rpi:research-web` |
+| `/claudehub:research-codebase` | `/rpi:research-codebase` |
+| `/claudehub:create-doc` | `/rpi:create-doc` |
+| `/claudehub:ralph:run` | `/ralph:run` |
+| `/claudehub:ralph:plan` | `/ralph:plan` |
+| `/claudehub:ralph:plan-deep` | `/ralph:plan-deep` |
+| `/claudehub:ralph:status` | `/ralph:status` |
+| `/claudehub:ralph:cancel` | `/ralph:cancel` |
+| `/claudehub:ralph:validate` | `/ralph:validate` |
 
-## 📦 Additional Plugins
-
-**GitHub Plugin** for streamlined git workflows: intelligent PR creation, branch management, and commit automation.
-
-```bash
-/plugin install github@claudehub
-```
+The github plugin commands are unchanged.

@@ -22,8 +22,9 @@ claude-hub │ main │ [Sonnet] │ ▓▓▓▓▓░░░░░ 50%
    - Read `~/.claude/settings.json`
    - If statusLine exists, inform the user and ask if they want to replace it
 
-2. **Find the statusline script using bash**
-   - Run this exact command to locate the script:
+2. **Resolve the statusline script path**
+   - The script is located at `${CLAUDE_PLUGIN_ROOT}/.support/scripts/statusline.py` relative to this plugin
+   - To get the absolute path, run:
      ```bash
      find ~/.claude/plugins/cache -path "*/claudehub/*/.support/scripts/statusline.py" 2>/dev/null | head -1
      ```
@@ -31,9 +32,8 @@ claude-hub │ main │ [Sonnet] │ ▓▓▓▓▓░░░░░ 50%
    - **Validate** the found path exists before using it: `test -f "$SCRIPT_PATH"`
 
 3. **Update settings.json**
-   - Add or update the statusLine configuration using the exact path found in step 2
+   - Add or update the statusLine configuration using the absolute path found in step 2
    - The path MUST end with `/.support/scripts/statusline.py` — do NOT append extra directory segments
-   - Example of a correct path: `~/.claude/plugins/cache/claudehub/claudehub/1.0.0/.support/scripts/statusline.py`
 
 4. **Confirm installation**
    - Inform the user that the statusline has been installed
@@ -41,13 +41,13 @@ claude-hub │ main │ [Sonnet] │ ▓▓▓▓▓░░░░░ 50%
 
 ## Settings Configuration
 
-The statusLine configuration should use an absolute path (not `${CLAUDE_PLUGIN_ROOT}` as that variable is not supported in statusLine commands):
+The script lives at `${CLAUDE_PLUGIN_ROOT}/.support/scripts/statusline.py` but statusLine commands require an absolute path (the variable is not expanded in settings.json). Use the `find` command above to resolve the absolute path:
 
 ```json
 {
   "statusLine": {
     "type": "command",
-    "command": "/home/user/.claude/plugins/cache/claudehub/claudehub/1.0.0/.support/scripts/statusline.py"
+    "command": "/home/user/.claude/plugins/cache/claudehub/claudehub/2.0.0/.support/scripts/statusline.py"
   }
 }
 ```

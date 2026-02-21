@@ -1,0 +1,5 @@
+{
+  "name": "ralph",
+  "description": "Autonomous agent execution through researcher-coder-verifier-reviewer pipeline",
+  "version": "2.0.0"
+}
