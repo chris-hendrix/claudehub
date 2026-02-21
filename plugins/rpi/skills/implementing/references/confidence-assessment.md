@@ -75,6 +75,6 @@ Proceed with implementation
 If any area is rated 🔴 **Low**:
 
 1. Do NOT proceed with implementation
-2. Suggest `/eng:brainstorm` to clarify requirements
-3. Or suggest `/eng:create-plan` to develop a proper approach
+2. Suggest `/rpi:brainstorm` to clarify requirements
+3. Or suggest `/rpi:plan` to develop a proper approach
 4. Re-assess after addressing gaps

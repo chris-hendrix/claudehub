@@ -58,7 +58,7 @@ Proven methodology for transforming messy ideas into production-ready code.
 /rpi:brainstorm "Add user authentication with OAuth"
 
 # Create a detailed plan
-/rpi:create-plan brainstorm.md
+/rpi:plan brainstorm.md
 
 # Implement from the plan
 /rpi:implement plan.md
@@ -74,7 +74,7 @@ Proven methodology for transforming messy ideas into production-ready code.
 | `/rpi:research-web` | Search the web and save findings to research doc |
 | `/rpi:research-codebase` | Investigate code and create documentation |
 | `/rpi:brainstorm` | Brainstorm an idea into a validated design |
-| `/rpi:create-plan` | Create detailed implementation plans |
+| `/rpi:plan` | Create detailed implementation plans |
 | `/rpi:implement` | Implement from a plan or description |
 | `/rpi:evaluate` | Assess output across quality dimensions |
 | `/rpi:create-doc` | Create a new document in .thoughts/ |
@@ -160,7 +160,7 @@ If you were using the monolithic claudehub plugin, commands have moved to new na
 | Old Command | New Command |
 |-------------|-------------|
 | `/claudehub:brainstorm` | `/rpi:brainstorm` |
-| `/claudehub:create-plan` | `/rpi:create-plan` |
+| `/claudehub:create-plan` | `/rpi:plan` |
 | `/claudehub:implement` | `/rpi:implement` |
 | `/claudehub:evaluate` | `/rpi:evaluate` |
 | `/claudehub:research-web` | `/rpi:research-web` |
