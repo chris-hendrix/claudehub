@@ -48,6 +48,7 @@ Ralph's orchestrator finds the next task by searching for `- [ ]` at the start o
 
 Logical groupings (e.g., "Database Layer", "API Endpoints", "UI Components")
 - Each phase groups related tasks
+- Second-to-last phase is always "Cleanup" to triage and fix unaddressed issues from PROGRESS.md
 - Final phase is always "Final Verification" to run all tests and catch regressions
 
 ### Tasks
@@ -63,13 +64,13 @@ A unit of work Ralph completes in one iteration
 
 Choose granularity based on how you want to track progress:
 
-**Small (Recommended)**: Smallest chunks of verifiable work
+**Small**: Smallest chunks of verifiable work
 - Each task is highly focused with minimal scope
 - Example: "Create user schema", "Add user endpoints", "Write user tests" as separate tasks
 - Pros: Clear progress, catch issues early, easier to resume after interruptions
 - Cons: More tasks to manage, more PROGRESS.md entries
 
-**Medium**: Balanced task sizes
+**Medium (Recommended)**: Balanced task sizes
 - Each task covers a complete feature component
 - Example: "Implement user service with endpoints and tests"
 - Pros: Good balance between granularity and task count
@@ -107,6 +108,29 @@ Tests are written WITH implementation, not after:
 - ❌ "Task 4.1: Write E2E tests" - E2E tests go with the UI tasks they test
 - ❌ "Task 5.2: Add manual test coverage" - manual tests go with the features they verify
 - ✅ Each task is self-contained: implement → test → verify
+
+### Cleanup Phase
+
+A dedicated Cleanup phase sits between the last feature phase and Final Verification. It starts with a single triage task that reads ALL of PROGRESS.md, identifies every unaddressed item, and creates individual fix tasks. This is one pass only — no re-triage after fixes run. Remaining issues are caught by Final Verification.
+
+**What counts as unaddressed:** FAILURE status, BLOCKED status, reviewer caveats, deferred work.
+
+**How it works:**
+1. Triage task reads entire PROGRESS.md
+2. For each unaddressed item, creates a fix task in TASKS.md (appended after the triage task, before Final Verification)
+3. If no issues found, marks the triage task complete and moves on
+4. Each fix task runs through the full agent sequence (researcher → coder → verifier → reviewer)
+
+**Format:**
+```markdown
+## Phase N-1: Cleanup
+
+- [ ] Task {N-1}.1: Triage PROGRESS.md for unaddressed items
+  - Review: Read entire PROGRESS.md
+  - Identify: Find FAILURE, BLOCKED, reviewer caveats, or deferred items across ALL phases
+  - Fix: Create individual fix tasks in TASKS.md for each outstanding issue
+  - Verify: run full test suite
+```
 
 ### Granularity Examples
 
@@ -207,7 +231,15 @@ Same feature broken down at different granularities:
   - Test: Write integration tests for POST /api/auth/verify-code
   - Verify: run full test suite, all tests pass
 
-## Phase N: Final Verification
+## Phase 3: Cleanup
+
+- [ ] Task 3.1: Triage PROGRESS.md for unaddressed items
+  - Review: Read entire PROGRESS.md
+  - Identify: Find FAILURE, BLOCKED, reviewer caveats, or deferred items across ALL phases
+  - Fix: Create individual fix tasks in TASKS.md for each outstanding issue
+  - Verify: run full test suite
+
+## Phase 4: Final Verification
 
 - [ ] Task N.1: Full regression check
   - Verify: all unit tests pass

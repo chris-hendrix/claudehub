@@ -61,8 +61,8 @@ Interactively create the three planning documents required for Ralph execution:
    Question: "What level of task granularity do you prefer for TASKS.md?"
 
    Options:
-   - **Small (Recommended)**: Smallest chunks of verifiable work. Each task is highly focused and can be completed quickly. More tasks overall, but each task has clear, minimal scope. Best for catching issues early and maintaining steady progress.
-   - **Medium**: Balanced task sizes. Each task covers a logical feature component with reasonable scope. Good middle ground between granularity and task count.
+   - **Small**: Smallest chunks of verifiable work. Each task is highly focused and can be completed quickly. More tasks overall, but each task has clear, minimal scope. Best for catching issues early and maintaining steady progress.
+   - **Medium (Recommended)**: Balanced task sizes. Each task covers a logical feature component with reasonable scope. Good middle ground between granularity and task count.
    - **Large**: Fewer, larger tasks. Each task covers significant functionality. Fewer tasks to track, but each takes longer to complete and verify. Best when you want less overhead.
 
    Store the user's choice and use it when breaking down work in the next step.
