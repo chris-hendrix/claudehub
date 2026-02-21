@@ -1,7 +1,7 @@
 ---
 description: Create ARCHITECTURE.md, TASKS.md, and VERIFICATION.md for Ralph execution
 argument-hint: "[PRD path] [--designs PATH]"
-allowed-tools: ["Bash", "Read", "Write", "Edit", "Grep", "Glob", "AskUserQuestion", "WebFetch", "WebSearch", "Task"]
+allowed-tools: ["Bash", "Read", "Write", "Edit", "Grep", "Glob", "AskUserQuestion", "EnterWorktree", "WebFetch", "WebSearch", "Task"]
 references-skills: ralph:ralph-wiggum
 ---
 
@@ -18,17 +18,27 @@ Interactively create the three planning documents required for Ralph execution:
 
 1. **Load the `ralph:ralph-wiggum` skill** using the Skill tool
 
-2. **Create new Ralph branch** (always create fresh, never checkout existing):
+2. **Get description and isolation mode**:
 
    Ask user for a short description (2-4 words, kebab-case) for the feature.
 
-   ```bash
-   DEFAULT_BRANCH=$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')
-   git checkout $DEFAULT_BRANCH && git pull
-   git checkout -b ralph/$(date +%Y%m%d-%H%M)-<description>
-   ```
+   Then ask isolation mode using AskUserQuestion:
+   - Question: "How would you like to isolate this work?"
+   - Header: "Isolation"
+   - Options:
+     - "Branch (Recommended)" — Ralph creates a `ralph/` branch when you run `/ralph:run`
+     - "Worktree" — Creates an isolated worktree now with its own branch
 
-3. **Create `.ralph/` directory** if it doesn't exist
+3. **Handle isolation + write CONFIG.md:**
+   - If worktree: call `EnterWorktree` with name `ralph-<description>`
+   - Create `.ralph/` directory
+   - Write `.ralph/CONFIG.md`:
+     ```markdown
+     # Ralph Config
+
+     - description: <description>
+     - mode: <worktree|branch>
+     ```
 
 4. **Gather inputs**:
    - Parse `$ARGUMENTS` for PRD path

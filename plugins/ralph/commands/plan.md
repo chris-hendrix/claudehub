@@ -1,7 +1,7 @@
 ---
 description: Create Ralph planning docs quickly with autonomous design decisions
 argument-hint: "<description>"
-allowed-tools: ["Bash", "Read", "Write", "Edit", "Grep", "Glob"]
+allowed-tools: ["Bash", "Read", "Write", "Edit", "Grep", "Glob", "AskUserQuestion", "EnterWorktree"]
 references-skills: ralph:ralph-wiggum
 ---
 
@@ -16,17 +16,27 @@ See `ralph:ralph-wiggum/references/context-files.md` for detailed format specs.
 1. **Load the `ralph:ralph-wiggum` skill** using the Skill tool
 2. **Parse description** from `$ARGUMENTS` (first non-flag argument)
    * If no description provided, tell user to provide one and stop
-3. **Create new Ralph branch** (always create fresh, never checkout existing):
-   ```bash
-   DEFAULT_BRANCH=$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')
-   git checkout $DEFAULT_BRANCH && git pull
-   git checkout -b ralph/$(date +%Y%m%d-%H%M)-<short-description>
-   ```
-4. **Quick codebase scan** - understand the project structure:
+3. **Ask isolation mode** using AskUserQuestion:
+   - Question: "How would you like to isolate this work?"
+   - Header: "Isolation"
+   - Options:
+     - "Branch (Recommended)" — Ralph creates a `ralph/` branch when you run `/ralph:run`
+     - "Worktree" — Creates an isolated worktree now with its own branch
+4. **Handle isolation + write CONFIG.md:**
+   - If worktree: call `EnterWorktree` with name `ralph-<short-description>`
+   - Create `.ralph/` directory
+   - Write `.ralph/CONFIG.md`:
+     ```markdown
+     # Ralph Config
+
+     - description: <short-description-from-arguments>
+     - mode: <worktree|branch>
+     ```
+5. **Quick codebase scan** - understand the project structure:
    * Check package.json, Cargo.toml, go.mod, etc. for project type
    * Identify test framework and commands
    * Find existing patterns to follow
-5. **Write ARCHITECTURE.md** with a "Design Decisions" section:
+6. **Write ARCHITECTURE.md** with a "Design Decisions" section:
    ```markdown
    # Architecture
 
@@ -45,7 +55,7 @@ See `ralph:ralph-wiggum/references/context-files.md` for detailed format specs.
    ## Technical Approach
    [Details based on codebase patterns]
    ```
-6. **Spawn two agents in parallel:**
+7. **Spawn two agents in parallel:**
 
    a. **Write TASKS.md**
       - Follow format in `ralph:ralph-wiggum/references/context-files.md`
@@ -59,7 +69,7 @@ See `ralph:ralph-wiggum/references/context-files.md` for detailed format specs.
       - Include discovered ports and URLs
       - Add manual testing steps for UI work
 
-7. **Confirm completion**:
+8. **Confirm completion**:
    > "Planning docs created with X design decisions - review `.ralph/ARCHITECTURE.md` if needed.
    > Run `/ralph:run` to start execution."
 
