@@ -1,6 +1,6 @@
 ---
 name: researching-web
-disable-model-invocation: true
+user-invocable: false
 description: This skill should be used when searching the web for information, researching topics online, finding documentation, looking up technical solutions, or gathering information from external sources.
 version: 1.0.0
 allowed-tools: WebSearch, WebFetch

@@ -1,6 +1,6 @@
 ---
 name: brainstorming
-disable-model-invocation: true
+user-invocable: false
 description: This skill should be used when creating or developing, before writing code or implementation plans - refines rough ideas into fully-formed designs through collaborative questioning, alternative exploration, and incremental validation. Don't use during clear 'mechanical' processes.
 version: 1.0.0
 ---
