@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
 """
 Claude Code status line for claudehub
-Displays: repo | branch | model | context usage
+Line 1: repo | branch | model | context bar
+Line 2: (reserved for Claude Code messages)
 """
 
 import json
 import sys
 import subprocess
 import os
+import re
 
 # Read JSON data from stdin
 data = json.load(sys.stdin)
@@ -32,33 +34,23 @@ repo_url = ""
 branch = ""
 
 try:
-    # Check if we're in a git repo
     subprocess.check_output(['git', 'rev-parse', '--git-dir'],
                           stderr=subprocess.DEVNULL)
-
-    # Get repository name and URL from remote
     try:
         remote = subprocess.check_output(['git', 'remote', 'get-url', 'origin'],
                                        stderr=subprocess.DEVNULL,
                                        text=True).strip()
-        # Convert SSH to HTTPS format
-        import re
         remote_https = re.sub(r'^git@github\.com:', 'https://github.com/', remote)
         remote_https = re.sub(r'\.git$', '', remote_https)
         repo_url = remote_https
-
-        # Extract just the repo name from URL
         repo_name = os.path.basename(remote_https)
-    except:
-        # Fallback to directory name
+    except Exception:
         repo_name = os.path.basename(directory)
 
-    # Get current branch
     branch = subprocess.check_output(['git', 'branch', '--show-current'],
                                     stderr=subprocess.DEVNULL,
                                     text=True).strip()
-except:
-    # Not a git repo or git not available
+except Exception:
     pass
 
 # Determine context bar color based on usage
@@ -75,15 +67,14 @@ else:
 filled = pct // 10
 bar = '▓' * filled + '░' * (10 - filled)
 
-# Build and output status line
+SEP = f" {CYAN}│{RESET} "
+
+# Build parts
 parts = []
 
 if repo_name:
-    # Make repo name clickable if we have a URL (OSC 8 escape sequence)
     if repo_url:
-        # OSC 8 format: \033]8;;URL\aLINK_TEXT\033]8;;\a
-        clickable_repo = f"\033]8;;{repo_url}\a{BLUE}{repo_name}{RESET}\033]8;;\a"
-        parts.append(clickable_repo)
+        parts.append(f"\033]8;;{repo_url}\a{BLUE}{repo_name}{RESET}\033]8;;\a")
     else:
         parts.append(f"{BLUE}{repo_name}{RESET}")
 
@@ -91,7 +82,7 @@ if branch:
     MAX_BRANCH = 30
     display_branch = branch
     if len(branch) > MAX_BRANCH:
-        keep = MAX_BRANCH - 1  # 1 char for ellipsis
+        keep = MAX_BRANCH - 1
         head = keep // 2
         tail = keep - head
         display_branch = branch[:head] + '…' + branch[-tail:]
@@ -104,4 +95,6 @@ if branch:
 parts.append(f"{YELLOW}[{model}]{RESET}")
 parts.append(f"{bar_color}{bar}{RESET} {pct}%")
 
-print(f" {CYAN}│{RESET} ".join(parts))
+# Print status then a blank line so Claude Code messages appear on the next line
+print(SEP.join(parts))
+print()
