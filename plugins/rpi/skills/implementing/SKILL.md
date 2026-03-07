@@ -97,3 +97,7 @@ See [references/implementing-a-plan.md](references/implementing-a-plan.md) for d
 After completing each phase, run phase-level checks (automated tests, manual verification) and get user sign-off before proceeding. When all phases complete, write implementation summary to `.thoughts/implementations/`.
 
 See [references/implementing-a-plan.md](references/implementing-a-plan.md) for detailed verification steps and summary document structure.
+
+## Agent Team Execution
+
+For parallel implementation using agent teams, see [references/agent-teams.md](references/agent-teams.md). This covers team lead responsibilities, task parallelism analysis, teammate spawn prompts, and the commit-per-phase workflow.
