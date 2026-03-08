@@ -38,3 +38,7 @@ Follow consistent branch naming conventions - see `references/branches.md` for d
 
 Follow PR best practices for effective code review - see `references/pull-requests.md` for detailed guidelines, templates, and commands.
 
+## GitHub Actions
+
+Monitor and troubleshoot CI/CD runs - see `references/gha.md` for CLI patterns, log analysis, and failure diagnosis.
+
