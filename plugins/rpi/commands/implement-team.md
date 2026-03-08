@@ -1,7 +1,7 @@
 ---
 description: Implement plan using an agent team with commit-per-phase workflow
 argument-hint: [plan file]
-allowed-tools: Read, Write, Edit, Bash, AskUserQuestion, Glob, Grep, Skill, Task, TaskCreate, TaskUpdate, TaskList, TaskGet
+allowed-tools: Read, Write, Edit, Bash, AskUserQuestion, Glob, Grep, Skill
 model: opus
 ---
 
@@ -9,16 +9,17 @@ model: opus
 
 - Always load referenced skills using the Skill tool
 - When needing input from the user, always use AskUserQuestion tool
+- **You MUST create an agent team to implement this plan. Do NOT implement code yourself or use subagents. You are the team lead — you coordinate, teammates implement.**
 
 ## Skills
 
-- `rpi:implementing` - execution methodology, confidence assessment, plan updates
-  - See `references/agent-teams.md` for team-specific orchestration
+- `rpi:implementing` - confidence assessment, plan file update format, phase verification
+  - **Read `references/agent-teams.md` for the full agent team orchestration workflow — follow it exactly**
 - `rpi:writing-documentation` - summary file naming and frontmatter
 
 ## Process
 
-1. Verify agent teams are enabled in settings (see `agent-teams.md`), offer to enable if not
+1. Verify `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` is enabled in settings (see `agent-teams.md`). Offer to enable if not. **Stop if not enabled.**
 
 2. Gather context (plan file from `.thoughts/plans/` or clarify with user)
 
@@ -26,12 +27,10 @@ model: opus
 
 4. Assess confidence and present phases for confirmation (per `implementing` skill)
 
-5. **Spawn team**: Create tasks from the plan (TaskCreate with dependencies), spawn agent team and let it decide how to distribute work
+5. **Create an agent team now.** Spawn teammates from the plan's phases per `agent-teams.md`. Do NOT use subagents. Do NOT implement code yourself.
 
-6. **As each phase completes**: Verify checks, update plan file, commit and push
+6. **Coordinate as team lead**: monitor progress, verify phase checks, update plan file, commit-per-phase, wait for teammates to finish
 
-7. Complete: update plan status, run full verification, write summary to `.thoughts/implementations/`, final commit and push, clean up team
-
-See `implementing` skill reference `agent-teams.md` for the full workflow, teammate prompt requirements, and error recovery.
+7. Complete: update plan status, run full verification, write summary to `.thoughts/implementations/`, final commit and push, clean up the agent team
 
 Input: $ARGUMENTS

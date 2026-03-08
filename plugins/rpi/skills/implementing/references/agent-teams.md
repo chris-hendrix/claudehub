@@ -1,6 +1,6 @@
 # Agent Team Implementation
 
-Orchestrate plan implementation using an agent team. You are the **team lead** — you coordinate work, manage the plan file, handle git operations, and commit after each phase completes. Teammates implement code.
+**You MUST create an agent team.** Do NOT use subagents (Agent tool). Do NOT implement code yourself. You are the **team lead** — you coordinate work, manage the plan file, handle git operations, and commit after each phase completes. Teammates implement code.
 
 **Prerequisite**: Requires `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` enabled in settings.
 
@@ -12,7 +12,13 @@ Before spawning any team, check that the environment variable is set. Look for i
 3. `.claude/settings.json` (project root)
 4. `.claude/settings.local.json` (project root)
 
-Search for `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` set to `"1"` in an `env` block. If not found in any of these files, inform the user that agent teams are not enabled and ask if they want to enable it. If yes, add it to their project-level `.claude/settings.local.json`.
+Search for `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` set to `"1"` in an `env` block. If not found in any of these files, inform the user that agent teams are not enabled and ask if they want to enable it. If yes, add it to their project-level `.claude/settings.local.json`:
+
+```json
+{ "env": { "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1" } }
+```
+
+**Stop here if not enabled — agent teams cannot work without this setting.**
 
 ## Lead Responsibilities
 
@@ -20,8 +26,8 @@ The lead (you) owns everything except writing implementation code:
 
 - Reading and parsing the plan
 - Branch creation and git operations
-- Creating the shared task list (TaskCreate)
-- Spawning the team and delegating work
+- Creating the shared task list
+- Creating the agent team and spawning teammates
 - Monitoring progress and resolving issues
 - Updating the plan file (checkboxes, tracked changes, frontmatter)
 - Committing and pushing after each phase
@@ -39,18 +45,21 @@ branch=$(git branch --show-current)
 - If on `main` or `master`: derive a branch name from the plan topic. Use AskUserQuestion to ask the user if they want to create a branch, presenting the suggested name as an option alongside "Stay on current branch" and an option to provide a custom name. If confirmed, create and push with `-u`.
 - If already on a feature branch: continue on it
 
-## Shared Task List
+## Creating the Agent Team
 
-Use TaskCreate to create tasks from the plan before spawning the team. Include full descriptions with steps and checks from the plan. Set up dependencies between tasks (via TaskUpdate `addBlockedBy`) to reflect the ordering in the plan.
+**This is the critical step.** Create an agent team — not subagents — to implement the plan.
 
-## Spawning the Team
+1. Analyze the plan to determine how many teammates are needed (typically 3-5) based on independent phases/tasks
+2. Group tasks that can run in parallel vs those with dependencies
+3. Create the agent team with a shared task list containing all tasks from the plan, with dependencies reflecting the plan's ordering
+4. Spawn teammates, each with a clear prompt
 
-Create the agent team and give it the full plan context — all phases, tasks, and their dependencies. Let the team lead (you) and the agent team infrastructure decide how to distribute work across teammates. The team will determine what can be parallelized based on task dependencies and file scope.
-
-**Teammate prompts must include:**
+**Each teammate's spawn prompt MUST include:**
 - The plan file path so they can read architecture context
-- Their assigned work with steps and checks verbatim from the plan
-- Instruction to NOT modify the plan file or run git commands
+- Their specific assigned tasks with steps and checks verbatim from the plan
+- **"Do NOT modify the plan file. Do NOT run git commands (git add, git commit, git push). The team lead handles all git operations and plan updates."**
+
+**Wait for teammates to finish their tasks.** Do NOT implement tasks yourself. If the team needs more workers, spawn additional teammates rather than doing the work.
 
 ## Commit-Per-Phase Workflow
 
