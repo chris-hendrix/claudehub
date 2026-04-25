@@ -36,6 +36,8 @@ Set `attempt = 0`. Loop:
 
 Spawn the `ci-watcher` agent. It will monitor runs for the current HEAD and return a status summary with overall PASS/FAIL and any failed run IDs.
 
+**Do not read any files while waiting for the watcher to return.**
+
 If **Overall: PASS**, report success and exit the loop.
 
 #### Fixer Phase
